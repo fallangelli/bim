@@ -1,0 +1,29 @@
+<!--This is a draft of config file.
+If you have any advice, go https://github.com/code4craft/grab/issues/106 and comment!-->
+<spider>
+  <site>
+    <charset>utf-8</charset>
+    <user-agent></user-agent>
+    <cookies>
+      <cookie domain="" path="" title="" value="">
+      </cookie>
+    </cookies>
+    <heads>
+      <head title="" value=""/>
+    </heads>
+  </site>
+
+  <startUrls>
+    <url></url>
+  </startUrls>
+
+  <extraction targetUrl="" helpUrl="">
+    <field title="title">
+      <extractor type="xpath" value="//div[@class='title']"/>
+    </field>
+    <field title="content">
+      <extractor type="xpath" value="//div[@class='content']"/>
+    </field>
+  </extraction>
+
+</spider>

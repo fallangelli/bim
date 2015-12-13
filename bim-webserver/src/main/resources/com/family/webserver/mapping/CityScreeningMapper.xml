@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.family.webserver.mapper.CityScreeningMapper">
+
+  <select id="selectMovieCinemaShowDatesByCity"
+          resultType="String">
+    SELECT DISTINCT date_format(show_date, '%Y-%m-%d') AS showDate
+    FROM screening s
+      LEFT JOIN cinema cn ON s.cinema_id = cn.id
+      LEFT JOIN city_area ca ON cn.district_id = ca.id
+      LEFT JOIN city c ON ca.city_id = c.id
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
+          s.cinema_id = #{cinemaId,jdbcType=INTEGER}
+    ORDER BY showDate
+  </select>
+
+
+</mapper>

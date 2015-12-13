@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.family.webserver.mapper.CityCinemaMapper">
+
+  <select id="selectByCity" parameterType="java.lang.Integer"
+          resultType="com.family.webserver.entity.ListCinema">
+    SELECT
+      cn.id,
+      ca.area,
+      cn.name,
+      cn.address,
+      cn.latitude,
+      cn.longitude,
+      cn.has_3d   AS has3d,
+      cn.has_imax AS hasImax,
+      cn.tel
+    FROM cinema cn
+      LEFT JOIN city_area ca ON cn.district_id = ca.id
+      LEFT JOIN city c ON ca.city_id = c.id
+    WHERE c.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">
+    SELECT
+      cn.id,
+      ca.area,
+      cn.name,
+      cn.address,
+      cn.latitude,
+      cn.longitude,
+      cn.has_3d                AS has3d,
+      cn.has_imax              AS hasImax,
+      cn.tel,
+      min(s.sale_price)        AS minPrice,
+      count(DISTINCT s.source) AS sourceCount
+    FROM cinema cn
+      LEFT JOIN city_area ca ON cn.district_id = ca.id
+      LEFT JOIN city c ON ca.city_id = c.id
+      LEFT JOIN screening s ON cn.id = s.cinema_id
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
+          to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
+    GROUP BY cn.id
+  </select>
+
+</mapper>

@@ -1,0 +1,62 @@
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+nav a {
+  display: block;
+  width: 50%;
+  float: left;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+
+nav a:before {
+  content: "";
+  display: block;
+  width: 39px;
+  height: 39px;
+  background: url("../img/home_nav.png");
+  background-size: 100%;
+  margin: 12px auto 4px;
+}
+
+nav a:nth-child(2):before {
+  background-position: 0px -39px
+}
+
+nav a:nth-child(3):before {
+  background-position: 0px -78px
+}
+
+nav a:after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 80px;
+  position: absolute;
+  top: 5px
+}
+
+nav a:nth-child(1):after {
+  border: none
+}
+
+.quanDiv {
+  width: 100%;
+  height: 42px;
+  position: absolute;
+  top: 9px;
+  text-align: center;
+}
+
+.quan {
+  width: 41px;
+  height: 41px;
+  border-radius: 37px;
+  -webkit-animation: guang 0.5s;
+  margin: 0 auto;
+  opacity: 0;
+
+}

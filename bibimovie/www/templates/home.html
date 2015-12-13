@@ -1,0 +1,73 @@
+<link href="css/home.css" rel="stylesheet">
+
+
+<ion-view view-title="统计">
+
+
+  <ion-content class="padding">
+    <ion-refresher on-refresh="doRefresh()"
+                   pulling-text="松开刷新"
+                   refreshing-text="更新历史数据，稍后..."
+                   refreshing-icon="ion-loading-b">
+    </ion-refresher>
+
+    <header><span class="logo"></span>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;上海&nbsp;</a>
+      <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
+
+    </header>
+
+    <nav>
+      <a href="#">
+        <div class="quanDiv"></div>
+        比比电影</a>
+      <a href="/#/cinema">
+        <div class="quanDiv"></div>
+        比比影院</a>
+    </nav>
+
+    <ion-item style="border-width: 0">
+      <span class="fs_10">热映影片</span>
+      <a href="filmlist.html" class="font_8f8f8f fs_13">
+        <span class="item-note">38部正在热映 &gt;</span>
+      </a>
+
+
+      <div class="row" ng-repeat="movies in movieList">
+        <div class="col col-33" ng-repeat="movie in movies">
+          <img src={{movie.image}} width="100%">
+          <a href="/#/moivecinema/{{movie.id}}"
+             class="button button-assertive button-full button-small button-positive">
+            购票&nbsp;{{movie.minPrice}}&nbsp;元起
+          </a>
+
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item style="border-width: 0">
+      <span class="fs_10">推荐影院</span>
+      <ion-list>
+        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
+          <h2>大光明电影院</h2>
+
+          <p>南京西路216号（近黄河路）</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
+          <h2>SFC上影-永华店</h2>
+
+          <p>南京西路216号（近黄河路）</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
+          <h2>海上国际影城-月星环球港店</h2>
+
+          <p>南京西路216号（近黄河路）</p>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,229 @@
+/* headr */
+
+header,
+.ppHeader {
+  height: 45px;
+  background: #676d8d;
+  color: #fff
+}
+
+.logo {
+  width: 98px;
+  height: 25px;
+  background: url(../img/logo.png) no-repeat;
+  background-size: 100%;
+  display: block;
+  float: left;
+  text-align: right;
+  line-height: 25px;
+  margin: 10px;
+}
+
+header a {
+  color: #fff;
+}
+
+header .movieTxt {
+  display: block;
+  float: right;
+  margin: 10px 0 0;
+  padding-right: 10px;
+  line-height: 25px;
+}
+
+.go_back {
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  position: relative;
+}
+
+.go_back:after, .go_back:before {
+  border: 11px solid transparent;
+  border-right: 11px solid #676d8d;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  content: ' ';
+  margin-top: -11px;
+}
+
+.go_back:before {
+  border-right-color: #fff;
+  left: -4px;
+}
+
+.page_title {
+  position: absolute;
+  width: 25%;
+  font-size: 18px;
+  line-height: 47px;
+  left: 15%;
+  z-index: 1;
+}
+
+.city:before {
+  content: "";
+  display: block;
+  float: left;
+  padding-right: 5px;
+  border-right: 1px solid #aec0ff;
+}
+
+.city {
+  display: block;
+  float: right;
+  height: 25px;
+  padding-right: 10px;
+  margin: 10px 0 0;
+  color: whitesmoke;
+  line-height: 25px;
+  font-weight: bold;
+}
+
+.city:after {
+  display: block;
+  content: "";
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid #fff;
+  line-height: 0px;
+  width: 0;
+  height: 0;
+  float: right;
+  margin-top: 10px;
+}
+
+.usego {
+  float: right;
+  padding: 5px 5% 0;
+  height: 40px;
+  position: relative;
+  z-index: 3;
+}
+
+/*.usego:active .usergo_list,.usego:hover .usergo_list{display: block}*/
+.usergoLine {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  font-size: 1.3em;
+  z-index: 99;
+}
+
+.usergo_ico {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+.usergo_list {
+  position: absolute;
+  width: 100px;
+  right: 2%;
+  top: 55px;
+  background: #565d78;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.usergo_list:before {
+  content: "";
+  display: block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #565d78;
+  line-height: 0px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -5px;
+  right: 14px;
+}
+
+.usergo_list1 {
+  background: #ff7070
+}
+
+.usergo_list1:before {
+  border-bottom: 5px solid #ff7070;
+}
+
+.usergo_list a {
+  display: block;
+  line-height: 41px;
+  margin: auto;
+  border-bottom: 1px solid #fff;
+  padding: 0.1em 0.5em;
+}
+
+.usergo_list a:link {
+  color: #fff;
+}
+
+.usergo_list a:active {
+  color: #fff;
+  background: #414965;
+}
+
+.usergo_list a:visited {
+  color: #fff;
+}
+
+.usergo_list a:hover {
+  color: #fff;
+}
+
+.usergo_list a:before {
+  content: "";
+  margin: 0 5px 0 1px;
+  display: block;
+  background: url("../../movie20/images/ico.png");
+  width: 20px;
+  float: left;
+  height: 20px;
+  background-size: 100%;
+  margin-top: 12px
+}
+
+.usergo_list a:nth-child(2):before {
+  background-position: 0px -21px
+}
+
+.usergo_list a:nth-child(3):before {
+  background-position: 0px -42px
+}
+
+.usergo_list a:first-child {
+  border-radius: 6px 6px 0 0;
+}
+
+.usergo_list a:last-child {
+  border-bottom: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.head_nav {
+  background: #ff4747;
+}
+
+.head_nav .usergo_list {
+  background: #ff6f6f;
+}
+
+.head_nav .usergo_list:before {
+  border-bottom: 5px solid #ff6f6f;
+}
+
+.head_nav .usergo_list a:active {
+  background: #e94545;
+}
+

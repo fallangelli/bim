@@ -1,0 +1,39 @@
+package com.family.grab.processor.example;
+
+import com.family.grab.Page;
+import com.family.grab.Site;
+import com.family.grab.Spider;
+import com.family.grab.processor.PageProcessor;
+
+import java.util.List;
+
+/**
+ * @author code4crafter@gmail.com <br>
+ */
+public class OschinaBlogPageProcessor implements PageProcessor {
+
+  private Site site = Site.me().setDomain("my.oschina.net");
+
+  public static void main(String[] args) {
+    Spider.create(new OschinaBlogPageProcessor()).addUrl("http://my.oschina.net/flashsword/blog").run();
+  }
+
+  @Override
+  public void process(Page page) {
+    List<String> links = page.getHtml().links().regex("http://my\\.oschina\\.net/flashsword/blog/\\d+").all();
+    page.addTargetRequests(links);
+    page.putField("title", page.getHtml().xpath("//div[@class='BlogEntity']/div[@class='BlogTitle']/h1/text()").toString());
+    if (page.getResultItems().get("title") == null) {
+      //skip this page
+      page.setSkip(true);
+    }
+    page.putField("content", page.getHtml().smartContent().toString());
+    page.putField("tags", page.getHtml().xpath("//div[@class='BlogTags']/a/text()").all());
+  }
+
+  @Override
+  public Site getSite() {
+    return site;
+
+  }
+}

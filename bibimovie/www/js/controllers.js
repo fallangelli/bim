@@ -1,15 +1,27 @@
 angular.module('bibimovie.controllers', [])
 
-  .controller('HomeCtrl', function ($scope, $http, ApiEndpoint, HomeService) {
+
+  .controller('HomeCtrl', function ($scope, $http, ApiEndpoint, Geolocation) {
+    Geolocation.showLoading();
+    Geolocation.getCurrentPosition();
+    $scope.currLat = Geolocation.GeoData['lat'];
+    $scope.currLng = Geolocation.GeoData['lng'];
+
+    Geolocation.getCurrentCity();
+    $scope.currCityId = Geolocation.GeoData['cityId'];
+    $scope.currCityName = Geolocation.GeoData['cityName'];
+    alert(Geolocation.GeoData);
+
     var url = ApiEndpoint.server_url + "home/hotMovies?cityId=1";
     $http.get(url)
       .success(function (data) {
         var movies = angular.fromJson(data)
         $scope.movieList = movies;
+        Geolocation.hideLoading();
       })
   })
 
-  .controller('CinemaCtrl', function ($scope, $http, ApiEndpoint, HomeService) {
+  .controller('CinemaCtrl', function ($scope, $http, ApiEndpoint, Geolocation) {
     var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=1";
     $http.get(url)
       .success(function (data) {
@@ -23,15 +35,7 @@ angular.module('bibimovie.controllers', [])
     };
   })
 
-  .controller('MovieCinemaCtrl', function ($scope, $stateParams, $http, $ionicLoading, ApiEndpoint, HomeService) {
-    $scope.showLoading = function () {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    };
-    $scope.hideLoading = function () {
-      $ionicLoading.hide();
-    };
+  .controller('MovieCinemaCtrl', function ($scope, $stateParams, $http, $ionicLoading, ApiEndpoint, Geolocation) {
 
     $scope.showLoading();
 

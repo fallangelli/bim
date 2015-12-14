@@ -25,4 +25,8 @@ public class HomeService {
     retVal.add(b);
     return retVal;
   }
+
+  public Integer getCityIdFromName(String cityName) {
+    return mapper.selectCityIdFromName(cityName);
+  }
 }

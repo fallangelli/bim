@@ -25,4 +25,11 @@ public class HomeController {
     return service.getHotMoviesByCity(cityId);
   }
 
+  @RequestMapping(value = "/getCityIdFromName", method = RequestMethod.GET, produces = "application/json")
+  public
+  @ResponseBody
+  Integer getCityIdFromName(@RequestParam(value = "cityName", required = true) String cityName) {
+    return service.getCityIdFromName(cityName);
+  }
+
 }

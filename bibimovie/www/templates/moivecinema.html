@@ -1,7 +1,7 @@
 <ion-view view-title="影院列表">
 
 
-  <ion-content class="padding" ng-controller="MovieCinemaCtrl">
+  <ion-content class="padding">
     <ion-refresher on-refresh="doRefresh()"
                    pulling-text="松开刷新"
                    refreshing-text="更新历史数据，稍后..."
@@ -14,7 +14,7 @@
       </a>
 
       <div class="page_title">极盗者</div>
-      <a href="switchCity.html" class="city">&nbsp;&nbsp;布宜诺斯艾利斯&nbsp;</a>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
     </header>
 
     <div class="bar bar-header item-input-inset">
@@ -44,7 +44,7 @@
 
         <p>
            <span class="badge badge-assertive" style="bottom: 2px;top: auto;right: 5px">
-            {{cinema.minPrice}}起 {{cinema.sourceCount}}个票源
+            {{cinema.minPrice}}元起 {{cinema.sourceCount}}个票源
           </span>
         </p>
       </a>

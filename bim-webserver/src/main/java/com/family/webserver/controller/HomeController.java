@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -29,7 +30,14 @@ public class HomeController {
   public
   @ResponseBody
   Integer getCityIdFromName(@RequestParam(value = "cityName", required = true) String cityName) {
-    return service.getCityIdFromName(cityName);
+    if (cityName.length() > 1) {
+      try {
+        String codeName = java.net.URLDecoder.decode(cityName, "utf-8");
+        return service.getCityIdFromName(codeName);
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
+    }
+    return null;
   }
-
 }

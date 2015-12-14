@@ -1,7 +1,7 @@
 <ion-view view-title="影院列表">
 
 
-  <ion-content class="padding" ng-controller="CinemaCtrl">
+  <ion-content class="padding">
     <ion-refresher on-refresh="doRefresh()"
                    pulling-text="松开刷新"
                    refreshing-text="更新历史数据，稍后..."
@@ -14,7 +14,7 @@
       </a>
 
       <div class="page_title">全部影院</div>
-      <a href="switchCity.html" class="city">&nbsp;&nbsp;布宜诺斯艾利斯&nbsp;</a>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
       <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
     </header>
 

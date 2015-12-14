@@ -12,7 +12,8 @@
     </ion-refresher>
 
     <header><span class="logo"></span>
-      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <a href="switchCity.html" class="city" ng-show="currCityId != -1">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <a href="#" class="city" ng-show="currCityId==-1">&nbsp;&nbsp;定位中...&nbsp;</a>
       <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
 
     </header>

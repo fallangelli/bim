@@ -1,33 +1,60 @@
 angular.module('bibimovie.controllers', [])
+  .controller('HomeCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, Geolocation) {
+    $scope.currCityId = -1;
+    $ionicLoading.show({template: '加载中...'})
 
+    var promiseLL = Geolocation.getCurrentPosition();
+    promiseLL.then(function () {  // 调用承诺API获取数据 .resolve
+        $scope.currLat = Geolocation.currLat['lat'];
+        $scope.currLng = Geolocation.currLng['lng'];
+        alert('读取附近的影院')
+      }
+      , function () {  // 处理错误 .reject
+        $scope.currCityId = 1;
+        $scope.currCityName = '1';
+        alert("无法获取坐标信息");
+      });
 
-  .controller('HomeCtrl', function ($scope, $http, ApiEndpoint, Geolocation) {
-    Geolocation.showLoading();
-    Geolocation.getCurrentPosition();
-    $scope.currLat = Geolocation.GeoData['lat'];
-    $scope.currLng = Geolocation.GeoData['lng'];
-
-    Geolocation.getCurrentCity();
-    $scope.currCityId = Geolocation.GeoData['cityId'];
-    $scope.currCityName = Geolocation.GeoData['cityName'];
-    alert(Geolocation.GeoData);
-
-    var url = ApiEndpoint.server_url + "home/hotMovies?cityId=1";
-    $http.get(url)
-      .success(function (data) {
-        var movies = angular.fromJson(data)
-        $scope.movieList = movies;
-        Geolocation.hideLoading();
-      })
+    var promiseCity = Geolocation.getCurrentCity();
+    promiseCity.then(function () {  // 调用承诺API获取数据 .resolve
+        $scope.currCityId = Geolocation.currCityId;
+        $scope.currCityName = Geolocation.currCityName;
+        var url = ApiEndpoint.server_url + "home/hotMovies?cityId=" + $scope.currCityId;
+        $http.get(url)
+          .success(function (data) {
+            var movies = angular.fromJson(data)
+            $scope.movieList = movies;
+            $ionicLoading.hide();
+          })
+          .error(function (data, header, config, status) {
+            alert("读取电影信息错误");
+            $ionicLoading.hide();
+          });
+      }, function () {  // 处理错误 .reject
+        $scope.currCityId = 1;
+        $scope.currCityName = '1';
+        alert("无法定位当前城市");
+        $ionicLoading.hide();
+      }
+    )
   })
 
-  .controller('CinemaCtrl', function ($scope, $http, ApiEndpoint, Geolocation) {
-    var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=1";
-    $http.get(url)
-      .success(function (data) {
-        var cinemas = angular.fromJson(data)
-        $scope.cinemas = cinemas;
-      })
+
+  .controller('CinemaCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, CinemaService, Geolocation) {
+    $ionicLoading.show({template: '加载中...'})
+
+    $scope.currCityId = Geolocation.getCurrentCityId();
+    $scope.currCityName = Geolocation.currCityName;
+    var promise = CinemaService.getCinemas($scope.currCityId);
+    promise.then(function (val) {
+        $scope.cinemas = val;
+        $ionicLoading.hide();
+      }
+      , function () {
+        $ionicLoading.hide();
+        alert("无法获取影院信息");
+      });
+
 
     $scope.getItemHeight = function (item, index) {
       //使索引项平均都有10px高，例如
@@ -35,37 +62,20 @@ angular.module('bibimovie.controllers', [])
     };
   })
 
-  .controller('MovieCinemaCtrl', function ($scope, $stateParams, $http, $ionicLoading, ApiEndpoint, Geolocation) {
+  .controller('MovieCinemaCtrl', function ($scope, $stateParams, $http, $ionicLoading, ApiEndpoint, MovieCinemaService, Geolocation) {
+    $ionicLoading.show({template: '加载中...'})
 
-    $scope.showLoading();
+    $scope.currCityId = Geolocation.getCurrentCityId();
+    $scope.currCityName = Geolocation.currCityName;
 
-
-    var dates_url = ApiEndpoint.server_url + "cityScreening/MovieCinemaShowDates?" +
-      "cityId=1&movieId=" + $stateParams.movieId + "&cinemaId=933";
-
-    $http.get(dates_url)
-      .success(function (data) {
-        var dates = angular.fromJson(data);
-
-        $scope.dates = dates;
-        $scope.currDate = dates[0];
-        var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
-          "cityId=1&movieId=" + $stateParams.movieId + "&showDate=" + dates[0];
-        $http.get(cinema_url)
-          .success(function (data) {
-            var cinemas = angular.fromJson(data);
-            $scope.cinemas = cinemas;
-            $scope.hideLoading();
-          })
-          .error(function (data, status, headers, config) {
-            $scope.hideLoading();
-            console.log(status);
-          });
+    var promise = MovieCinemaService.getMovieCinemas($scope.currCityId, $stateParams.movieId);
+    promise.then(function (data) {
+        var cinemas = angular.fromJson(data);
+        $scope.cinemas = cinemas;
+        $ionicLoading.hide();
+      }
+      , function () {
+        alert("无法获取影片影院信息");
+        $ionicLoading.hide();
       })
-      .error(function (data, status, headers, config) {
-        $scope.hideLoading();
-        console.log(status);
-      });
-
-
   })

@@ -16,8 +16,10 @@ public class HomeService {
 
   public List<List<HomeCityHotMovie>> getHotMoviesByCity(Integer cityId) {
     List<HomeCityHotMovie> hotMovies = mapper.selectHomeHotMoviesByCity(cityId);
-    List<HomeCityHotMovie> a = hotMovies.subList(0, 3);
-    List<HomeCityHotMovie> b = hotMovies.subList(3, 6);
+
+    int midIndex = hotMovies.size() / 2;
+    List<HomeCityHotMovie> a = hotMovies.subList(0, midIndex);
+    List<HomeCityHotMovie> b = hotMovies.subList(midIndex, hotMovies.size());
     List<List<HomeCityHotMovie>> retVal = new ArrayList<>();
     retVal.add(a);
     retVal.add(b);

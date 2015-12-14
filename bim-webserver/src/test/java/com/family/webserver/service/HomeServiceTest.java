@@ -20,7 +20,7 @@ public class HomeServiceTest {
 
   @Test
   public void testGetHotMoviesByCity() throws Exception {
-    List<List<HomeCityHotMovie>> movies = service.getHotMoviesByCity(2867);
+    List<List<HomeCityHotMovie>> movies = service.getHotMoviesByCity(2861);
     System.out.println(movies);
   }
 }

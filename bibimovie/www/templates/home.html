@@ -36,7 +36,9 @@
       <div class="row" ng-repeat="movies in movieList">
         <div class="col col-33" ng-repeat="movie in movies">
           <img src={{movie.image}} width="100%">
-          <a href="/#/moivecinema/{{movie.id}}"
+
+          <h2 style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</h2>
+          <a href="/#/moivecinema/{{movie.movieId}}"
              class="button button-assertive button-full button-small button-positive">
             购票&nbsp;{{movie.minPrice}}&nbsp;元起
           </a>

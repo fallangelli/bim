@@ -12,7 +12,7 @@ public class CityScreeningService {
   @Autowired
   private CityScreeningMapper ccmapper;
 
-  public List<String> getMovieCinemaShowDatesByCity(Integer cityId, Integer movieId, Integer cinemaId) {
-    return ccmapper.selectMovieCinemaShowDatesByCity(cityId, movieId, cinemaId);
+  public List<String> getMovieCinemaShowDatesByCity(Integer cityId, Integer movieId) {
+    return ccmapper.selectMovieCinemaShowDatesByCity(cityId, movieId);
   }
 }

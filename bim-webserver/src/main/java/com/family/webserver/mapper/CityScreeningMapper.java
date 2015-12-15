@@ -8,6 +8,5 @@ public interface CityScreeningMapper {
 
 
   List<String> selectMovieCinemaShowDatesByCity(@Param("cityId") Integer cityId,
-                                                @Param("movieId") Integer movieId,
-                                                @Param("cinemaId") Integer cinemaId);
+                                                @Param("movieId") Integer movieId);
 }

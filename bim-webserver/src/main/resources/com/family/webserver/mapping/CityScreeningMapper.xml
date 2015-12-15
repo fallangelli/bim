@@ -9,8 +9,7 @@
       LEFT JOIN cinema cn ON s.cinema_id = cn.id
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
-          s.cinema_id = #{cinemaId,jdbcType=INTEGER}
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER}
     ORDER BY showDate
   </select>
 

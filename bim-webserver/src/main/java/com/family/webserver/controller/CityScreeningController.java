@@ -21,9 +21,8 @@ public class CityScreeningController {
   public
   @ResponseBody
   List<String> getCityMovieCinemaShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                           @RequestParam(value = "movieId", required = true) Integer movieId,
-                                           @RequestParam(value = "cinemaId", required = true) Integer cinemaId) {
-    List<String> dates = service.getMovieCinemaShowDatesByCity(cityId, movieId, cinemaId);
+                                           @RequestParam(value = "movieId", required = true) Integer movieId) {
+    List<String> dates = service.getMovieCinemaShowDatesByCity(cityId, movieId);
     return dates;
   }
 

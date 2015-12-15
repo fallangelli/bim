@@ -19,7 +19,7 @@ public class CityScreeningServiceTest {
 
   @Test
   public void testGetMovieCinemaShowDatesByCity() throws Exception {
-    List<String> dates = service.getMovieCinemaShowDatesByCity(2861, 1554, 933);
+    List<String> dates = service.getMovieCinemaShowDatesByCity(2861, 1554);
     System.out.println("return size : " + dates.size());
   }
 }

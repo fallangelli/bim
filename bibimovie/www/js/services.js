@@ -53,13 +53,10 @@ angular.module('bibimovie.services', [])
         var promise = deferred.promise;
 
         var dates_url = ApiEndpoint.server_url + "cityScreening/MovieCinemaShowDates?" +
-          "cityId=" + cityId + "&movieId=" + movieId + "&cinemaId=933";
+          "cityId=" + cityId + "&movieId=" + movieId;
         $http.get(dates_url)
           .success(function (data) {
             var dates = angular.fromJson(data);
-            //
-            //$scope.dates = dates;
-            //$scope.currDate = dates[0];
             deferred.resolve(dates);
           })
           .error(function (data, header, config, status) {

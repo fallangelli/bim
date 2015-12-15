@@ -3,61 +3,39 @@ angular.module('bibimovie.services', [])
   .provider('Geolocation', function () {
     this.$get = function ($q, $http, $ionicLoading, ApiEndpoint) {
       var service = {
-        currCityId: window.localStorage['curr_city_id'],
-        currCityName: window.localStorage['curr_city_name'],
-        currLat: window.localStorage['curr_Lat'],
-        currLng: window.localStorage['curr_Lng'],
+        curr_city_id: '',
+        curr_city_name: '',
+        curr_lat: '',
+        curr_lng: '',
 
-        getCurrentCityId: function () {
-          var currCityId = window.localStorage['curr_city_id'];
-          if (currCityId)
-            return currCityId;
-
-          var promiseCity = service.getCurrentCity();
-          promiseCity.then(function () {
-            window.localStorage['curr_city_id'] = service.currCityId;
-            window.localStorage['curr_city_name'] = service.currCityName;
-            return window.localStorage['curr_city_id'];
-          }, function () {
-            window.localStorage['curr_city_id'] = 1;
-            window.localStorage['curr_city_name'] = '';
-            alert("无法定位当前城市");
-          })
-        },
-        getCurrentPosition: function () {
-          var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
-          var geolocation = new BMap.Geolocation();
-          geolocation.getCurrentPosition(function (r) {
-            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              //var mk = new BMap.Marker(r.point);
-              window.localStorage['curr_Lat'] = r.point.lat;
-              window.localStorage['curr_Lng'] = r.point.lng;
-              deferred.resolve();
-            }
-            else {
-              alert('failed' + this.getStatus());
-              deferred.reject();
-            }
-          }, {enableHighAccuracy: false})
-          return deferred.promise;
-        },
-        getCurrentCity: function () {
+        initCurrentCity: function () {
           var deferred = $q.defer();
           var deferredCityId = $q.defer();
           var promise = deferred.promise;
-          var myCity = new BMap.LocalCity();
-          myCity.get(function (result) {
-            var cityName = result.name;
-            window.localStorage['curr_city_name'] = cityName;
-            deferred.resolve(cityName);
-          })
+          var geolocation = new BMap.Geolocation();
+          geolocation.getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+              service.curr_lat = r.point.lat;
+              service.curr_lng = r.point.lng;
+              service.curr_city_name = r.address.city;
+              deferred.resolve([service.curr_city_name, service.curr_lat, service.curr_lng]);
+            }
+            else {
+              alert('查询当前坐标错误' + this.getStatus());
+              deferred.reject();
+            }
+          }, {enableHighAccuracy: false})
+
           promise
             .then(function (val) {
               var url = ApiEndpoint.server_url + "home/getCityIdFromName?cityName=" + encodeURI(encodeURI(val));
               $http.get(url)
                 .success(function (data) {
-                  window.localStorage['curr_city_id'] = data;
+                  service.curr_city_id = data;
                   deferredCityId.resolve(data);
+                })
+                .error(function (data, header, config, status) {
+                  deferredCityId.reject();
                 });
             })
           return deferredCityId.promise;

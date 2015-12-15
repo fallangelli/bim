@@ -4,19 +4,12 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-  <!--[if gt IE 8]>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <![endif]-->
+
 
   <title>哔哔电影</title>
 
   <link rel="icon" type="/image/ico" href="${ctx}/img/favicon.png"/>
 
-  <link href="${ctx}/css/stylesheets.css" rel="stylesheet" type="text/css"/>
-  <!--[if lt IE 8]>
-  <link href="${ctx}/css/ie7.css" rel="stylesheet" type="text/css"/>
-  <![endif]-->
-  <link rel='stylesheet' type='text/css' href='${ctx}/css/fullcalendar.print.css' media='print'/>
 
 </head>
 <body>

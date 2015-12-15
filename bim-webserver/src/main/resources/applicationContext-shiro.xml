@@ -27,7 +27,7 @@
         /executeLogin = anon
         /logout = anon
         /index = anon
-        /tis/** = anon
+        /bibi/** = anon
         /** = anon
       </value>
     </property>

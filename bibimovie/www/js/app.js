@@ -1,6 +1,7 @@
 angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controllers'])
   .constant('ApiEndpoint', {
-    server_url: 'http://localhost:8100/server_url/'
+    server_url: 'http://localhost:8100/server_url/bibimovie/'
+    //server_url: 'http://localhost:8080/bibimovie/'
   })
 
   .run(function ($ionicPlatform) {

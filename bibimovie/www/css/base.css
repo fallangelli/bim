@@ -58,6 +58,33 @@ header .movieTxt {
   left: -4px;
 }
 
+.go_forward {
+  float: right;
+  position: relative;
+  margin-left: 10px;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  position: relative;
+}
+
+.go_forward:after, .go_forward:before {
+  border: 11px solid transparent;
+  border-left: 11px solid #676d8d;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  content: ' ';
+  margin-top: -11px;
+}
+
+.go_forward:before {
+  border-left-color: #fff;
+  left: -4px;
+}
+
 .page_title {
   position: absolute;
   width: 25%;

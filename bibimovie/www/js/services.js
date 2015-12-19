@@ -3,11 +3,6 @@ angular.module('bibimovie.services', [])
   .provider('Geolocation', function () {
     this.$get = function ($q, $http, $ionicLoading, ApiEndpoint) {
       var service = {
-        curr_city_id: '',
-        curr_city_name: '',
-        curr_lat: '',
-        curr_lng: '',
-
         initCurrentCity: function () {
           var deferred = $q.defer();
           var deferredCityId = $q.defer();
@@ -15,10 +10,11 @@ angular.module('bibimovie.services', [])
           var geolocation = new BMap.Geolocation();
           geolocation.getCurrentPosition(function (r) {
             if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              service.curr_lat = r.point.lat;
-              service.curr_lng = r.point.lng;
-              service.curr_city_name = r.address.city;
-              deferred.resolve([service.curr_city_name, service.curr_lat, service.curr_lng]);
+              window.localStorage['curr_lat'] = r.point.lat;
+              window.localStorage['curr_lng'] = r.point.lng;
+              window.localStorage['curr_city_name'] = r.address.city;
+              deferred.resolve([window.localStorage['curr_city_name'], window.localStorage['curr_lat'],
+                window.localStorage['curr_lng']]);
             }
             else {
               alert('查询当前坐标错误' + this.getStatus());
@@ -31,7 +27,10 @@ angular.module('bibimovie.services', [])
               var url = ApiEndpoint.server_url + "home/getCityIdFromName?cityName=" + encodeURI(encodeURI(val));
               $http.get(url)
                 .success(function (data) {
-                  service.curr_city_id = data;
+                  window.localStorage['curr_city_id'] = data;
+                  var curTime = new Date()
+                  var expirationTime = new Date(curTime.getTime() + 30 * 60 * 1000)
+                  window.localStorage['expiration_time'] = expirationTime;
                   deferredCityId.resolve(data);
                 })
                 .error(function (data, header, config, status) {
@@ -46,10 +45,10 @@ angular.module('bibimovie.services', [])
   })
 
   .factory('MovieCinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+
     return {
-      getMovieCinemas: function (cityId, movieId) {
+      getMovieCinemaDates: function (cityId, movieId) {
         var deferred = $q.defer();
-        var deferredCinemas = $q.defer();
         var promise = deferred.promise;
 
         var dates_url = ApiEndpoint.server_url + "cityScreening/MovieCinemaShowDates?" +
@@ -63,18 +62,23 @@ angular.module('bibimovie.services', [])
             alert("读取电影影院上映日期信息错误");
             deferred.reject();
           });
-        promise
-          .then(function (dates) {
-            var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
-              "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + dates[0];
-            $http.get(cinema_url)
-              .success(function (data) {
-                deferredCinemas.resolve(data);
-              })
-              .error(function (data, header, config, status) {
-              });
+        return promise;
+      },
+      getMovieCinemasByDate: function (cityId, movieId, date) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
+        var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
+          "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date;
+        $http.get(cinema_url).success(function (data) {
+            deferred.resolve(data);
           })
-        return deferredCinemas.promise;
+          .error(function (data, header, config, status) {
+            alert("读取电影影院信息错误");
+            deferred.reject();
+          });
+
+        return promise;
       }
 
     }

@@ -39,10 +39,7 @@
       LEFT JOIN city c ON ca.city_id = c.id
       LEFT JOIN screening s ON cn.id = s.cinema_id
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
-    if(to_days(now()) = to_days(#{showDate,jdbcType=DATE}),
-    time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30,
     to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
-    )
     GROUP BY cn.id
   </select>
 

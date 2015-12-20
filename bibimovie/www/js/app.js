@@ -41,6 +41,18 @@ angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controlle
         templateUrl: 'templates/moivecinema.html',
         controller: 'MovieCinemaCtrl'
       })
+
+      .state('screening', {
+        url: '/screening/:cinemaId/:movieId/:showDate',
+        templateUrl: 'templates/screening.html',
+        controller: 'ScreeningCtrl'
+      })
+
+      .state('source', {
+        url: '/source/:cinemaId/:movieId/:showDate/:startTime',
+        templateUrl: 'templates/source.html',
+        controller: 'SourceCtrl'
+      })
     $urlRouterProvider.otherwise('/');
   });
 

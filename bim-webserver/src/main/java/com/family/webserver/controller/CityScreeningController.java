@@ -1,5 +1,8 @@
 package com.family.webserver.controller;
 
+import com.family.webserver.entity.CityMovieWithShowDates;
+import com.family.webserver.entity.CityScreening;
+import com.family.webserver.entity.Source;
 import com.family.webserver.service.CityScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -17,13 +22,36 @@ public class CityScreeningController {
   @Autowired
   private CityScreeningService service;
 
-  @RequestMapping(value = "/MovieCinemaShowDates", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<String> getCityMovieCinemaShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                           @RequestParam(value = "movieId", required = true) Integer movieId) {
-    List<String> dates = service.getMovieCinemaShowDatesByCity(cityId, movieId);
-    return dates;
+  CityMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
+                                                   @RequestParam(value = "movieId", required = true) Integer movieId) {
+    CityMovieWithShowDates movieWithShowDates = service.getCityMovieWithShowDates(cityId, movieId);
+    return movieWithShowDates;
+  }
+
+  @RequestMapping(value = "/cityScreening", method = RequestMethod.GET, produces = "application/json")
+  public
+  @ResponseBody
+  CityScreening getCityScreening(@RequestParam(value = "cityId", required = true) Integer cityId,
+                                 @RequestParam(value = "cinemaId", required = true) Integer cinemaId,
+                                 @RequestParam(value = "movieId", required = true) Integer movieId,
+                                 @RequestParam(value = "showDate", required = true) Date showDate) {
+    CityScreening screening = service.getCityScreening(cityId, cinemaId, movieId, showDate);
+    return screening;
+  }
+
+  @RequestMapping(value = "/citySource", method = RequestMethod.GET, produces = "application/json")
+  public
+  @ResponseBody
+  List<Source> getCitySource(@RequestParam(value = "cityId", required = true) Integer cityId,
+                             @RequestParam(value = "cinemaId", required = true) Integer cinemaId,
+                             @RequestParam(value = "movieId", required = true) Integer movieId,
+                             @RequestParam(value = "showDate", required = true) Date showDate,
+                             @RequestParam(value = "startTime", required = true) Time startTime) {
+    List<Source> sourceList = service.getCitySource(cityId, cinemaId, movieId, showDate, startTime);
+    return sourceList;
   }
 
 }

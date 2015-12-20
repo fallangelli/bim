@@ -1,0 +1,41 @@
+<ion-view view-title="购票">
+
+
+  <ion-content class="padding">
+    <ion-refresher on-refresh="doRefresh()"
+                   pulling-text="松开刷新"
+                   refreshing-text="更新历史数据，稍后..."
+                   refreshing-icon="ion-loading-b">
+    </ion-refresher>
+
+    <header>
+      <a href="/#/">
+        <div class="go_back"></div>
+      </a>
+
+      <div class="page_title">{{movieName}}</div>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+    </header>
+
+    <div class="button-bar">
+      <a class="button button-outline button-positive">最早</a>
+      <a class="button button-outline button-positive">最省</a>
+      <button class="button  button-outline button-positive icon-left ion-star ">筛选</button>
+    </div>
+    <h4>场次:{{showDate}} {{startTime| date:'shortTime'}}</h4>
+
+    <div class="list">
+      <div class="item  item-icon-right" ng-repeat="source in sources">
+        <h2 style="color: darkgoldenrod">{{source.source}}</h2>
+        <a href="{{source.ticketURL}}">
+          <span class="badge badge-assertive" style="color: red">
+            <h2 style="color: white">￥{{source.salePrice}} 去购票</h2>
+          </span>
+        </a>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

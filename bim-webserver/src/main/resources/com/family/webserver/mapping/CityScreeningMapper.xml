@@ -1,16 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.webserver.mapper.CityScreeningMapper">
+  <resultMap id="MovieWithShowDatesResultMap" type="com.family.webserver.entity.CityMovieWithShowDates">
+    <id property="movieName" column="movie_name"/>
+    <collection property="showDates" ofType="String">
+      <result property="showDates" column="show_dates"/>
+    </collection>
+  </resultMap>
 
-  <select id="selectMovieCinemaShowDatesByCity"
-          resultType="String">
-    SELECT DISTINCT date_format(show_date, '%Y-%m-%d') AS showDate
+  <resultMap id="CityScreeningResultMap" type="com.family.webserver.entity.CityScreening">
+    <id property="movieName" jdbcType="VARCHAR" column="movie_name"/>
+    <result property="showDate" jdbcType="DATE" column="show_date"/>
+
+    <collection property="minSource" ofType="com.family.webserver.entity.Source">
+      <id property="id" jdbcType="INTEGER" column="id"/>
+      <result property="sourceCount" jdbcType="INTEGER" column="source_count"/>
+      <result property="startTime" jdbcType="VARCHAR" column="start_time"/>
+      <result property="endTime" jdbcType="VARCHAR" column="end_time"/>
+      <result property="salePrice" jdbcType="REAL" column="sale_price"/>
+      <result property="cinemaPrice" jdbcType="REAL" column="cinema_price"/>
+      <result property="source" jdbcType="VARCHAR" column="source"/>
+      <result property="ticketURL" jdbcType="VARCHAR" column="ticket_url"/>
+      <result property="language" jdbcType="VARCHAR" column="language"/>
+      <result property="version" jdbcType="VARCHAR" column="version"/>
+      <result property="hall" jdbcType="VARCHAR" column="hall"/>
+    </collection>
+  </resultMap>
+
+  <select id="selectCityMovieWithShowDates" resultMap="MovieWithShowDatesResultMap">
+    SELECT
+    m.name AS movie_name,
+    date_format(s.show_date, '%Y-%m-%d') AS show_dates
     FROM screening s
       LEFT JOIN cinema cn ON s.cinema_id = cn.id
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
+    LEFT JOIN movieshowing m ON m.id = s.movie_id
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER}
-    ORDER BY showDate
+    AND (to_days(s.show_date) > to_days(now()) OR
+    (to_days(s.show_date) = to_days(now()) AND
+    time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30
+    )
+    )
+    GROUP BY show_dates
+    ORDER BY show_dates
+  </select>
+
+  <select id="selectCityScreening" resultMap="CityScreeningResultMap">
+    SELECT
+      m.name                 AS movie_name,
+      s.show_date,
+      count(DISTINCT source) AS source_count,
+      s.id,
+      s.start_time,
+      s.end_time,
+      s.sale_price,
+      s.cinema_price,
+      s.source,
+      s.ticket_url,
+      s.`language`,
+      s.hall,
+      s.version
+    FROM screening s
+      LEFT JOIN cinema cn ON s.cinema_id = cn.id
+      LEFT JOIN city_area ca ON cn.district_id = ca.id
+      LEFT JOIN city c ON ca.city_id = c.id
+      LEFT JOIN movieshowing m ON m.id = s.movie_id
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND cn.id = #{cinemaId,jdbcType=INTEGER}
+          AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
+          if(to_days(now()) = to_days(#{showDate,jdbcType=DATE}),
+             time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30,
+             to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
+          )
+    GROUP BY s.start_time
+    ORDER BY s.start_time
+  </select>
+
+
+  <select id="selectCitySource" resultType="com.family.webserver.entity.Source">
+    SELECT
+    s.id,
+    s.start_time AS startTime,
+    s.end_time AS endTime,
+    s.sale_price AS salePrice,
+    s.cinema_price AS cinemaPrice,
+    s.source AS source,
+    s.ticket_url AS ticketURL,
+    s.`language` AS language,
+    s.hall AS hall,
+    s.version AS version
+    FROM screening s
+    LEFT JOIN cinema cn ON s.cinema_id = cn.id
+    LEFT JOIN city_area ca ON cn.district_id = ca.id
+    LEFT JOIN city c ON ca.city_id = c.id
+    LEFT JOIN movieshowing m ON m.id = s.movie_id
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND cn.id = #{cinemaId,jdbcType=INTEGER}
+    AND s.movie_id = #{movieId,jdbcType=INTEGER}
+    AND to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
+    AND time_to_sec(s.start_time) = time_to_sec(#{startTime,jdbcType=TIME})
+    ORDER BY s.start_time
   </select>
 
 

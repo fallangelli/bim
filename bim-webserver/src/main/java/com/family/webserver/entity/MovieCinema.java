@@ -15,6 +15,7 @@ public class MovieCinema {
   String tel;
   Integer minPrice;
   Integer sourceCount;
+  Integer leftScreening;
 
   public Integer getId() {
     return id;
@@ -102,5 +103,13 @@ public class MovieCinema {
 
   public void setTel(String tel) {
     this.tel = tel;
+  }
+
+  public Integer getLeftScreening() {
+    return leftScreening;
+  }
+
+  public void setLeftScreening(Integer leftScreening) {
+    this.leftScreening = leftScreening;
   }
 }

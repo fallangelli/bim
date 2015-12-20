@@ -13,8 +13,7 @@ angular.module('bibimovie.services', [])
               window.localStorage['curr_lat'] = r.point.lat;
               window.localStorage['curr_lng'] = r.point.lng;
               window.localStorage['curr_city_name'] = r.address.city;
-              deferred.resolve([window.localStorage['curr_city_name'], window.localStorage['curr_lat'],
-                window.localStorage['curr_lng']]);
+              deferred.resolve(window.localStorage['curr_city_name']);
             }
             else {
               alert('查询当前坐标错误' + this.getStatus());
@@ -51,7 +50,7 @@ angular.module('bibimovie.services', [])
         var deferred = $q.defer();
         var promise = deferred.promise;
 
-        var dates_url = ApiEndpoint.server_url + "cityScreening/MovieCinemaShowDates?" +
+        var dates_url = ApiEndpoint.server_url + "cityScreening/cityMovieWithShowDates?" +
           "cityId=" + cityId + "&movieId=" + movieId;
         $http.get(dates_url)
           .success(function (data) {
@@ -101,5 +100,47 @@ angular.module('bibimovie.services', [])
         return deferred.promise;
       }
 
+    }
+  }])
+
+  .factory('ScreeningService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+    return {
+      getScreening: function (cityId, cinemaId, movieId, showDate) {
+        var deferred = $q.defer();
+        var url = ApiEndpoint.server_url + "cityScreening/cityScreening?cityId=" +
+          cityId + "&cinemaId=" + cinemaId + "&movieId=" + movieId + "&showDate=" + showDate;
+        $http.get(url)
+          .success(function (data) {
+            var obj = angular.fromJson(data)
+            deferred.resolve(obj);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      }
+    }
+  }])
+
+
+  .factory('SourceService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+    return {
+      getSource: function (cityId, cinemaId, movieId, showDate, startTime) {
+        var deferred = $q.defer();
+        var url = ApiEndpoint.server_url + "cityScreening/citySource?cityId=" +
+          cityId + "&cinemaId=" + cinemaId + "&movieId=" + movieId + "&showDate=" + showDate + "&startTime=" + startTime;
+        ;
+        $http.get(url)
+          .success(function (data) {
+            var obj = angular.fromJson(data)
+            deferred.resolve(obj);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      }
     }
   }])

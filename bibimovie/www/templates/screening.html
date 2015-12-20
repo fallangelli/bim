@@ -27,7 +27,7 @@
       <h4>日期:{{showDate}}</h4>
       <ion-item ng-repeat="screening in Screenings"
                 class="item-icon-right" type="item-text-wrap"
-                href="/#/source/{{cinemaId}}/{{movieId}}/{{showDate}}/{{screening.startTime}}">
+                href="/#/source/{{cinema.id}}/{{movieId}}/{{showDate}}/{{screening.startTime}}">
         <div class="row">
           <div class="col col-40">
             <h3>{{screening.startTime}}</h3>
@@ -57,7 +57,7 @@
 
         <div class="item item-divider" style="border: hidden;min-height: 40px">
           <div class="bar bar-header">
-            最低价来自:<h2 style="color:darkorange"> {{screening.source}}</h2>
+            <h2 style="color:darkorange">最低价来自: {{screening.source}}</h2>
             <a class="button button-small button-assertive pull-right"
                href="{{screening.ticketURL}}">
               ￥{{screening.salePrice}} 去购票

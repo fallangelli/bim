@@ -55,6 +55,7 @@
         <configuration>
           <port>8808</port>
           <path>/bibimovie</path>
+          <uriEncoding>UTF-8</uriEncoding>
         </configuration>
       </plugin>
 

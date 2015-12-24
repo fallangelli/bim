@@ -23,7 +23,7 @@ angular.module('bibimovie.services', [])
 
           promise
             .then(function (val) {
-              var url = ApiEndpoint.server_url + "home/getCityIdFromName?cityName=" + encodeURI(encodeURI(val));
+              var url = ApiEndpoint.server_url + "home/getCityIdFromName?cityName=" + val;
               $http.get(url)
                 .success(function (data) {
                   window.localStorage['curr_city_id'] = data;

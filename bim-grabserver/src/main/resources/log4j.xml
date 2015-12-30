@@ -7,7 +7,7 @@
       <param name="ConversionPattern" value="%d{yy-MM-dd HH:mm:ss,SSS} %-5p %c(%F:%L) ## %m%n"/>
     </layout>
     <filter class="org.apache.log4j.varia.LevelRangeFilter">
-      <param name="levelMin" value="info"/>
+      <param name="levelMin" value="debug"/>
       <param name="levelMax" value="FATAL "/>
       <param name="AcceptOnMatch" value="true"/>
     </filter>

@@ -17,7 +17,6 @@ public class CityMaoyanPipeline implements PageModelPipeline<CityMaoyanModel> {
   @Autowired
   private CityMaoyanService service;
 
-
   @Override
   public void process(CityMaoyanModel model, Task task) {
     String context = model.getContext();

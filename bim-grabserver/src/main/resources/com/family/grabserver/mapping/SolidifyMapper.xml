@@ -36,7 +36,7 @@
     first_letter,
     pinyin
     FROM bim_grab.city_baidu b
-    ON DUPLICATE KEY UPDATE id_maoyan = b.id;
+    ON DUPLICATE KEY UPDATE id_baidu = b.id;
   </insert>
   <insert id="merge_city_area_mtime">
     INSERT INTO bim_base.city_area (city_id, area)
@@ -78,13 +78,14 @@
     FROM (
     SELECT
     c.id AS city_id,
-    cim.city_id id_maoyan,
+    cim.city_id id_baidu,
     cim.area AS area
-    FROM bim_grab.cinema_maoyan cim
-    JOIN bim_base.city c ON c.id_maoyan = cim.city_id
+    FROM bim_grab.cinema_baidu cim
+    JOIN bim_base.city c ON c.id_baidu = cim.city_id
     GROUP BY cim.city_id, cim.area) tmp
-    ON DUPLICATE KEY UPDATE area = tmp.area;
+    ON DUPLICATE KEY UPDATE bim_base.city_area.area = tmp.area;
   </insert>
+
   <insert id="merge_movieshowing_maoyan">
     INSERT INTO bim_base.movieshowing (id_maoyan, name, image, rating, is_imax, is_3d, directors, actors, type, content, runTime)
       SELECT
@@ -117,8 +118,20 @@
         content,
         runTime
       FROM bim_grab.movieshowing_mtime mm
-    ON DUPLICATE KEY UPDATE id_maoyan = mm.id;
+    ON DUPLICATE KEY UPDATE id_mtime = mm.id;
   </insert>
+  <insert id="merge_movieshowing_baidu">
+    INSERT INTO bim_base.movieshowing (id_baidu, name, image, rating, content)
+      SELECT
+        id,
+        name,
+        image,
+        rating,
+        content
+      FROM bim_grab.movieshowing_baidu mm
+    ON DUPLICATE KEY UPDATE id_baidu = mm.id;
+  </insert>
+
   <insert id="merge_cinema_mtime">
     INSERT INTO bim_base.cinema (id_mtime, district_id, name, address, latitude, longitude, rating, has_3d, has_imax,
                                  has_wifi, has_park, route, tel)
@@ -155,15 +168,22 @@
         has_imax,
         tel
       FROM bim_grab.cinema_maoyan cim
-
         JOIN bim_base.city c ON c.id_maoyan = cim.city_id
         JOIN bim_base.city_area ca ON ca.area = cim.area AND ca.city_id = c.id
     ON DUPLICATE KEY UPDATE id_maoyan = cim.id
   </insert>
-
-  <delete id="deleteAllscreening">
-    DELETE FROM bim_base.screening
-  </delete>
+  <insert id="merge_cinema_baidu">
+    INSERT INTO bim_base.cinema (id_baidu, district_id, name, address)
+      SELECT
+        cim.id,
+        ca.id AS district_id,
+        cim.name,
+        address
+      FROM bim_grab.cinema_baidu cim
+        JOIN bim_base.city c ON c.id_baidu = cim.city_id
+        JOIN bim_base.city_area ca ON ca.area = cim.area AND ca.city_id = c.id
+    ON DUPLICATE KEY UPDATE id_baidu = cim.id
+  </insert>
 
   <insert id="merge_screening_maoyan">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall, version,
@@ -206,6 +226,28 @@
       FROM bim_grab.screening_mtime pm
         JOIN bim_base.movieshowing m ON pm.movie_id = m.id_mtime
         JOIN bim_base.cinema c ON pm.cinema_id = c.id_mtime
+    ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
+  </insert>
+
+  <insert id="merge_screening_baidu">
+    INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
+    version, sale_price, cinema_price, source, ticket_url)
+    SELECT
+    c.id AS cinema_id,
+    m.id AS movie_id,
+    show_date,
+    start_time,
+    end_time,
+    language,
+    hall,
+    version,
+    sale_price,
+    cinema_price,
+    'baidu',
+    ticket_url
+    FROM bim_grab.screening_baidu pm
+    JOIN bim_base.movieshowing m ON pm.movie_id = m.id_baidu
+    JOIN bim_base.cinema c ON pm.cinema_id = c.id_baidu
     ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
   </insert>
 </mapper>

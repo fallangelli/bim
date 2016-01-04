@@ -49,7 +49,7 @@ public class CityTaobaoCrawler {
         "&sign=" + sign +
         "&data=" + java.net.URLEncoder.encode("{\"platform\":\"8\"}", "utf-8");
 
-      OOSpider.create(Site.me().setTimeOut(30000)
+      OOSpider.create(Site.me().setTimeOut(60000)
           .addCookie("_m_h5_tk", tk)
           .addCookie("_m_h5_tk_enc", enc)
           .setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),

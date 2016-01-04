@@ -22,7 +22,7 @@ public class ScreeningBaiduModel implements AfterExtractor {
   private String cinemaId = "";
 
   public static void main(String[] args) {
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(1000)
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000)
       , new ConsolePageModelPipeline(), ScreeningBaiduModel.class)
       .addPipeline(new ConsolePipeline())
       .addUrl("http://m.dianying.baidu.com/info/cinema/detail?cinemaId=148").thread(1).run();

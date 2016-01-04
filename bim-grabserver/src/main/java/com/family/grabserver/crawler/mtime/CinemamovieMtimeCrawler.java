@@ -36,7 +36,7 @@ public class CinemamovieMtimeCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.deleteAll("cinemamovie_Mtime");
+      SqlUtil.truncateTable("cinemamovie_Mtime");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -49,7 +49,7 @@ public class CinemamovieMtimeCrawler {
       urls.add(url);
     }
     logger.info("开始抓取 时光 影院上映电影");
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(1000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(1000),
       pipeline, CinemamovieMtimeModel.class).addUrl((String[]) urls.toArray(new String[]{}))
       .thread(100).run();
   }

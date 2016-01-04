@@ -45,7 +45,7 @@ public class ScreeningMtimeCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.deleteAll("screening_Mtime");
+      SqlUtil.truncateTable("screening_Mtime");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -59,7 +59,7 @@ public class ScreeningMtimeCrawler {
       //电影不存在则添加
       if (movieService.selectByPrimaryKey(cm.getMovieId()) == null) {
         logger.info("添加 时光 电影基本信息 - " + cm.getMovieId());
-        OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+        OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
           movieShowingMtimePipeline, MovieshowingMtimeModel.class)
           .addUrl("http://m.mtime.cn/Service/callback.mi/movie/Detail.api?movieId=" + cm.getMovieId())
           .thread(1).run();
@@ -74,10 +74,10 @@ public class ScreeningMtimeCrawler {
       }
     }
     logger.info("开始抓取 时光 场次信息");
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMtimeModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(100).run();
+      .thread(1000).run();
   }
 
 }

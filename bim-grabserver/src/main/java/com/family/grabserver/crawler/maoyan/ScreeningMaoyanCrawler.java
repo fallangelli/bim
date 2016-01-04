@@ -33,8 +33,6 @@ public class ScreeningMaoyanCrawler {
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
   public static void main(String[] args) {
-
-
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final ScreeningMaoyanCrawler jsonCrawler = applicationContext.getBean(ScreeningMaoyanCrawler.class);
     jsonCrawler.crawl();
@@ -43,7 +41,7 @@ public class ScreeningMaoyanCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.deleteAll("screening_maoyan");
+      SqlUtil.truncateTable("screening_maoyan");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -59,7 +57,7 @@ public class ScreeningMaoyanCrawler {
       //电影不存在则添加
       if (movieService.selectByPrimaryKey(cm.getMovieId()) == null) {
         logger.info("添加 猫眼 电影基本信息 - " + cm.getMovieId());
-        OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+        OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
           movieShowingMaoyanPipeline, MovieshowingMaoyanModel.class)
           .addUrl("http://m.maoyan.com/cinemas/list.json?movieid=" + cm.getMovieId())
           .thread(1).run();
@@ -70,10 +68,10 @@ public class ScreeningMaoyanCrawler {
       urls.add(movieUrl);
     }
     logger.info("开始抓取 猫眼 场次信息");
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(200).run();
+      .thread(1500).run();
   }
 
 }

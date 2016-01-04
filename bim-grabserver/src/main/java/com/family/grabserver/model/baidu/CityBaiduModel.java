@@ -21,7 +21,7 @@ public class CityBaiduModel implements AfterExtractor {
   private List<String> listName;
 
   public static void main(String[] args) {
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(1000)
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000)
       , new ConsolePageModelPipeline(), CityBaiduModel.class)
       .addPipeline(new ConsolePipeline())
       .addUrl("http://m.dianying.baidu.com/city/choose").thread(1).run();

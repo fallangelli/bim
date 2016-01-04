@@ -44,7 +44,7 @@ public class DoubanComing implements AfterExtractor {
   private String urlMd5 = "";
 
   public static void main(String[] args) {
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(1000)
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000)
       , new ConsolePageModelPipeline(), DoubanComing.class)
       .addPipeline(new JsonFilePipeline("D:\\grab\\"))
       .addPipeline(new ConsolePipeline())

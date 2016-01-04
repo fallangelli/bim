@@ -6,13 +6,12 @@ import com.family.grab.model.AfterExtractor;
 import com.family.grab.model.OOSpider;
 import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
-import com.family.grab.model.annotation.TargetUrl;
 import com.family.grabserver.pipeline.maoyan.ScreeningMaoyanPipeline;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@TargetUrl("http://m.maoyan.com/showtime/[\\w\\W]*")
+
 public class ScreeningMaoyanModel implements AfterExtractor {
 
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
@@ -33,8 +32,7 @@ public class ScreeningMaoyanModel implements AfterExtractor {
 
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
       pipeline, ScreeningMaoyanModel.class)
-      .addUrl("http://m.maoyan.com/showtime/wrap.json?cinemaid=14381&movieid=249141").thread(1).run();
-
+      .addUrl("http://m.maoyan.com/showtime/wrap.json?cinemaid=834&movieid=78701").thread(1).run();
   }
 
   public String getContext() {
@@ -61,12 +59,6 @@ public class ScreeningMaoyanModel implements AfterExtractor {
   public void setMovieid(String movieid) {
     this.movieid = movieid;
   }
-
-//    @Override
-//    public String toString() {
-//        String retVal = context;
-//        return retVal;
-//    }
 
   @Override
   public void afterProcess(Page page) {

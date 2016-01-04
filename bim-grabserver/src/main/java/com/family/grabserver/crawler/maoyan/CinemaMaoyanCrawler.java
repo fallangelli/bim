@@ -72,7 +72,7 @@ public class CinemaMaoyanCrawler {
 
     @Override
     public void run() {
-      OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000)
+      OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000)
           .addCookie("ci", cityId.toString()),
         cinemaMaoyanPipeline, CinemaMaoyanModel.class)
         .addUrl(url)

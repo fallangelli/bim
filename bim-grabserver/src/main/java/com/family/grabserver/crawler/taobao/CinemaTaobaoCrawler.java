@@ -59,7 +59,7 @@ public class CinemaTaobaoCrawler {
           "\"longitude\":0,\"latitude\":0,\"supportTypeCode\":3,\"" +
           "cityCode\":\"" + city.getId() + "\"}", "utf-8");
         logger.info("开始抓取 时光 影院详情信息");
-        OOSpider.create(Site.me().setTimeOut(30000)
+        OOSpider.create(Site.me().setTimeOut(60000)
             .addCookie("_m_h5_tk", tk)
             .addCookie("_m_h5_tk_enc", enc)
             .setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),

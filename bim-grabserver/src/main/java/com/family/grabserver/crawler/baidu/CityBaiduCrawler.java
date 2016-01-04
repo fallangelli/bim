@@ -38,7 +38,7 @@ public class CityBaiduCrawler {
   public void crawl() {
     logger.info("开始抓取 百度 城市列表");
 
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, CityBaiduModel.class)
       .addUrl("http://m.dianying.baidu.com/city/choose")
       .thread(1).run();
@@ -50,7 +50,7 @@ public class CityBaiduCrawler {
         "&c=" + city.getId() + "&district=%E5%85%A8%E9%83%A8%E5%95%86%E5%9C%88");
     }
 
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       areaPipeline, CityareaBaiduModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(30).run();

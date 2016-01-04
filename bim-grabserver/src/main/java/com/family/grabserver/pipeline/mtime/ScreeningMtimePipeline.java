@@ -10,6 +10,7 @@ import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.service.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
@@ -78,7 +79,11 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
       record.setSalePrice(show.getFloat("salePrice") / 100);
       record.setCinemaPrice(show.getFloat("cinemaPrice") / 100);
 
-      service.insertOrUpate(record);
+      try {
+        service.insertOrUpate(record);
+      } catch (DuplicateKeyException de) {
+        logger.warn("猫眼上映信息键值重复");
+      }
 
     }
   }

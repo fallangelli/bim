@@ -28,7 +28,7 @@ public class GithubRepoProcessor implements PageProcessor {
 
   @Test
   public void testRunCycleTriedTimes() {
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       new PageModelPipeline() {
         @Override
         public void process(Object o, Task task) {

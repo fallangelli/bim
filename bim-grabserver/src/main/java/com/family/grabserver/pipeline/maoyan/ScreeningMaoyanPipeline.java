@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -52,10 +53,10 @@ public class ScreeningMaoyanPipeline implements PageModelPipeline<ScreeningMaoya
       int retryTimes = 5;
       while (retryTimes > 0) {
         try {
+          Thread.sleep(500);
           HttpGet request = new HttpGet(url);
           HttpResponse response = null;
           response = HttpClients.createDefault().execute(request);
-          Thread.sleep(500);
           if (response.getStatusLine().getStatusCode() == 200) {
             decodeCssContent = EntityUtils.toString(response.getEntity());
             break;
@@ -80,7 +81,6 @@ public class ScreeningMaoyanPipeline implements PageModelPipeline<ScreeningMaoya
     JSONObject data = (JSONObject) ob.get("data");
     JSONObject dateShow = (JSONObject) data.get("DateShow");
     for (String key : dateShow.keySet()) {
-      String currDate = key;
       JSONArray shows = (JSONArray) dateShow.get(key);
       for (Object showOb : shows) {
 
@@ -113,7 +113,11 @@ public class ScreeningMaoyanPipeline implements PageModelPipeline<ScreeningMaoya
           e.printStackTrace();
           continue;
         }
-        service.insertOrUpate(record);
+        try {
+          service.insertOrUpate(record);
+        } catch (DuplicateKeyException de) {
+          logger.warn("猫眼上映信息键值重复");
+        }
       }
     }
   }

@@ -40,7 +40,7 @@ public class CinemaMtimeCrawler {
       urls.add("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=" + cinema.getId());
     }
     logger.info("开始抓取 时光 影院详情信息");
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       cinemaMtimePipeline, CinemaMtimeModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(50).run();

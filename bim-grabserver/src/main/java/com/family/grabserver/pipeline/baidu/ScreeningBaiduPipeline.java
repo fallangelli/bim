@@ -12,6 +12,7 @@ import com.family.grabserver.service.MovieshowingBaiduService;
 import com.family.grabserver.service.ScreeningBaiduService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -86,6 +87,8 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
           }
         }
       }
+    } catch (DuplicateKeyException de) {
+      logger.warn("重复键值");
     } catch (Exception e) {
       e.printStackTrace();
     }

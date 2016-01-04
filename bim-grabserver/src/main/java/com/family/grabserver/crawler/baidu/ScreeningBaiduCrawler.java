@@ -36,7 +36,7 @@ public class ScreeningBaiduCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.deleteAll("screening_baidu");
+      SqlUtil.truncateTable("screening_baidu");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -49,11 +49,11 @@ public class ScreeningBaiduCrawler {
       urls.add(movieUrl);
     }
 
-    logger.info("开始抓取 猫眼 场次信息");
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    logger.info("开始抓取 百度 场次信息");
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningBaiduModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(200).run();
+      .thread(1000).run();
   }
 
 }

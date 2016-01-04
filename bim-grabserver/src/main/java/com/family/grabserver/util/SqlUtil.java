@@ -14,9 +14,8 @@ public class SqlUtil {
   static Statement stmt;
   static ResultSet rs;
 
-  public static void deleteAll(String tableName) throws Exception {
+  public static void truncateTable(String tableName) throws Exception {
     Properties props = new Properties();
-//        props.load(SqlUtil.class.getClassLoader().getResourceAsStream("config.properties"));
     props.load(ClassLoader.getSystemResourceAsStream("jdbc.properties"));
     String driver = props.getProperty("jdbc.driver");
     String url = props.getProperty("jdbc.url");
@@ -27,10 +26,10 @@ public class SqlUtil {
       Class.forName(driver);
       conn = DriverManager.getConnection(url, user, pass);
       stmt = conn.createStatement();
-      String sql = "delete from " + tableName;
+      String sql = "TRUNCATE " + tableName;
       stmt.execute(sql);
 
-      System.out.println("删除" + tableName + "记录" + stmt.getUpdateCount() + "条");
+      System.out.println("删除" + tableName + "记录");
 
     } finally {
       if (rs != null) {

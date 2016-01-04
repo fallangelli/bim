@@ -12,15 +12,23 @@ public interface SolidifyMapper {
 
   void merge_city_area_mtime();
 
+  void merge_city_area_baidu();
+
   void merge_movieshowing_maoyan();
 
   void merge_movieshowing_mtime();
+
+  void merge_movieshowing_baidu();
 
   void merge_cinema_mtime();
 
   void merge_cinema_maoyan();
 
+  void merge_cinema_baidu();
+
   void merge_screening_mtime();
 
   void merge_screening_maoyan();
+
+  void merge_screening_baidu();
 }

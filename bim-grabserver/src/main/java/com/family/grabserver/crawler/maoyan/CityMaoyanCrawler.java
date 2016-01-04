@@ -26,7 +26,7 @@ public class CityMaoyanCrawler {
   public void crawl() {
     logger.info("开始抓取 猫眼 城市列表");
 
-    OOSpider.create(Site.me().setTimeOut(30000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       CityMaoyanPipeline, CityMaoyanModel.class)
       .addUrl("http://m.maoyan.com/changecity.json")
       .thread(1).run();

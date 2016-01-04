@@ -15,7 +15,7 @@ public class MovieshowingMaoyanModel implements AfterExtractor {
   private String context;
 
   public static void main(String[] args) {
-    OOSpider.create(Site.me().setTimeOut(30000)
+    OOSpider.create(Site.me().setTimeOut(60000)
       , new ConsolePageModelPipeline(), MovieshowingMaoyanModel.class)
       .addUrl("http://m.maoyan.com/cinemas/list.json?movieid=117").thread(1).run();
   }

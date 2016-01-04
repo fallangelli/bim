@@ -17,8 +17,6 @@
         pinyin
       FROM bim_grab.city_maoyan b
     ON DUPLICATE KEY UPDATE id_maoyan = b.id;
-
-
   </insert>
   <insert id="merge_city_mtime">
     INSERT INTO bim_base.city (id_mtime, name, first_letter, pinyin)
@@ -29,7 +27,16 @@
         pinyin
       FROM bim_grab.city_mtime b
     ON DUPLICATE KEY UPDATE id_mtime = b.id;
-
+  </insert>
+  <insert id="merge_city_baidu">
+    INSERT INTO bim_base.city (id_baidu, name, first_letter, pinyin)
+    SELECT
+    id,
+    name,
+    first_letter,
+    pinyin
+    FROM bim_grab.city_baidu b
+    ON DUPLICATE KEY UPDATE id_maoyan = b.id;
   </insert>
   <insert id="merge_city_area_mtime">
     INSERT INTO bim_base.city_area (city_id, area)
@@ -61,7 +68,22 @@
                JOIN bim_base.city c ON c.id_maoyan = cim.city_id
              GROUP BY cim.city_id, cim.area) tmp
     ON DUPLICATE KEY UPDATE area = tmp.area;
+  </insert>
 
+  <insert id="merge_city_area_baidu">
+    INSERT INTO bim_base.city_area (city_id, area)
+    SELECT
+    tmp.city_id,
+    tmp.area
+    FROM (
+    SELECT
+    c.id AS city_id,
+    cim.city_id id_maoyan,
+    cim.area AS area
+    FROM bim_grab.cinema_maoyan cim
+    JOIN bim_base.city c ON c.id_maoyan = cim.city_id
+    GROUP BY cim.city_id, cim.area) tmp
+    ON DUPLICATE KEY UPDATE area = tmp.area;
   </insert>
   <insert id="merge_movieshowing_maoyan">
     INSERT INTO bim_base.movieshowing (id_maoyan, name, image, rating, is_imax, is_3d, directors, actors, type, content, runTime)

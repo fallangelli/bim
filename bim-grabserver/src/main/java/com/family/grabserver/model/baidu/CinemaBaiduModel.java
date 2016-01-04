@@ -29,7 +29,7 @@ public class CinemaBaiduModel implements AfterExtractor {
   @ExtractByUrl("areaId=(\\d*)[&]?")
   private String areaId;
 
-  @ExtractByUrl("areaName=(\\d*)[&]?")
+  @ExtractByUrl("areaName=([\\w\\W]*?)[?&]")
   private String areaName;
 
   public static void main(String[] args) {

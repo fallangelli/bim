@@ -52,10 +52,10 @@ public class MainRunner {
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final MainRunner grabMaoyanRunner = applicationContext.getBean(MainRunner.class);
-//    grabMaoyanRunner.grabCity();
-//    grabMaoyanRunner.grabCinema();
-//    grabMaoyanRunner.grabCinemamovie();
-//    grabMaoyanRunner.grabScreening();
+    grabMaoyanRunner.grabCity();
+    grabMaoyanRunner.grabCinema();
+    grabMaoyanRunner.grabCinemamovie();
+    grabMaoyanRunner.grabScreening();
     grabMaoyanRunner.mergeService.merge();
   }
 

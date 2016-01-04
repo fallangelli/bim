@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `screening` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cinema_id_movie_id_show_date_start_time_source` (`cinema_id`,`movie_id`,`show_date`,`start_time`,`source`)
+  UNIQUE KEY `cinema_id_movie_id_show_date_start_time_source` (`cinema_id`,`movie_id`,`show_date`,`start_time`,`source`,`hall`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 数据导出被取消选择。

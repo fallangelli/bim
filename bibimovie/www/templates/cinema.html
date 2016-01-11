@@ -56,30 +56,25 @@
       </div>
     </div>
 
-    <div class="bar bar-header item-input-inset">
-      <label class="item-input-wrapper">
-        <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="输入影院名称或地址">
-      </label>
-      <button class="button button-outline button-royal">
-        搜索
-      </button>
-    </div>
-
-    <div class="button-bar">
-      <a class="button button-outline button-positive">最近</a>
-      <a class="button button-outline button-positive">最省</a>
-      <button class="button  button-outline button-positive icon-left ion-star ">筛选</button>
-    </div>
-
-    <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="true">
+    <ion-slide-box style="background-color: gainsboro"
+                   on-slide-changed="slideHasChanged($index)" show-pager="true">
       <ion-slide ng-repeat="movie in movies" repeat-done="repeatDone()">
-        <h3 style="text-align: center">
-          <div ng-if="$index!=0" class="go_back" ng-click="lastSlide()"></div>
-          <img src="{{movie.image}}">
+        <div class="row">
+          <div class="col col-30">
+            <img ng-if="$index!=0"
+                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
+                 src="{{movies[$index-1].image}}">
+          </div>
+          <div class="col col-40">
+            <img style="height: 150px;border: 3px" src="{{movie.image}}">
+          </div>
+          <div class="col col-30">
+            <img ng-if="$index!=movies.length-1"
+                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.6;opacity:0.6"
+                 src="{{movies[$index+1].image}}">
+          </div>
 
-          <div ng-if="$index!=showDates.length-1" class="go_forward" ng-click="nextSlide()"></div>
-        </h3>
+        </div>
       </ion-slide>
     </ion-slide-box>
 

@@ -83,11 +83,50 @@ angular.module('bibimovie.services', [])
     }
   }])
 
-  .factory('CinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+  .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
       getCinemas: function (cityId) {
         var deferred = $q.defer();
         var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId;
+        $http.get(url)
+          .success(function (data) {
+            var cinemas = angular.fromJson(data)
+            deferred.resolve(cinemas);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      }
+
+    }
+  }])
+
+  .factory('CinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+    return {
+      getCinema: function (cinemaId) {
+        var deferred = $q.defer();
+        var url = ApiEndpoint.server_url + "cityCinemas/Cinema?cinemaId=" + cinemaId;
+        $http.get(url)
+          .success(function (data) {
+            var cinemas = angular.fromJson(data)
+            deferred.resolve(cinemas);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      }
+    }
+  }])
+
+  .factory('MovieService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+    return {
+      getMovie: function (moiveId) {
+        var deferred = $q.defer();
+        var url = ApiEndpoint.server_url + "cityMovies/Movie?moiveId=" + moiveId;
         $http.get(url)
           .success(function (data) {
             var cinemas = angular.fromJson(data)

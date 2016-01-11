@@ -1,0 +1,111 @@
+<ion-view view-title="影片详情">
+
+
+  <ion-content class="padding">
+    <ion-refresher on-refresh="doRefresh()"
+                   pulling-text="松开刷新"
+                   refreshing-text="更新历史数据，稍后..."
+                   refreshing-icon="ion-loading-b">
+    </ion-refresher>
+
+    <header>
+      <a href="/#/">
+        <div class="go_back"></div>
+      </a>
+
+      <div class="page_title">电影详情</div>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
+    </header>
+
+
+    <div class="row">
+      <div class="col col-40">
+        <img src="{{movie.image}}">
+      </div>
+      <div class="col col-60">
+        <h4> {{movie.name}}</h4>
+        <h5> {{movie.content}}</h5>
+        <h5><span ng-if="movie.isImax">iMAX</span> <span ng-if="movie.is3d">3D</span></h5>
+        <h6 style="max-height:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+          导演:{{movie.directors}}</h6>
+        <h6 style="max-height:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">主演:{{movie.actors}}</h6>
+        <h6 style="max-height:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">类型:{{movie.type}}</h6>
+        <h6 ng-if="movie.runtime">时长:{{movie.runtime}}</h6>
+        <h6 ng-if="movie.rating">评分:{{movie.rating}}</h6>
+      </div>
+    </div>
+
+    <div class="list card">
+      <div class="item item-body">
+        <h2>评论者 53分前</h2>
+
+        <p>
+          第一次看星球大战还是我童年时代，这是一种情怀已经超出了普通观影的范畴，那年哈里森福特还是小伙子呢，如今已经是老人家了，唏嘘时光飞逝。
+        </p>
+
+        <p>
+
+        <div class="subdued">8.7分</div>
+        </p>
+      </div>
+      <div class="item item-body">
+        <h2>评论者 53分前</h2>
+
+        <p>
+          第一次看星球大战还是我童年时代，这是一种情怀已经超出了普通观影的范畴，那年哈里森福特还是小伙子呢，如今已经是老人家了，唏嘘时光飞逝。
+        </p>
+
+        <p>
+
+        <div class="subdued">8.7分</div>
+        </p>
+      </div>
+      <div class="item item-body">
+        <h2>评论者 53分前</h2>
+
+        <p>
+          第一次看星球大战还是我童年时代，这是一种情怀已经超出了普通观影的范畴，那年哈里森福特还是小伙子呢，如今已经是老人家了，唏嘘时光飞逝。
+        </p>
+
+        <p>
+
+        <div class="subdued">8.7分</div>
+        </p>
+      </div>
+      <div class="item item-body">
+        <h2>评论者 53分前</h2>
+
+        <p>
+          第一次看星球大战还是我童年时代，这是一种情怀已经超出了普通观影的范畴，那年哈里森福特还是小伙子呢，如今已经是老人家了，唏嘘时光飞逝。
+        </p>
+
+        <p>
+
+        <div class="subdued">8.7分</div>
+        </p>
+      </div>
+
+      <!--<div class="item tabs tabs-secondary tabs-icon-left">-->
+      <!--<a class="tab-item" href="#">-->
+      <!--<i class="icon ion-thumbsup"></i>-->
+      <!--Like-->
+      <!--</a>-->
+      <!--<a class="tab-item" href="#">-->
+      <!--<i class="icon ion-chatbox"></i>-->
+      <!--Comment-->
+      <!--</a>-->
+      <!--<a class="tab-item" href="#">-->
+      <!--<i class="icon ion-share"></i>-->
+      <!--Share-->
+      <!--</a>-->
+      <!--</div>-->
+
+    </div>
+  </ion-content>
+  <a href="/#/moivecinema/{{movie.id}}">
+    <div class="bar bar-footer bar-assertive">
+      <div class="title">购票</div>
+    </div>
+  </a>
+</ion-view>

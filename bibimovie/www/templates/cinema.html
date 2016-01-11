@@ -1,4 +1,15 @@
-<ion-view view-title="影院列表">
+<style type="text/css">
+  .slider-pager {
+    position: relative;
+    bottom: 18px;
+    z-index: 1;
+    width: 100%;
+    height: 25px;
+    text-align: center;
+  }
+</style>
+
+<ion-view view-title="影院详情">
 
 
   <ion-content class="padding">
@@ -13,10 +24,37 @@
         <div class="go_back"></div>
       </a>
 
-      <div class="page_title">全部影院</div>
+      <div class="page_title">影院详情</div>
       <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
-      <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
     </header>
+
+    <div class="card">
+      <div class="item item-divider">
+        <div class="row">
+          <div class="col col-90">
+            <h2 style="font-size: 20px">{{cinema.name}}</h2>
+          </div>
+          <div class="col col-10">
+            <a href="tel:{{cinema.tel}}"><img style="height: 25px;" src="../img/tel.png"> </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-70">
+            <p>{{cinema.address}}</p>
+
+            <p>{{cinema.route}}</p>
+          </div>
+          <div class="col col-center">
+            <div style="float: right;">
+              <img style="width: 30px" ng-if="cinema.has3d" src="../img/3d.png">
+              <img style="width: 30px" ng-if="cinema.hasImax" src="../img/imax.png">
+              <img style="width: 30px" ng-if="cinema.hasPark" src="../img/park.png">
+              <img style="width: 30px" ng-if="cinema.hasWifi" src="../img/wifi.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
@@ -27,19 +65,37 @@
         搜索
       </button>
     </div>
+
     <div class="button-bar">
       <a class="button button-outline button-positive">最近</a>
       <a class="button button-outline button-positive">最省</a>
       <button class="button  button-outline button-positive icon-left ion-star ">筛选</button>
     </div>
 
+    <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="true">
+      <ion-slide ng-repeat="movie in movies" repeat-done="repeatDone()">
+        <h3 style="text-align: center">
+          <div ng-if="$index!=0" class="go_back" ng-click="lastSlide()"></div>
+          <img src="{{movie.image}}">
+
+          <div ng-if="$index!=showDates.length-1" class="go_forward" ng-click="nextSlide()"></div>
+        </h3>
+      </ion-slide>
+    </ion-slide-box>
+
     <div class="list">
-      <a class="item"
-         collection-repeat="cinema in cinemas"
-         href="#">
+      <a class="item" collection-repeat="cinema in cinemas"
+         href="/#/screening/{{cinema.id}}/{{movieId}}/{{showDate}}">
         {{cinema.name}}
         <p>
           {{cinema.address}}
+        </p>
+
+        <p style="color: orangered">
+          剩余{{cinema.leftScreening}}场
+           <span class="badge badge-assertive" style="bottom: 2px;top: auto;right: 5px">
+            {{cinema.minPrice}}元起 {{cinema.sourceCount}}个票源
+          </span>
         </p>
       </a>
     </div>

@@ -1,5 +1,6 @@
 package com.family.webserver.service;
 
+import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.HomeCityHotMovie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +20,15 @@ public class HomeServiceTest {
   private HomeService service;
 
   @Test
-  public void testGetHotMoviesByCity() throws Exception {
+  public void testGetHotMoviesByCity() {
     List<List<HomeCityHotMovie>> movies = service.getHotMoviesByCity(2861);
     System.out.println(movies);
+  }
+
+
+  @Test
+  public void testGetNearCinemas() {
+    List<Cinema> cinemas = service.getNearCinemas("23.02362", "113.1147");
+    System.out.println(cinemas);
   }
 }

@@ -18,7 +18,7 @@ public class CityCinemaService {
   @Autowired
   private CinemaMapper cmapper;
 
-  public Cinema getCinemaId(Integer cityId) {
+  public Cinema getCinemaById(Integer cityId) {
     return cmapper.selectByPrimaryKey(cityId);
   }
 

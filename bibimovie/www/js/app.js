@@ -30,10 +30,22 @@ angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controlle
         controller: 'HomeCtrl'
       })
 
+      .state('movie', {
+        url: '/movie/:movieId',
+        templateUrl: 'templates/movie.html',
+        controller: 'MovieCtrl'
+      })
+
       .state('cinema', {
-        url: '/cinema',
+        url: '/cinema/:cinemaId',
         templateUrl: 'templates/cinema.html',
         controller: 'CinemaCtrl'
+      })
+
+      .state('cinemalist', {
+        url: '/cinemalist',
+        templateUrl: 'templates/cinemalist.html',
+        controller: 'CinemaListCtrl'
       })
 
       .state('moivecinema', {

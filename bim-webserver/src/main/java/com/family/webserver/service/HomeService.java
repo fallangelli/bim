@@ -1,5 +1,6 @@
 package com.family.webserver.service;
 
+import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.HomeCityHotMovie;
 import com.family.webserver.mapper.HomeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,9 @@ public class HomeService {
   public Integer getCityIdFromName(String cityName) {
     return mapper.selectCityIdFromName(cityName);
   }
+
+  public List<Cinema> getNearCinemas(String lat, String lng) {
+    return mapper.selectNearCinemas(lat, lng);
+  }
+
 }

@@ -30,5 +30,30 @@
     WHERE #{cityName,jdbcType=VARCHAR} LIKE concat('%', c.name, '%')
   </select>
 
-
+  <select id="selectNearCinemas"
+          resultType="com.family.webserver.entity.Cinema">
+    SELECT
+      *,
+      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
+    FROM cinema
+    WHERE MBRContains
+    (
+      LineString
+      (
+        Point
+        (
+          #{lat,jdbcType=VARCHAR} + 10 / (111.1 / COS(RADIANS(#{lng,jdbcType=VARCHAR}))),
+          #{lng,jdbcType=VARCHAR} + 10 / 111.1
+        ),
+        Point
+        (
+          #{lat,jdbcType=VARCHAR} - 10 / (111.1 / COS(RADIANS(#{lng,jdbcType=VARCHAR}))),
+          #{lng,jdbcType=VARCHAR} - 10 / 111.1
+        )
+      ),
+      pos
+    )
+    ORDER BY len
+    LIMIT 3
+  </select>
 </mapper>

@@ -22,7 +22,7 @@
       <a href="#">
         <div class="quanDiv"></div>
         比比电影</a>
-      <a href="/#/cinema">
+      <a href="/#/cinemalist">
         <div class="quanDiv"></div>
         比比影院</a>
     </nav>
@@ -36,9 +36,11 @@
 
       <div class="row" ng-repeat="movies in movieList">
         <div class="col col-33" ng-repeat="movie in movies">
-          <img src={{movie.image}} width="100%">
+          <a href="/#/movie/{{movie.movieId}}">
+            <img src={{movie.image}} width="100%">
 
-          <h2 style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</h2>
+            <h2 style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</h2>
+          </a>
           <a href="/#/moivecinema/{{movie.movieId}}"
              class="button button-assertive button-full button-small button-positive">
             购票&nbsp;{{movie.minPrice}}&nbsp;元起
@@ -51,24 +53,14 @@
     <ion-item style="border-width: 0">
       <span class="fs_10">推荐影院</span>
       <ion-list>
-        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
-          <h2>大光明电影院</h2>
+        <ion-item ng-repeat="cinema in nearCinemaList"
+                  class="item-icon-right" type="item-text-wrap" href="/#/cinema/{{cinema.id}}">
+          <h2>{{cinema.name}}</h2>
 
-          <p>南京西路216号（近黄河路）</p>
+          <p>{{cinema.address}}</p>
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
-        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
-          <h2>SFC上影-永华店</h2>
 
-          <p>南京西路216号（近黄河路）</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </ion-item>
-        <ion-item class="item-icon-right" type="item-text-wrap" href="#">
-          <h2>海上国际影城-月星环球港店</h2>
-
-          <p>南京西路216号（近黄河路）</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </ion-item>
       </ion-list>
     </ion-item>
 

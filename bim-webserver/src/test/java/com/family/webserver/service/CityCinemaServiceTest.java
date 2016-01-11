@@ -21,7 +21,7 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testSelect() throws Exception {
-    Cinema cinema = service.getCinemaId(212213);
+    Cinema cinema = service.getCinemaById(212213);
     System.out.println(cinema.getName());
   }
 

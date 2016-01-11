@@ -43,4 +43,11 @@
     GROUP BY cn.id
   </select>
 
+  <select id="selectMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">
+    SELECT DISTINCT m.*
+    FROM movieshowing m
+      LEFT JOIN screening s ON s.movie_id = m.id
+    WHERE s.cinema_id = #{cinemaId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

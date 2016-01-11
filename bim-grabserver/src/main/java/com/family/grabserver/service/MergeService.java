@@ -30,16 +30,16 @@ public class MergeService {
     mapper.merge_city_mtime();
     mapper.merge_city_baidu();
 
-    mapper.merge_city_area_mtime();
     mapper.merge_city_area_maoyan();
+    mapper.merge_city_area_mtime();
     mapper.merge_city_area_baidu();
 
-    mapper.merge_movieshowing_mtime();
     mapper.merge_movieshowing_maoyan();
+    mapper.merge_movieshowing_mtime();
     mapper.merge_movieshowing_baidu();
 
-    mapper.merge_cinema_mtime();
     mapper.merge_cinema_maoyan();
+    mapper.merge_cinema_mtime();
     mapper.merge_cinema_baidu();
 
     mapper.merge_screening_maoyan();

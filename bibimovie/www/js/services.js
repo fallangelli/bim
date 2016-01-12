@@ -83,6 +83,26 @@ angular.module('bibimovie.services', [])
     }
   }])
 
+  .factory('MovieListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+    return {
+      getMovies: function (cityId) {
+        var deferred = $q.defer();
+        var url = ApiEndpoint.server_url + "cityMovies/CityMovies?cityId=" + cityId;
+        $http.get(url)
+          .success(function (data) {
+            var cinemas = angular.fromJson(data)
+            deferred.resolve(cinemas);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      }
+
+    }
+  }])
+
   .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
       getCinemas: function (cityId) {

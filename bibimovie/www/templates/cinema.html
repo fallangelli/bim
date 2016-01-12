@@ -79,10 +79,10 @@
       </ion-slide>
     </ion-slide-box>
 
-    <h2 ng-if="currShowDates.length<=0">当前影片无上映信息</h2>
+    <h2 ng-if="showDates.length<=0">当前影片无上映信息</h2>
     <ion-slide-box on-slide-changed="currDateHasChanged($index)" delegate-handle="slideDate"
-                   show-pager="true" ng-if="currShowDates.length>0">
-      <ion-slide ng-repeat="showDate in currShowDates" repeat-done="repeatDateDone()">
+                   show-pager="true" ng-if="showDates.length>0">
+      <ion-slide ng-repeat="showDate in showDates" repeat-done="repeatDateDone()">
         <h3 style="text-align: center">
           <div ng-if="$index!=0" class="go_back" ng-click="lastDateSlide()"></div>
           {{showDate}}
@@ -91,11 +91,11 @@
       </ion-slide>
     </ion-slide-box>
 
-    <ion-list ng-if="currShowDates.length>0">
+    <ion-list ng-if="showDates.length>0">
       <h4>日期:{{showDate}}</h4>
       <ion-item ng-repeat="screening in currScreenings"
                 class="item-icon-right" type="item-text-wrap"
-                href="/#/source/{{cinemaId}}/{{movieId}}/{{showDate}}/{{screening.startTime}}">
+                href="/#/source/{{cinema.id}}/{{currMovie.id}}/{{currShowDate}}/{{screening.startTime}}">
         <div class="row">
           <div class="col col-40">
             <h3>{{screening.startTime}}</h3>

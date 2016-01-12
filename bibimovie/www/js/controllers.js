@@ -69,6 +69,37 @@ angular.module('bibimovie.controllers', [])
     }
   })
 
+  .controller('MovieListCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, MovieListService, Geolocation) {
+    $ionicLoading.show({template: '加载中...'})
+    var currTime = new Date();
+    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      $scope.currCityId = window.localStorage['curr_city_id'];
+      $scope.currCityName = window.localStorage['curr_city_name'];
+      loadMovies();
+    } else {
+      var promiseCity = Geolocation.initCurrentCity();
+      promiseCity.then(function () {
+        $scope.currCityId = window.localStorage['curr_city_id'];
+        $scope.currCityName = window.localStorage['curr_city_name'];
+        loadMovies();
+      }, function () {
+        alert("无法得到当前城市信息");
+      })
+    }
+
+    function loadMovies() {
+      var promise = MovieListService.getMovies($scope.currCityId);
+      promise.then(function (val) {
+          $scope.movies = val;
+          $ionicLoading.hide();
+        }
+        , function () {
+          $ionicLoading.hide();
+          alert("无法获取上映影片信息");
+        });
+    }
+  })
 
   .controller('CinemaListCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
     $ionicLoading.show({template: '加载中...'})
@@ -312,17 +343,18 @@ angular.module('bibimovie.controllers', [])
 
     $scope.currDateHasChanged = function (index) {
       $ionicLoading.show({template: '加载中...'})
-      if ($scope.currShowDates.length > 0) {
-        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.currShowDates[index]);
+      if ($scope.showDates.length > 0) {
+        $scope.currShowDate = $scope.showDates[index];
+        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.showDates[index]);
       }
     }
 
     $scope.repeatDateDone = function () {
       $ionicLoading.show({template: '加载中...'})
       $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
-      if ($scope.currShowDates.length > 0) {
+      if ($scope.showDates.length > 0) {
         var index = $ionicSlideBoxDelegate.$getByHandle("slideDate").currentIndex();
-        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.currShowDates[index]);
+        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.showDates[index]);
       }
     };
 
@@ -336,7 +368,7 @@ angular.module('bibimovie.controllers', [])
     function loadCinemaMovieDates(cinemaId, movieId) {
       var promise = CinemaService.getCinemaMovieDates(cinemaId, movieId);
       promise.then(function (data) {
-          $scope.currShowDates = angular.fromJson(data);
+          $scope.showDates = angular.fromJson(data);
           $ionicSlideBoxDelegate.$getByHandle("slideDate").slide(0);
           $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
           $scope.currDateHasChanged(0);

@@ -3,12 +3,13 @@
 <mapper namespace="com.family.webserver.mapper.HomeMapper">
 
   <select id="selectHomeHotMoviesByCity" parameterType="java.lang.Integer"
-          resultType="com.family.webserver.entity.HomeCityHotMovie">
+          resultType="com.family.webserver.entity.CityHotMovie">
     SELECT
       ct.id      AS     cityId,
       s.movie_id AS     movieId,
       m.name     AS     movieName,
       m.image,
+    m.content,
       m.rating   AS     rating,
       min(s.sale_price) minPrice,
       count(s.movie_id) screeningCount

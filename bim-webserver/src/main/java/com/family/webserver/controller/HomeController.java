@@ -1,7 +1,7 @@
 package com.family.webserver.controller;
 
 import com.family.webserver.entity.Cinema;
-import com.family.webserver.entity.HomeCityHotMovie;
+import com.family.webserver.entity.CityHotMovie;
 import com.family.webserver.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class HomeController {
   @RequestMapping(value = "/hotMovies", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<List<HomeCityHotMovie>> getHotMoviesByCity(@RequestParam(value = "cityId", required = true) Integer cityId) {
+  List<List<CityHotMovie>> getHotMoviesByCity(@RequestParam(value = "cityId", required = true) Integer cityId) {
     return service.getHotMoviesByCity(cityId);
   }
 

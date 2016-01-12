@@ -6,12 +6,13 @@ import org.apache.ibatis.type.Alias;
  * Created by Administrator on 2015/12/12.
  */
 @Alias("User")
-public class HomeCityHotMovie {
+public class CityHotMovie {
 
   Integer cityId;
   Integer movieId;
   String movieName;
   String image;
+  String content;
   Float rating;
   Double minPrice;
   Integer screeningCount;
@@ -46,6 +47,14 @@ public class HomeCityHotMovie {
 
   public void setImage(String image) {
     this.image = image;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
   }
 
   public Float getRating() {

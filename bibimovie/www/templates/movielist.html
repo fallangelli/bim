@@ -1,0 +1,58 @@
+<ion-view view-title="热映影评">
+
+
+  <ion-content class="padding">
+    <ion-refresher on-refresh="doRefresh()"
+                   pulling-text="松开刷新"
+                   refreshing-text="更新历史数据，稍后..."
+                   refreshing-icon="ion-loading-b">
+    </ion-refresher>
+
+    <header>
+      <a href="/#/">
+        <div class="go_back"></div>
+      </a>
+
+      <div class="page_title">热映影评</div>
+      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
+    </header>
+
+    <div class="list">
+      <a ng-repeat="movie in movies"
+         class="item item-thumbnail-left item-icon-right" href="/#/movie/{{movie.movieId}}">
+        <img src="{{movie.image}}" height="220px">
+
+        <h2 style="font-family: 微软雅黑">{{movie.movieName}}</h2>
+
+        <p>{{movie.content}}</p>
+
+        <h3>评分：{{movie.rating}}</h3>
+
+        <h3>{{movie.screeningCount}} 场次</h3>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+
+      <!--<div class="col col-30">-->
+      <!--<a href="/#/movie/{{movie.movieId}}">-->
+      <!--<div>-->
+      <!--<img src={{movie.image}} height="220px">-->
+      <!--<em class="ml_score"><i>111</i></em>-->
+      <!--</div>-->
+      <!--</a>-->
+
+
+      <!--</div>-->
+      <!--<div class="col col-70">-->
+      <!--<h4 style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</h4>-->
+
+      <!--<p style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</p>-->
+      <!--<a style="ali" href="/#/moivecinema/{{movie.movieId}}"-->
+      <!--class="button button-assertive button-full button-small button-positive">-->
+      <!--购票&nbsp;{{movie.minPrice}}&nbsp;元起-->
+      <!--</a>-->
+      <!--</div>-->
+    </div>
+
+  </ion-content>
+</ion-view>

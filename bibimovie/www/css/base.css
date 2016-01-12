@@ -254,3 +254,34 @@ header .movieTxt {
   background: #e94545;
 }
 
+.m_score {
+  position: relative;
+  left: -38px;
+  top: -110px;
+  background: #659d0e;
+  width: 2em;
+  height: 1.8em;
+  color: #fff;
+  border-radius: 0;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  line-height: 1.8em;
+  text-align: center;
+}
+
+.ml_score {
+  position: relative;
+  left: -0px;
+  top: -160px;
+  background: #659d0e;
+  width: 2em;
+  height: 1.8em;
+  color: #fff;
+  border-radius: 0;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  line-height: 1.8em;
+  text-align: center;
+}

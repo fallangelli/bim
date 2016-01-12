@@ -19,7 +19,7 @@
     </header>
 
     <nav>
-      <a href="#">
+      <a href="/#/movielist">
         <div class="quanDiv"></div>
         比比电影</a>
       <a href="/#/cinemalist">
@@ -29,15 +29,18 @@
 
     <ion-item style="border-width: 0">
       <span class="fs_10">热映影片</span>
-      <a href="filmlist.html" class="font_8f8f8f fs_13">
-        <span class="item-note">38部正在热映 &gt;</span>
+      <a href="/#/movielist" class="font_8f8f8f fs_13">
+        <span class="item-note">更多&gt;&gt;</span>
       </a>
 
 
       <div class="row" ng-repeat="movies in movieList">
         <div class="col col-33" ng-repeat="movie in movies">
           <a href="/#/movie/{{movie.movieId}}">
-            <img src={{movie.image}} width="100%">
+            <div>
+              <img src={{movie.image}} height="130px" width="100%">
+              <em class="m_score">{{movie.rating}}</em>
+            </div>
 
             <h2 style="font-family: 微软雅黑;text-align: center">{{movie.movieName}}</h2>
           </a>

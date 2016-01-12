@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.family.webserver.mapper.CityMovieMapper">
+
+  <select id="selectCityMovies" parameterType="java.lang.Integer"
+          resultType="com.family.webserver.entity.CityHotMovie">
+    SELECT
+      ct.id      AS     cityId,
+      s.movie_id AS     movieId,
+      m.name     AS     movieName,
+      m.image,
+      m.content,
+      m.rating   AS     rating,
+      min(s.sale_price) minPrice,
+      count(s.movie_id) screeningCount
+    FROM screening s
+      INNER JOIN cinema cn ON s.cinema_id = cn.id
+      INNER JOIN city_area ca ON cn.district_id = ca.id
+      INNER JOIN city ct ON ca.city_id = ct.id
+      INNER JOIN movieshowing m ON s.movie_id = m.id
+    WHERE ct.id = #{cityId,jdbcType=INTEGER} AND to_days(s.show_date) >= to_days(now()) AND s.sale_price > 0
+    GROUP BY s.movie_id
+    ORDER BY count(*) DESC
+  </select>
+
+</mapper>

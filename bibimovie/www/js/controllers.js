@@ -27,20 +27,6 @@ angular.module('bibimovie.controllers', [])
       })
     }
 
-    //if (window.localStorage['curr_lat'].length > 0 && window.localStorage['curr_lng'].length > 0) {
-    //  $scope.currLat = window.localStorage['curr_lat'];
-    //  $scope.currLng = window.localStorage['curr_lng'];
-    //} else {
-    //  var promiseCity = Geolocation.initCurrentPosition();
-    //  promiseCity.then(function () {
-    //    $scope.currLat = window.localStorage['curr_lat'];
-    //    $scope.currLng = window.localStorage['curr_lng'];
-    //  }, function () {
-    //    alert("无法得到当前城市信息");
-    //    $ionicLoading.hide();
-    //  })
-    //}
-
     function loadHotMovies() {
       var url = ApiEndpoint.server_url + "home/hotMovies?cityId=" + $scope.currCityId;
       $http.get(url)

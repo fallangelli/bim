@@ -90,16 +90,21 @@ angular.module('bibimovie.controllers', [])
   .controller('CinemaListCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
     $ionicLoading.show({template: '加载中...'})
     var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+    if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
+      window.localStorage['curr_lat'] && window.localStorage['curr_lng'] &&
       window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
       $scope.currCityId = window.localStorage['curr_city_id'];
       $scope.currCityName = window.localStorage['curr_city_name'];
+      $scope.currLat = window.localStorage['curr_lat'];
+      $scope.currLng = window.localStorage['curr_lng'];
       loadCinemas();
     } else {
       var promiseCity = Geolocation.initCurrentCity();
       promiseCity.then(function () {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
+        $scope.currLat = window.localStorage['curr_lat'];
+        $scope.currLng = window.localStorage['curr_lng'];
         loadCinemas();
       }, function () {
         alert("无法得到当前城市信息");
@@ -107,7 +112,7 @@ angular.module('bibimovie.controllers', [])
     }
 
     function loadCinemas() {
-      var promise = CinemaListService.getCinemas($scope.currCityId);
+      var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng);
       promise.then(function (val) {
           $scope.cinemas = val;
           $ionicLoading.hide();

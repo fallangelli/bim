@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.webserver.mapper.CityCinemaMapper">
 
-  <select id="selectByCity" parameterType="java.lang.Integer"
+  <select id="selectByCity"
           resultType="com.family.webserver.entity.ListCinema">
     SELECT
       cn.id,
@@ -11,13 +11,15 @@
       cn.address,
       cn.latitude,
       cn.longitude,
-      cn.has_3d   AS has3d,
-      cn.has_imax AS hasImax,
-      cn.tel
+    cn.has_3d AS has3d,
+    cn.has_imax AS hasImax,
+    cn.tel,
+    GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
     FROM cinema cn
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
-    WHERE c.id = #{id,jdbcType=INTEGER}
+    WHERE c.id = #{cityId,jdbcType=INTEGER}
+    ORDER BY len
   </select>
 
   <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">

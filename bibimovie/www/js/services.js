@@ -90,8 +90,8 @@ angular.module('bibimovie.services', [])
         var url = ApiEndpoint.server_url + "cityMovies/CityMovies?cityId=" + cityId;
         $http.get(url)
           .success(function (data) {
-            var cinemas = angular.fromJson(data)
-            deferred.resolve(cinemas);
+            var movies = angular.fromJson(data)
+            deferred.resolve(movies);
           })
           .error(function (data, header, config, status) {
             deferred.reject();
@@ -105,9 +105,9 @@ angular.module('bibimovie.services', [])
 
   .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
-      getCinemas: function (cityId) {
+      getCinemas: function (cityId, lat, lng) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId;
+        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId + "&lat=" + lat + "&lng=" + lng
         $http.get(url)
           .success(function (data) {
             var cinemas = angular.fromJson(data)

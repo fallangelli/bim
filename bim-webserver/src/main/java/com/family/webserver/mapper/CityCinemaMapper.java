@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface CityCinemaMapper {
 
-  List<ListCinema> selectByCity(Integer cityId);
+  List<ListCinema> selectByCity(@Param("cityId") Integer cityId,
+                                @Param("lat") String lat,
+                                @Param("lng") String lng);
 
   List<ListCinema> selectMovieCinemaByCity(@Param("cityId") Integer cityId,
                                            @Param("movieId") Integer movieId,

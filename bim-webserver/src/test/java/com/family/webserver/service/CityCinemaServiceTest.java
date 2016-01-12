@@ -32,7 +32,9 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testGetCinemaByCity() throws Exception {
+    List<ListCinema> listCinemas = service.getCinemaByCity(1, "39.91488908", "116");
 
+    System.out.println("return size : " + listCinemas.size());
   }
 
   @Test

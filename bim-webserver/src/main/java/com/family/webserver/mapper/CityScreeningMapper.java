@@ -12,16 +12,17 @@ public interface CityScreeningMapper {
   CityMovieWithShowDates selectCityMovieWithShowDates(@Param("cityId") Integer cityId,
                                                       @Param("movieId") Integer movieId);
 
-  CityScreening selectCityScreening(@Param("cityId") Integer cityId,
-                                    @Param("cinemaId") Integer cinemaId,
-                                    @Param("movieId") Integer movieId,
-                                    @Param("showDate") Date showDate);
+  List<String> selectCinemaMovieDates(@Param("cinemaId") Integer cinemaId,
+                                      @Param("movieId") Integer movieId);
 
-  List<Source> selectCitySource(@Param("cityId") Integer cityId,
-                                @Param("cinemaId") Integer cinemaId,
-                                @Param("movieId") Integer movieId,
-                                @Param("showDate") Date showDate,
-                                @Param("startTime") Date startTime);
+  CityScreening selectCinemaScreening(@Param("cinemaId") Integer cinemaId,
+                                      @Param("movieId") Integer movieId,
+                                      @Param("showDate") Date showDate);
+
+  List<Source> selectCinemaSource(@Param("cinemaId") Integer cinemaId,
+                                  @Param("movieId") Integer movieId,
+                                  @Param("showDate") Date showDate,
+                                  @Param("startTime") Date startTime);
 
 
 }

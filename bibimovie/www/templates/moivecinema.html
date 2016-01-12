@@ -58,9 +58,7 @@
       <a class="item" collection-repeat="cinema in cinemas"
          href="/#/screening/{{cinema.id}}/{{movieId}}/{{showDate}}">
         {{cinema.name}}
-        <p>
-          {{cinema.address}}
-        </p>
+        <p>{{cinema.address}}</p>
 
         <p style="color: orangered">
           剩余{{cinema.leftScreening}}场

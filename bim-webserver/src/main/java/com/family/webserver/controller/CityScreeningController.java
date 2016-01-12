@@ -22,7 +22,7 @@ public class CityScreeningController {
   @Autowired
   private CityScreeningService service;
 
-  @RequestMapping(value = "/cityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/CityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   CityMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
@@ -31,26 +31,24 @@ public class CityScreeningController {
     return movieWithShowDates;
   }
 
-  @RequestMapping(value = "/cityScreening", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/CinemaScreening", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityScreening getCityScreening(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                 @RequestParam(value = "cinemaId", required = true) Integer cinemaId,
-                                 @RequestParam(value = "movieId", required = true) Integer movieId,
-                                 @RequestParam(value = "showDate", required = true) Date showDate) {
-    CityScreening screening = service.getCityScreening(cityId, cinemaId, movieId, showDate);
+  CityScreening getCinemaScreening(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
+                                   @RequestParam(value = "movieId", required = true) Integer movieId,
+                                   @RequestParam(value = "showDate", required = true) Date showDate) {
+    CityScreening screening = service.getCinemaScreening(cinemaId, movieId, showDate);
     return screening;
   }
 
-  @RequestMapping(value = "/citySource", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/CinemaSource", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<Source> getCitySource(@RequestParam(value = "cityId", required = true) Integer cityId,
-                             @RequestParam(value = "cinemaId", required = true) Integer cinemaId,
-                             @RequestParam(value = "movieId", required = true) Integer movieId,
-                             @RequestParam(value = "showDate", required = true) Date showDate,
-                             @RequestParam(value = "startTime", required = true) Time startTime) {
-    List<Source> sourceList = service.getCitySource(cityId, cinemaId, movieId, showDate, startTime);
+  List<Source> getCinemaSource(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
+                               @RequestParam(value = "movieId", required = true) Integer movieId,
+                               @RequestParam(value = "showDate", required = true) Date showDate,
+                               @RequestParam(value = "startTime", required = true) Time startTime) {
+    List<Source> sourceList = service.getCinemaSource(cinemaId, movieId, showDate, startTime);
     return sourceList;
   }
 

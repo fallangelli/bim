@@ -22,7 +22,6 @@ public class CityCinemaService {
     return cmapper.selectByPrimaryKey(cityId);
   }
 
-
   public List<ListCinema> getCinemaByCity(Integer cityId) {
     return ccmapper.selectByCity(cityId);
   }

@@ -32,7 +32,7 @@ public class CityScreeningServiceTest {
   public void testGetCityScreening() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-26");
 
-    CityScreening screening = service.getCityScreening(2861, 578, 2256, date);
+    CityScreening screening = service.getCinemaScreening(578, 2256, date);
     System.out.println("return size : " + screening);
   }
 
@@ -41,7 +41,7 @@ public class CityScreeningServiceTest {
   public void testGetCitySource() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-24");
     Date time = new SimpleDateFormat("HH:mm:ss").parse("11:45:00");
-    List<Source> screening = service.getCitySource(2861, 578, 2256, date, time);
+    List<Source> screening = service.getCinemaSource(578, 2256, date, time);
     System.out.println("return size : " + screening.size());
   }
 }

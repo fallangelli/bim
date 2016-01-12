@@ -54,7 +54,6 @@ angular.module('bibimovie.controllers', [])
         });
     }
 
-
     function loadNearCinemas() {
       var url = ApiEndpoint.server_url + "home/getNearCinemas?lat=" + $scope.currLat + "&lng=" + $scope.currLng;
       $http.get(url)
@@ -261,7 +260,7 @@ angular.module('bibimovie.controllers', [])
   })
 
 
-  .controller('CinemaCtrl', function ($scope, $http, $ionicLoading, $filter, ApiEndpoint, $stateParams, CinemaService, Geolocation) {
+  .controller('CinemaCtrl', function ($scope, $http, $ionicLoading, $ionicSlideBoxDelegate, $filter, ApiEndpoint, $stateParams, CinemaService, Geolocation) {
     $ionicLoading.show({template: '加载中...'})
     var currTime = new Date();
     if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
@@ -292,6 +291,75 @@ angular.module('bibimovie.controllers', [])
           $ionicLoading.hide();
           alert("无法获取影院详情信息");
         });
+    }
+
+    $scope.currMovieHasChanged = function (index) {
+      $ionicLoading.show({template: '加载中...'})
+      $scope.currMovie = $scope.movies[index];
+      loadCinemaMovieDates($scope.cinema.id, $scope.currMovie.id);
+    }
+
+    $scope.repeatMovieDone = function () {
+      $ionicLoading.show({template: '加载中...'})
+      $ionicSlideBoxDelegate.$getByHandle("slideMovie").update();
+
+      if ($scope.movies.length > 0) {
+        var index = $ionicSlideBoxDelegate.$getByHandle("slideMovie").currentIndex();
+        $scope.currMovie = $scope.movies[index];
+        loadCinemaMovieDates($scope.cinema.id, $scope.currMovie.id);
+      }
+    };
+
+    $scope.currDateHasChanged = function (index) {
+      $ionicLoading.show({template: '加载中...'})
+      if ($scope.currShowDates.length > 0) {
+        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.currShowDates[index]);
+      }
+    }
+
+    $scope.repeatDateDone = function () {
+      $ionicLoading.show({template: '加载中...'})
+      $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
+      if ($scope.currShowDates.length > 0) {
+        var index = $ionicSlideBoxDelegate.$getByHandle("slideDate").currentIndex();
+        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.currShowDates[index]);
+      }
+    };
+
+    $scope.lastDateSlide = function () {
+      $ionicSlideBoxDelegate.$getByHandle("slideDate").previous();
+    };
+    $scope.nextDateSlide = function () {
+      $ionicSlideBoxDelegate.$getByHandle("slideDate").next();
+    };
+
+    function loadCinemaMovieDates(cinemaId, movieId) {
+      var promise = CinemaService.getCinemaMovieDates(cinemaId, movieId);
+      promise.then(function (data) {
+          $scope.currShowDates = angular.fromJson(data);
+          $ionicSlideBoxDelegate.$getByHandle("slideDate").slide(0);
+          $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
+          $scope.currDateHasChanged(0);
+          $ionicLoading.hide();
+        }
+        , function () {
+          alert("无法获取影院影片日期信息");
+          $ionicLoading.hide();
+        })
+    }
+
+    function loadCinemaMovieSourcesByDate(cinemaId, movieId, date) {
+      var promise = CinemaService.getCinemaMovieScreeningByDate(cinemaId, movieId, date);
+      promise.then(function (data) {
+          var jsonObject = angular.fromJson(data);
+          $scope.currScreenings = jsonObject['minSource'];
+
+          $ionicLoading.hide();
+        }
+        , function () {
+          alert("无法获取该日影院影片信息");
+          $ionicLoading.hide();
+        })
     }
   })
 

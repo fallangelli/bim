@@ -17,7 +17,7 @@
       INNER JOIN city_area ca ON cn.district_id = ca.id
       INNER JOIN city ct ON ca.city_id = ct.id
       INNER JOIN movieshowing m ON s.movie_id = m.id
-    WHERE ct.id = #{id,jdbcType=INTEGER} AND to_days(s.show_date) = to_days(now()) AND s.sale_price > 0
+    WHERE ct.id = #{id,jdbcType=INTEGER} AND to_days(s.show_date) >= to_days(now()) AND s.sale_price > 0
     GROUP BY s.movie_id
     ORDER BY count(*) DESC
     LIMIT 6

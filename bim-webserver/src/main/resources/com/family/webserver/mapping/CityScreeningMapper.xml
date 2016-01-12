@@ -36,7 +36,7 @@
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN movieshowing m ON m.id = s.movie_id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER}
+    WHERE s.movie_id = #{movieId,jdbcType=INTEGER}
     AND (to_days(s.show_date) > to_days(now()) OR
     (to_days(s.show_date) = to_days(now()) AND
     time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30
@@ -46,7 +46,15 @@
     ORDER BY show_dates
   </select>
 
-  <select id="selectCityScreening" resultMap="CityScreeningResultMap">
+  <select id="selectCinemaMovieDates" resultType="java.lang.String">
+    SELECT DISTINCT show_date
+    FROM screening
+    WHERE cinema_id = #{cinemaId,jdbcType=INTEGER} AND movie_id = #{movieId,jdbcType=INTEGER}
+          AND to_days(show_date) >= to_days(now())
+    ORDER BY show_date
+  </select>
+
+  <select id="selectCinemaScreening" resultMap="CityScreeningResultMap">
     SELECT
       m.name                 AS movie_name,
       s.show_date,
@@ -66,7 +74,7 @@
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
       LEFT JOIN movieshowing m ON m.id = s.movie_id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} AND cn.id = #{cinemaId,jdbcType=INTEGER}
+    WHERE cn.id = #{cinemaId,jdbcType=INTEGER}
           AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
           if(to_days(now()) = to_days(#{showDate,jdbcType=DATE}),
              time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30,
@@ -77,7 +85,7 @@
   </select>
 
 
-  <select id="selectCitySource" resultType="com.family.webserver.entity.Source">
+  <select id="selectCinemaSource" resultType="com.family.webserver.entity.Source">
     SELECT
     s.id,
     s.start_time AS startTime,
@@ -94,7 +102,7 @@
     LEFT JOIN city_area ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN movieshowing m ON m.id = s.movie_id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} AND cn.id = #{cinemaId,jdbcType=INTEGER}
+    WHERE cn.id = #{cinemaId,jdbcType=INTEGER}
     AND s.movie_id = #{movieId,jdbcType=INTEGER}
     AND to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
     AND time_to_sec(s.start_time) = time_to_sec(#{startTime,jdbcType=TIME})

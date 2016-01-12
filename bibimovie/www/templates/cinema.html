@@ -56,9 +56,11 @@
       </div>
     </div>
 
-    <ion-slide-box style="background-color: gainsboro"
-                   on-slide-changed="slideHasChanged($index)" show-pager="true">
-      <ion-slide ng-repeat="movie in movies" repeat-done="repeatDone()">
+    <h1 ng-if="movies.length<=0">当前影院无上映信息</h1>
+    <ion-slide-box style="background-color: gainsboro" delegate-handle="slideMovie"
+                   on-slide-changed="currMovieHasChanged($index)" show-pager="true"
+                   ng-if="movies.length>0">
+      <ion-slide ng-repeat="movie in movies" repeat-done="repeatMovieDone()">
         <div class="row">
           <div class="col col-30">
             <img ng-if="$index!=0"
@@ -69,31 +71,71 @@
             <img style="height: 150px;border: 3px" src="{{movie.image}}">
           </div>
           <div class="col col-30">
-            <img ng-if="$index!=movies.length-1"
+            <img ng-if="$index!=movies.length-1 && movies.length != 1"
                  style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.6;opacity:0.6"
                  src="{{movies[$index+1].image}}">
           </div>
-
         </div>
       </ion-slide>
     </ion-slide-box>
 
-    <div class="list">
-      <a class="item" collection-repeat="cinema in cinemas"
-         href="/#/screening/{{cinema.id}}/{{movieId}}/{{showDate}}">
-        {{cinema.name}}
-        <p>
-          {{cinema.address}}
-        </p>
+    <h2 ng-if="currShowDates.length<=0">当前影片无上映信息</h2>
+    <ion-slide-box on-slide-changed="currDateHasChanged($index)" delegate-handle="slideDate"
+                   show-pager="true" ng-if="currShowDates.length>0">
+      <ion-slide ng-repeat="showDate in currShowDates" repeat-done="repeatDateDone()">
+        <h3 style="text-align: center">
+          <div ng-if="$index!=0" class="go_back" ng-click="lastDateSlide()"></div>
+          {{showDate}}
+          <div ng-if="$index!=showDates.length-1" class="go_forward" ng-click="nextDateSlide()"></div>
+        </h3>
+      </ion-slide>
+    </ion-slide-box>
 
-        <p style="color: orangered">
-          剩余{{cinema.leftScreening}}场
-           <span class="badge badge-assertive" style="bottom: 2px;top: auto;right: 5px">
-            {{cinema.minPrice}}元起 {{cinema.sourceCount}}个票源
-          </span>
-        </p>
-      </a>
-    </div>
+    <ion-list ng-if="currShowDates.length>0">
+      <h4>日期:{{showDate}}</h4>
+      <ion-item ng-repeat="screening in currScreenings"
+                class="item-icon-right" type="item-text-wrap"
+                href="/#/source/{{cinemaId}}/{{movieId}}/{{showDate}}/{{screening.startTime}}">
+        <div class="row">
+          <div class="col col-40">
+            <h3>{{screening.startTime}}</h3>
+          </div>
+          <div class="col col-30">
+            <h4>{{screening.language}}/{{screening.version}}</h4>
+          </div>
+          <div class="col col-30">
+            <h5 style="color: red"> 原价
+              <del>￥{{screening.cinemaPrice}}</del>
+            </h5>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col col-40">
+            <p>散 {{screening.endTime}}</p>
+          </div>
+          <div class="col col-30">
+            <h4>{{screening.hall}}</h4>
+          </div>
+          <div class="col col-30">
+            <h3>{{screening.sourceCount}}个来源</h3>
+          </div>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </div>
+
+        <div class="item item-divider" style="border: hidden;min-height: 40px">
+          <div class="bar bar-header">
+            <h2 style="color:darkorange">最低价来自: {{screening.source}}</h2>
+            <a class="button button-small button-assertive pull-right"
+               href="{{screening.ticketURL}}">
+              ￥{{screening.salePrice}} 去购票
+            </a>
+          </div>
+
+        </div>
+      </ion-item>
+
+    </ion-list>
 
   </ion-content>
 </ion-view>

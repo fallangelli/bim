@@ -20,12 +20,16 @@ public class CityScreeningService {
     return ccmapper.selectCityMovieWithShowDates(cityId, movieId);
   }
 
-  public CityScreening getCityScreening(Integer cityId, Integer cinemaId, Integer movieId, Date showDate) {
-    return ccmapper.selectCityScreening(cityId, cinemaId, movieId, showDate);
+  public List<String> getCinemaMovieDates(Integer cinemaId, Integer movieId) {
+    return ccmapper.selectCinemaMovieDates(cinemaId, movieId);
   }
 
-  public List<Source> getCitySource(Integer cityId, Integer cinemaId, Integer movieId, Date showDate, Date startTime) {
-    return ccmapper.selectCitySource(cityId, cinemaId, movieId, showDate, startTime);
+  public CityScreening getCinemaScreening(Integer cinemaId, Integer movieId, Date showDate) {
+    return ccmapper.selectCinemaScreening(cinemaId, movieId, showDate);
+  }
+
+  public List<Source> getCinemaSource(Integer cinemaId, Integer movieId, Date showDate, Date startTime) {
+    return ccmapper.selectCinemaSource(cinemaId, movieId, showDate, startTime);
   }
 
 }

@@ -43,8 +43,10 @@ public class CityCinemaController {
   @ResponseBody
   List<ListCinema> getCityMovieCinemabyDate(@RequestParam(value = "cityId", required = true) Integer cityId,
                                             @RequestParam(value = "movieId", required = true) Integer movieId,
-                                            @RequestParam(value = "showDate", required = true) Date showDate) {
-    List<ListCinema> cinemas = cservice.getMovieCinemaByCity(cityId, movieId, showDate);
+                                            @RequestParam(value = "showDate", required = true) Date showDate,
+                                            @RequestParam(value = "lat", required = true) String lat,
+                                            @RequestParam(value = "lng", required = true) String lng) {
+    List<ListCinema> cinemas = cservice.getMovieCinemaByCity(cityId, movieId, showDate, lat, lng);
     return cinemas;
   }
 

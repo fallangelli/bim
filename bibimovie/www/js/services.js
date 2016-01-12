@@ -63,12 +63,12 @@ angular.module('bibimovie.services', [])
           });
         return promise;
       },
-      getMovieCinemasByDate: function (cityId, movieId, date) {
+      getMovieCinemasByDate: function (cityId, movieId, date, lat, lng) {
         var deferred = $q.defer();
         var promise = deferred.promise;
 
         var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
-          "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date;
+          "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date + "&lat=" + lat + "&lng=" + lng;
         $http.get(cinema_url).success(function (data) {
             deferred.resolve(data);
           })

@@ -26,7 +26,7 @@ public class CityCinemaService {
     return ccmapper.selectByCity(cityId, lat, lng);
   }
 
-  public List<ListCinema> getMovieCinemaByCity(Integer cityId, Integer movieId, Date showDate) {
-    return ccmapper.selectMovieCinemaByCity(cityId, movieId, showDate);
+  public List<ListCinema> getMovieCinemaByCity(Integer cityId, Integer movieId, Date showDate, String lat, String lng) {
+    return ccmapper.selectMovieCinemaByCity(cityId, movieId, showDate, lat, lng);
   }
 }

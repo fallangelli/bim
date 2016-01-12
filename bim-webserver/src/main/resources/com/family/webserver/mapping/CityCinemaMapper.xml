@@ -35,7 +35,9 @@
       cn.tel,
     min(s.sale_price) AS minPrice,
     count(DISTINCT s.source) AS sourceCount,
-    count(DISTINCT s.start_time) AS leftScreening
+    count(DISTINCT
+    s.start_time) AS leftScreening,
+    GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
     FROM cinema cn
       LEFT JOIN city_area ca ON cn.district_id = ca.id
       LEFT JOIN city c ON ca.city_id = c.id
@@ -43,6 +45,7 @@
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
     to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
     GROUP BY cn.id
+    ORDER BY len
   </select>
 
   <select id="selectMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">

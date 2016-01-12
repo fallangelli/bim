@@ -1,12 +1,12 @@
 -- --------------------------------------------------------
--- 主机:                           localhost
--- 服务器版本:                        5.6.21 - MySQL Community Server (GPL)
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.6.24 - MySQL Community Server (GPL)
 -- 服务器操作系统:                      Win32
--- HeidiSQL 版本:                  8.3.0.4694
+-- HeidiSQL 版本:                  9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `cinema` (
   `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '地址',
   `latitude` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '经度',
   `longitude` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '纬度',
+  `pos` point DEFAULT NULL,
   `rating` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '评分',
   `has_3d` tinyint(1) DEFAULT NULL COMMENT '是否3d',
   `has_imax` tinyint(1) DEFAULT NULL COMMENT '是否IMax',
@@ -139,17 +140,6 @@ CREATE DATABASE IF NOT EXISTS `bim_grab` /*!40100 DEFAULT CHARACTER SET utf8 COL
 USE `bim_grab`;
 
 
--- 导出  表 bim_grab.base 结构
-CREATE TABLE IF NOT EXISTS `base` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- 数据导出被取消选择。
-
-
 -- 导出  表 bim_grab.cinemamovie_maoyan 结构
 CREATE TABLE IF NOT EXISTS `cinemamovie_maoyan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -183,8 +173,8 @@ CREATE TABLE IF NOT EXISTS `cinemamovie_mtime` (
 CREATE TABLE IF NOT EXISTS `cinema_baidu` (
   `id` int(11) NOT NULL,
   `city_id` int(11) NOT NULL DEFAULT '0',
+  `area` varchar(100) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '区域',
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '名称',
-  `area` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '区域',
   `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '地址',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -252,9 +242,7 @@ CREATE TABLE IF NOT EXISTS `cinema_taobao` (
   `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '地址',
   `latitude` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '经度',
   `longitude` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '纬度',
-  `sell` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否售票',
   `preferential` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否特惠',
-  `has_imax` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否imax',
   `tel` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '联系电话json',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -285,8 +273,8 @@ CREATE TABLE IF NOT EXISTS `cityarea_mtime` (
   `city_id` int(11) NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_area_city` (`city_id`),
-  CONSTRAINT `fk_area_city` FOREIGN KEY (`city_id`) REFERENCES `city_mtime` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_mtime_area_city` (`city_id`),
+  CONSTRAINT `fk_mtime_area_city` FOREIGN KEY (`city_id`) REFERENCES `city_mtime` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 数据导出被取消选择。
@@ -301,6 +289,7 @@ CREATE TABLE IF NOT EXISTS `city_baidu` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -424,13 +413,15 @@ CREATE TABLE IF NOT EXISTS `screening_baidu` (
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '语种',
   `hall` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '厅位',
   `version` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '类型',
-  `sale_price` float NOT NULL COMMENT '原价',
-  `cinema_price` float NOT NULL COMMENT '价格',
+  `sale_price` float NOT NULL COMMENT '价格',
+  `cinema_price` float NOT NULL COMMENT '原价',
   `ticket_url` varchar(3000) COLLATE utf8_unicode_ci NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cinema_id_movie_id_show_date_start_time_end_time` (`cinema_id`,`movie_id`,`show_date`,`start_time`,`end_time`,`hall`)
+  KEY `showplan_maoyan_cinema_id` (`cinema_id`),
+  KEY `showplan_maoyan_movie_id` (`movie_id`),
+  KEY `showplan_maoyan_show_date` (`show_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 数据导出被取消选择。
@@ -447,13 +438,15 @@ CREATE TABLE IF NOT EXISTS `screening_maoyan` (
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '语种',
   `hall` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '厅位',
   `version` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '类型',
-  `sale_price` float NOT NULL COMMENT '原价',
-  `cinema_price` float NOT NULL COMMENT '价格',
+  `sale_price` float NOT NULL COMMENT '价格',
+  `cinema_price` float NOT NULL COMMENT '原价',
   `ticket_url` varchar(3000) COLLATE utf8_unicode_ci NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cinema_id_movie_id_show_date_start_time_end_time` (`cinema_id`,`movie_id`,`show_date`,`start_time`,`end_time`,`hall`)
+  KEY `showplan_maoyan_cinema_id` (`cinema_id`),
+  KEY `showplan_maoyan_movie_id` (`movie_id`),
+  KEY `showplan_maoyan_show_date` (`show_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 数据导出被取消选择。
@@ -470,13 +463,15 @@ CREATE TABLE IF NOT EXISTS `screening_mtime` (
   `language` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '语种',
   `hall` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '厅位',
   `version` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '类型',
-  `sale_price` float NOT NULL COMMENT '原价',
-  `cinema_price` float NOT NULL COMMENT '价格',
+  `sale_price` float NOT NULL COMMENT '价格',
+  `cinema_price` float NOT NULL COMMENT '原价',
   `ticket_url` varchar(3000) COLLATE utf8_unicode_ci NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cinema_id_movie_id_show_date_start_time_end_time` (`cinema_id`,`movie_id`,`show_date`,`start_time`,`end_time`,`hall`)
+  KEY `showplan_maoyan_cinema_id` (`cinema_id`),
+  KEY `showplan_maoyan_movie_id` (`movie_id`),
+  KEY `showplan_maoyan_show_date` (`show_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 数据导出被取消选择。

@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 public interface CityCinemaMapper {
-
-  List<ListCinema> selectByCity(@Param("cityId") Integer cityId,
-                                @Param("lat") String lat,
-                                @Param("lng") String lng);
+  List<ListCinema> selectCityCinemas(@Param("cityId") Integer cityId,
+                                     @Param("lat") String lat,
+                                     @Param("lng") String lng,
+                                     @Param("orderBy") String orderBy,
+                                     @Param("distinctId") Integer distinctId,
+                                     @Param("nameLike") String nameLike);
 
   List<ListCinema> selectMovieCinemaByCity(@Param("cityId") Integer cityId,
                                            @Param("movieId") Integer movieId,

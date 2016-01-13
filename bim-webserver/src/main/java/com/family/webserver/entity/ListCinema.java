@@ -13,6 +13,8 @@ public class ListCinema {
   String has3d;
   String hasImax;
   String tel;
+  Double minPrice;
+  Integer sourceCount;
 
   public Integer getId() {
     return id;
@@ -84,5 +86,21 @@ public class ListCinema {
 
   public void setTel(String tel) {
     this.tel = tel;
+  }
+
+  public Double getMinPrice() {
+    return minPrice;
+  }
+
+  public void setMinPrice(Double minPrice) {
+    this.minPrice = minPrice;
+  }
+
+  public Integer getSourceCount() {
+    return sourceCount;
+  }
+
+  public void setSourceCount(Integer sourceCount) {
+    this.sourceCount = sourceCount;
   }
 }

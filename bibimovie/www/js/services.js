@@ -105,9 +105,14 @@ angular.module('bibimovie.services', [])
 
   .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
-      getCinemas: function (cityId, lat, lng) {
+      getCinemas: function (cityId, lat, lng, orderBy, distinctId, nameLike) {
+        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId;
+        if (lat) url += "&lat=" + lat;
+        if (lng) url += "&lat=" + lng;
+        if (orderBy) url += "&orderBy=" + orderBy;
+        if (distinctId) url += "&distinctId=" + distinctId;
+        if (nameLike) url += "&nameLike=" + nameLike;
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId + "&lat=" + lat + "&lng=" + lng
         $http.get(url)
           .success(function (data) {
             var cinemas = angular.fromJson(data)
@@ -118,8 +123,21 @@ angular.module('bibimovie.services', [])
           });
 
         return deferred.promise;
-      }
+      },
+      getCityInfo: function (cityId) {
+        var url = ApiEndpoint.server_url + "home/getCityInfo?cityId=" + cityId;
+        var deferred = $q.defer();
+        $http.get(url)
+          .success(function (data) {
+            var cityInfo = angular.fromJson(data);
+            deferred.resolve(cityInfo);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
 
+        return deferred.promise;
+      }
     }
   }])
 

@@ -2,6 +2,7 @@ package com.family.webserver.controller;
 
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.CityHotMovie;
+import com.family.webserver.entity.CityWithArea;
 import com.family.webserver.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class HomeController {
     return service.getHotMoviesByCity(cityId);
   }
 
+
   @RequestMapping(value = "/getCityIdFromName", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
@@ -34,6 +36,13 @@ public class HomeController {
       return service.getCityIdFromName(cityName);
     }
     return null;
+  }
+
+  @RequestMapping(value = "/getCityInfo", method = RequestMethod.GET, produces = "application/json")
+  public
+  @ResponseBody
+  CityWithArea getCityInfo(@RequestParam(value = "cityId", required = true) Integer cityId) {
+    return service.getCityInfo(cityId);
   }
 
   @RequestMapping(value = "/getNearCinemas", method = RequestMethod.GET, produces = "application/json")

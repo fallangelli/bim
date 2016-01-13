@@ -32,8 +32,15 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testGetCinemaByCity() throws Exception {
-    List<ListCinema> listCinemas = service.getCinemaByCity(1, "39.91488908", "116");
+    List<ListCinema> listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "len", null, null);
+    System.out.println("return size : " + listCinemas.size());
+    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", null, null);
+    System.out.println("return size : " + listCinemas.size());
 
+    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", 1, null);
+    System.out.println("return size : " + listCinemas.size());
+
+    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", null, "东");
     System.out.println("return size : " + listCinemas.size());
   }
 

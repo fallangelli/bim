@@ -21,16 +21,21 @@
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="输入影院名称或地址">
+        <input type="search" placeholder="输入影院名称或地址" ng-model="nameLike" autocorrect="off">
       </label>
-      <button class="button button-outline button-royal">
+      <button class="button button-outline button-royal" ng-click="filterByName(nameLike)">
         搜索
       </button>
     </div>
+
     <div class="button-bar">
-      <a class="button button-outline button-positive">最近</a>
-      <a class="button button-outline button-positive">最省</a>
-      <button class="button  button-outline button-positive icon-left ion-star ">筛选</button>
+      <a ng-style="distanceOrderStyle" class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
+      <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
+      <button ng-style="distinctFilterStyle" ng-click="openPopover($event)"
+              class="button button-outline button-positive">
+        筛选: {{currDistinctName}}
+      </button>
+
     </div>
 
     <div class="list">
@@ -41,8 +46,39 @@
         <p>
           {{cinema.address}}
         </p>
+
+        <p style="color: orangered">
+           <span class="badge badge-assertive" style="bottom: 2px;top: auto;right: 5px">
+            {{cinema.minPrice}}元起 {{cinema.sourceCount}}个票源
+          </span>
+        </p>
       </a>
     </div>
-
   </ion-content>
 </ion-view>
+
+
+<script id="my-popover.html" type="text/ng-template">
+  <ion-popover-view style="height:80%">
+    <ion-header-bar>
+      <h1 class="title">选择区域</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <li class="item"
+            ng-click="filterByDistinct(null,'全部')">
+          <p>
+            全部
+          </p>
+        </li>
+        <li class="item"
+            ng-repeat="area in areas"
+            ng-click="filterByDistinct(area.id,area.area)">
+          <p>
+            {{area.area}}
+          </p>
+        </li>
+      </div>
+    </ion-content>
+  </ion-popover-view>
+</script>

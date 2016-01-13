@@ -87,8 +87,14 @@ angular.module('bibimovie.controllers', [])
     }
   })
 
-  .controller('CinemaListCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
+  .controller('CinemaListCtrl', function ($scope, $http, $ionicPopover, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
     $ionicLoading.show({template: '加载中...'})
+    $scope.orderBy = 'len';
+    $scope.nameLike = '';
+    $scope.currDistinctId = null;
+    $scope.currDistinctName = '全部';
+    $scope.distanceOrderStyle = {color: 'red'};
+
     var currTime = new Date();
     if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
       window.localStorage['curr_lat'] && window.localStorage['curr_lng'] &&
@@ -97,7 +103,8 @@ angular.module('bibimovie.controllers', [])
       $scope.currCityName = window.localStorage['curr_city_name'];
       $scope.currLat = window.localStorage['curr_lat'];
       $scope.currLng = window.localStorage['curr_lng'];
-      loadCinemas();
+      loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+      loadAreas();
     } else {
       var promiseCity = Geolocation.initCurrentCity();
       promiseCity.then(function () {
@@ -105,14 +112,78 @@ angular.module('bibimovie.controllers', [])
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
         $scope.currLng = window.localStorage['curr_lng'];
-        loadCinemas();
+        loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+        loadAreas();
       }, function () {
         alert("无法得到当前城市信息");
       })
     }
 
-    function loadCinemas() {
-      var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng);
+    $ionicPopover.fromTemplateUrl('my-popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+
+
+    $scope.openPopover = function ($event) {
+      $scope.popover.show($event);
+    };
+
+    $scope.closePopover = function () {
+      $scope.popover.hide();
+    };
+
+
+    $scope.filterByDistinct = function (distinctId, distinctName) {
+      $scope.closePopover();
+      $ionicLoading.show({template: '加载中...'})
+      $scope.currDistinctId = distinctId;
+      $scope.currDistinctName = distinctName;
+      if (distinctId)
+        $scope.distinctFilterStyle = {color: 'red'};
+      else
+        $scope.distinctFilterStyle = {color: 'blue'};
+      loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+    }
+
+    $scope.filterByName = function (nameLike) {
+      $ionicLoading.show({template: '加载中...'})
+      $scope.nameLike = nameLike;
+      loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+    }
+
+    $scope.orderByDistance = function () {
+      $ionicLoading.show({template: '加载中...'})
+      $scope.orderBy = "len";
+      $scope.distanceOrderStyle = {color: 'red'};
+      $scope.priceOrderStyle = {color: 'blue'};
+      loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+    }
+
+    $scope.orderByPrice = function () {
+      $ionicLoading.show({template: '加载中...'})
+      $scope.orderBy = "minPrice";
+      $scope.distanceOrderStyle = {color: 'blue'};
+      $scope.priceOrderStyle = {color: 'red'};
+      loadCinemas($scope.orderBy, $scope.currDistinctId, $scope.nameLike);
+    }
+
+    function loadAreas() {
+      var promise = CinemaListService.getCityInfo($scope.currCityId);
+      promise.then(function (val) {
+          var jsonObject = angular.fromJson(val);
+          $scope.areas = jsonObject['areas'];
+          $ionicLoading.hide();
+        }
+        , function () {
+          $ionicLoading.hide();
+          alert("无法获取影院信息");
+        });
+    }
+
+    function loadCinemas(orderBy, distinct, nameLike) {
+      var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng, orderBy, distinct, nameLike);
       promise.then(function (val) {
           $scope.cinemas = val;
           $ionicLoading.hide();
@@ -122,6 +193,7 @@ angular.module('bibimovie.controllers', [])
           alert("无法获取影院信息");
         });
     }
+
 
     $scope.getItemHeight = function (item, index) {
       //使索引项平均都有10px高，例如

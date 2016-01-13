@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.webserver.mapper.HomeMapper">
 
+  <resultMap type="com.family.webserver.entity.CityWithArea" id="cityWithAreaMap">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="first_letter" property="firstLetter"/>
+    <result column="pinyin" property="pinyin"/>
+    <collection property="areas" ofType="com.family.webserver.entity.CityArea" column="city_id">
+      <id column="area_id" property="id"/>
+      <result column="city_id" property="cityId"/>
+      <result column="area" property="area"/>
+    </collection>
+  </resultMap>
+
   <select id="selectHomeHotMoviesByCity" parameterType="java.lang.Integer"
           resultType="com.family.webserver.entity.CityHotMovie">
     SELECT
@@ -29,6 +41,21 @@
     SELECT c.id
     FROM city c
     WHERE #{cityName,jdbcType=VARCHAR} LIKE concat('%', c.name, '%')
+  </select>
+
+  <select id="selectCityInfo" parameterType="java.lang.Integer"
+          resultMap="cityWithAreaMap">
+    SELECT
+    c.id,
+    c.name,
+    c.first_letter,
+    c.pinyin,
+    ca.id AS area_id,
+    ca.city_id,
+    ca.area
+    FROM city c
+    LEFT JOIN city_area ca ON c.id = ca.city_id
+    WHERE c.id = #{cityId,jdbcType=INTEGER}
   </select>
 
   <select id="selectNearCinemas"

@@ -47,7 +47,7 @@ public class CityCinemaServiceTest {
   @Test
   public void testGetMovieCinemaByCity() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-12");
-    List<ListCinema> listCinemas = service.getMovieCinemaByCity(2861, 1713, date, "11", "11");
+    List<ListCinema> listCinemas = service.getMovieCinemaByCity(2861, 1713, date, "11", "11", null, null);
 
 
     System.out.println("return size : " + listCinemas.size());

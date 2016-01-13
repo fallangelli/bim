@@ -16,8 +16,8 @@ public class CityScreeningService {
   @Autowired
   private CityScreeningMapper ccmapper;
 
-  public CityMovieWithShowDates getCityMovieWithShowDates(Integer cityId, Integer movieId) {
-    return ccmapper.selectCityMovieWithShowDates(cityId, movieId);
+  public CityMovieWithShowDates getCityMovieWithShowDates(Integer cityId, Integer movieId, Integer distinctId) {
+    return ccmapper.selectCityMovieWithShowDates(cityId, movieId, distinctId);
   }
 
   public List<String> getCinemaMovieDates(Integer cinemaId, Integer movieId) {

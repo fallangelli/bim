@@ -32,11 +32,15 @@
     m.name AS movie_name,
     date_format(s.show_date, '%Y-%m-%d') AS show_dates
     FROM screening s
-      LEFT JOIN cinema cn ON s.cinema_id = cn.id
-      LEFT JOIN city_area ca ON cn.district_id = ca.id
-      LEFT JOIN city c ON ca.city_id = c.id
+    LEFT JOIN cinema cn ON s.cinema_id = cn.id
+    LEFT JOIN city_area ca ON cn.district_id = ca.id
+    LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN movieshowing m ON m.id = s.movie_id
     WHERE s.movie_id = #{movieId,jdbcType=INTEGER}
+    and c.id = #{cityId,jdbcType=INTEGER}
+    <if test="distinctId!=null and distinctId!=''">
+      and ca.id = ${distinctId}
+    </if>
     AND (to_days(s.show_date) > to_days(now()) OR
     (to_days(s.show_date) = to_days(now()) AND
     time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30

@@ -19,7 +19,9 @@ public interface CityCinemaMapper {
                                            @Param("movieId") Integer movieId,
                                            @Param("showDate") Date showDate,
                                            @Param("lat") String lat,
-                                           @Param("lng") String lng);
+                                           @Param("lng") String lng,
+                                           @Param("orderBy") String orderBy,
+                                           @Param("distinctId") Integer distinctId);
 
   List<Movieshowing> selectMoviesByCinemaId(@Param("cinemaId") Integer cinemaId);
 }

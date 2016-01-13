@@ -46,16 +46,20 @@ angular.module('bibimovie.services', [])
   .factory('MovieCinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
 
     return {
-      getMovieCinemaDates: function (cityId, movieId) {
+      getMovieCinemaDates: function (cityId, movieId, distinctId) {
         var deferred = $q.defer();
         var promise = deferred.promise;
 
         var dates_url = ApiEndpoint.server_url + "cityScreening/CityMovieWithShowDates?" +
           "cityId=" + cityId + "&movieId=" + movieId;
+        if (distinctId) dates_url += "&distinctId=" + distinctId;
         $http.get(dates_url)
           .success(function (data) {
-            var dates = angular.fromJson(data);
-            deferred.resolve(dates);
+            if (data) {
+              var dates = angular.fromJson(data);
+              deferred.resolve(dates);
+            }
+            else  deferred.resolve();
           })
           .error(function (data, header, config, status) {
             alert("读取电影影院上映日期信息错误");
@@ -63,12 +67,14 @@ angular.module('bibimovie.services', [])
           });
         return promise;
       },
-      getMovieCinemasByDate: function (cityId, movieId, date, lat, lng) {
+      getMovieCinemasByDate: function (cityId, movieId, date, lat, lng, orderBy, distinctId) {
         var deferred = $q.defer();
         var promise = deferred.promise;
 
         var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
           "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date + "&lat=" + lat + "&lng=" + lng;
+        if (orderBy) cinema_url += "&orderBy=" + orderBy;
+        if (distinctId) cinema_url += "&distinctId=" + distinctId;
         $http.get(cinema_url).success(function (data) {
             deferred.resolve(data);
           })
@@ -78,6 +84,20 @@ angular.module('bibimovie.services', [])
           });
 
         return promise;
+      },
+      getCityInfo: function (cityId) {
+        var url = ApiEndpoint.server_url + "home/getCityInfo?cityId=" + cityId;
+        var deferred = $q.defer();
+        $http.get(url)
+          .success(function (data) {
+            var cityInfo = angular.fromJson(data);
+            deferred.resolve(cityInfo);
+          })
+          .error(function (data, header, config, status) {
+            deferred.reject();
+          });
+
+        return deferred.promise;
       }
 
     }

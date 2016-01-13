@@ -388,6 +388,7 @@ angular.module('bibimovie.controllers', [])
           var jsonObject = angular.fromJson(val);
           $scope.cinemaId = $stateParams.cinemaId;
           $scope.movieId = $stateParams.movieId;
+          $scope.cinemaName = jsonObject['cinemaName'];
           $scope.movieName = jsonObject['movieName'];
           $scope.showDate = jsonObject['showDate'];
           $scope.Screenings = jsonObject['minSource'];

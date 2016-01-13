@@ -8,10 +8,10 @@
     </collection>
   </resultMap>
 
-  <resultMap id="CityScreeningResultMap" type="com.family.webserver.entity.CityScreening">
+  <resultMap id="CinemaScreeningResultMap" type="com.family.webserver.entity.CinemaScreening">
     <id property="movieName" jdbcType="VARCHAR" column="movie_name"/>
     <result property="showDate" jdbcType="DATE" column="show_date"/>
-
+    <result property="cinemaName" jdbcType="VARCHAR" column="cinema_name"/>
     <collection property="minSource" ofType="com.family.webserver.entity.Source">
       <id property="id" jdbcType="INTEGER" column="id"/>
       <result property="sourceCount" jdbcType="INTEGER" column="source_count"/>
@@ -58,9 +58,10 @@
     ORDER BY show_date
   </select>
 
-  <select id="selectCinemaScreening" resultMap="CityScreeningResultMap">
+  <select id="selectCinemaScreening" resultMap="CinemaScreeningResultMap">
     SELECT
       m.name                 AS movie_name,
+    cn.name AS cinema_name,
       s.show_date,
       count(DISTINCT source) AS source_count,
       s.id,

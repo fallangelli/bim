@@ -128,7 +128,7 @@ angular.module('bibimovie.services', [])
       getCinemas: function (cityId, lat, lng, orderBy, distinctId, nameLike) {
         var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId;
         if (lat) url += "&lat=" + lat;
-        if (lng) url += "&lat=" + lng;
+        if (lng) url += "&lng=" + lng;
         if (orderBy) url += "&orderBy=" + orderBy;
         if (distinctId) url += "&distinctId=" + distinctId;
         if (nameLike) url += "&nameLike=" + nameLike;
@@ -256,7 +256,6 @@ angular.module('bibimovie.services', [])
         var deferred = $q.defer();
         var url = ApiEndpoint.server_url + "cityScreening/CinemaSource?cinemaId=" +
           cinemaId + "&movieId=" + movieId + "&showDate=" + showDate + "&startTime=" + startTime;
-        ;
         $http.get(url)
           .success(function (data) {
             var obj = angular.fromJson(data)

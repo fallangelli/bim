@@ -2,9 +2,10 @@ package com.family.webserver.entity;
 
 import java.util.List;
 
-public class CityScreening {
+public class CinemaScreening {
 
   String movieName;
+  String cinemaName;
   String showDate;
 
   List<Source> minSource;
@@ -15,6 +16,14 @@ public class CityScreening {
 
   public void setMovieName(String movieName) {
     this.movieName = movieName;
+  }
+
+  public String getCinemaName() {
+    return cinemaName;
+  }
+
+  public void setCinemaName(String cinemaName) {
+    this.cinemaName = cinemaName;
   }
 
   public String getShowDate() {

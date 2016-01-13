@@ -1,7 +1,7 @@
 package com.family.webserver.service;
 
+import com.family.webserver.entity.CinemaScreening;
 import com.family.webserver.entity.CityMovieWithShowDates;
-import com.family.webserver.entity.CityScreening;
 import com.family.webserver.entity.Source;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml",
   "classpath:applicationContext-myBatis.xml"})
-public class CityScreeningServiceTest {
+public class CinemaScreeningServiceTest {
   @Autowired
   private CityScreeningService service;
 
@@ -32,7 +32,7 @@ public class CityScreeningServiceTest {
   public void testGetCityScreening() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-26");
 
-    CityScreening screening = service.getCinemaScreening(578, 2256, date);
+    CinemaScreening screening = service.getCinemaScreening(578, 2256, date);
     System.out.println("return size : " + screening);
   }
 

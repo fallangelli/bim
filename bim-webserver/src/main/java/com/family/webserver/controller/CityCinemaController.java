@@ -1,7 +1,7 @@
 package com.family.webserver.controller;
 
+import com.family.webserver.entity.CinemaScreening;
 import com.family.webserver.entity.CityCinema;
-import com.family.webserver.entity.CityScreening;
 import com.family.webserver.entity.ListCinema;
 import com.family.webserver.service.CityCinemaService;
 import com.family.webserver.service.CityMovieService;
@@ -39,7 +39,8 @@ public class CityCinemaController {
                                   @RequestParam(value = "distinctId", required = false) Integer distinctId,
                                   @RequestParam(value = "nameLike", required = false) String nameLike) {
 
-    return cservice.getCityCinemas(cityId, lat, lng, orderBy, distinctId, nameLike);
+    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng, orderBy, distinctId, nameLike);
+    return retList;
   }
 
   @RequestMapping(value = "/DateMovieCinemas", method = RequestMethod.GET, produces = "application/json")
@@ -78,10 +79,10 @@ public class CityCinemaController {
   @RequestMapping(value = "/CinemaMovieSourcesByDate", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityScreening getCinemaMovieSourcesByDate(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
-                                            @RequestParam(value = "movieId", required = true) Integer movieId,
-                                            @RequestParam(value = "date", required = true) Date date) {
-    CityScreening screening = sService.getCinemaScreening(cinemaId, movieId, date);
+  CinemaScreening getCinemaMovieSourcesByDate(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
+                                              @RequestParam(value = "movieId", required = true) Integer movieId,
+                                              @RequestParam(value = "date", required = true) Date date) {
+    CinemaScreening screening = sService.getCinemaScreening(cinemaId, movieId, date);
     return screening;
   }
 

@@ -17,13 +17,9 @@
       <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
     </header>
 
-    <div class="button-bar">
-      <a class="button button-outline button-positive">最早</a>
-      <a class="button button-outline button-positive">最省</a>
-      <button class="button  button-outline button-positive icon-left ion-star ">筛选</button>
-    </div>
 
     <ion-list>
+      <h4>{{cinemaName}}</h4>
       <h4>日期:{{showDate}}</h4>
       <ion-item ng-repeat="screening in Screenings"
                 class="item-icon-right" type="item-text-wrap"

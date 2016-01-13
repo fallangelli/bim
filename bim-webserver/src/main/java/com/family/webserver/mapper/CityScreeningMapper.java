@@ -1,7 +1,7 @@
 package com.family.webserver.mapper;
 
+import com.family.webserver.entity.CinemaScreening;
 import com.family.webserver.entity.CityMovieWithShowDates;
-import com.family.webserver.entity.CityScreening;
 import com.family.webserver.entity.Source;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,9 +16,9 @@ public interface CityScreeningMapper {
   List<String> selectCinemaMovieDates(@Param("cinemaId") Integer cinemaId,
                                       @Param("movieId") Integer movieId);
 
-  CityScreening selectCinemaScreening(@Param("cinemaId") Integer cinemaId,
-                                      @Param("movieId") Integer movieId,
-                                      @Param("showDate") Date showDate);
+  CinemaScreening selectCinemaScreening(@Param("cinemaId") Integer cinemaId,
+                                        @Param("movieId") Integer movieId,
+                                        @Param("showDate") Date showDate);
 
   List<Source> selectCinemaSource(@Param("cinemaId") Integer cinemaId,
                                   @Param("movieId") Integer movieId,

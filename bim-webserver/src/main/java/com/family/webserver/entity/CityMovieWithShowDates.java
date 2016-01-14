@@ -4,15 +4,15 @@ import java.util.List;
 
 public class CityMovieWithShowDates {
 
-  Integer distinctId;
+  String movieName;
   List<String> showDates;
 
-  public Integer getDistinctId() {
-    return distinctId;
+  public String getMovieName() {
+    return movieName;
   }
 
-  public void setDistinctId(Integer distinctId) {
-    this.distinctId = distinctId;
+  public void setMovieName(String movieName) {
+    this.movieName = movieName;
   }
 
   public List<String> getShowDates() {

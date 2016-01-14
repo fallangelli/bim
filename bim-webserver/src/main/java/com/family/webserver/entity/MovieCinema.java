@@ -1,5 +1,7 @@
 package com.family.webserver.entity;
 
+import com.family.webserver.utils.Cn2Spell;
+
 /**
  * Created by Administrator on 2015/12/13.
  */
@@ -133,7 +135,7 @@ public class MovieCinema {
   }
 
   public String getPinyin() {
-    return pinyin;
+    return Cn2Spell.converterToFirstSpell(this.getName());
   }
 
   public void setPinyin(String pinyin) {

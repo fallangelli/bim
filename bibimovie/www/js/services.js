@@ -44,13 +44,15 @@ angular.module('bibimovie.services', [])
   })
 
   .factory('MovieCinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+
     return {
-      getCityMovieCinemasWithDates: function (cityId, movieId) {
+      getMovieCinemaDates: function (cityId, movieId, distinctId) {
         var deferred = $q.defer();
         var promise = deferred.promise;
 
-        var dates_url = ApiEndpoint.server_url + "cityScreening/CityMovieCinemasWithDates?" +
+        var dates_url = ApiEndpoint.server_url + "cityScreening/CityMovieWithShowDates?" +
           "cityId=" + cityId + "&movieId=" + movieId;
+        if (distinctId) dates_url += "&distinctId=" + distinctId;
         $http.get(dates_url)
           .success(function (data) {
             if (data) {
@@ -63,6 +65,24 @@ angular.module('bibimovie.services', [])
             alert("读取电影影院上映日期信息错误");
             deferred.reject();
           });
+        return promise;
+      },
+      getMovieCinemasByDate: function (cityId, movieId, date, lat, lng) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
+        var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
+          "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date;
+        if (lat) cinema_url += "&lat=" + lat;
+        if (lng) cinema_url += "&lng=" + lng;
+        $http.get(cinema_url).success(function (data) {
+            deferred.resolve(data);
+          })
+          .error(function (data, header, config, status) {
+            alert("读取电影影院信息错误");
+            deferred.reject();
+          });
+
         return promise;
       },
       getCityInfo: function (cityId) {

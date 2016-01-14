@@ -71,6 +71,12 @@ angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controlle
         templateUrl: 'templates/source.html',
         controller: 'SourceCtrl'
       })
+
+      .state('cities', {
+        url: '/cities',
+        templateUrl: 'templates/cities.html',
+        controller: 'CitiesCtrl'
+      })
     $urlRouterProvider.otherwise('/');
   });
 

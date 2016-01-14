@@ -16,6 +16,9 @@ public class MovieCinema {
   Integer minPrice;
   Integer sourceCount;
   Integer leftScreening;
+  Double len;
+  Integer districtId;
+  String pinyin;
 
   public Integer getId() {
     return id;
@@ -111,5 +114,29 @@ public class MovieCinema {
 
   public void setLeftScreening(Integer leftScreening) {
     this.leftScreening = leftScreening;
+  }
+
+  public Double getLen() {
+    return len;
+  }
+
+  public void setLen(Double len) {
+    this.len = len;
+  }
+
+  public Integer getDistrictId() {
+    return districtId;
+  }
+
+  public void setDistrictId(Integer districtId) {
+    this.districtId = districtId;
+  }
+
+  public String getPinyin() {
+    return pinyin;
+  }
+
+  public void setPinyin(String pinyin) {
+    this.pinyin = pinyin;
   }
 }

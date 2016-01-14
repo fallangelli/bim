@@ -1,5 +1,7 @@
 package com.family.webserver.entity;
 
+import com.family.webserver.utils.Cn2Spell;
+
 /**
  * Created by Administrator on 2015/12/13.
  */
@@ -15,6 +17,9 @@ public class ListCinema {
   String tel;
   Double minPrice;
   Integer sourceCount;
+  Double len;
+  Integer districtId;
+  String pinyin;
 
   public Integer getId() {
     return id;
@@ -102,5 +107,29 @@ public class ListCinema {
 
   public void setSourceCount(Integer sourceCount) {
     this.sourceCount = sourceCount;
+  }
+
+  public Double getLen() {
+    return len;
+  }
+
+  public void setLen(Double len) {
+    this.len = len;
+  }
+
+  public Integer getDistrictId() {
+    return districtId;
+  }
+
+  public void setDistrictId(Integer districtId) {
+    this.districtId = districtId;
+  }
+
+  public String getPinyin() {
+    return Cn2Spell.converterToFirstSpell(this.getName());
+  }
+
+  public void setPinyin(String pinyin) {
+    this.pinyin = pinyin;
   }
 }

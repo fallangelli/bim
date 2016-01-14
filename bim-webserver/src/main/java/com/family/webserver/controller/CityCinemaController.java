@@ -3,6 +3,7 @@ package com.family.webserver.controller;
 import com.family.webserver.entity.CinemaScreening;
 import com.family.webserver.entity.CityCinema;
 import com.family.webserver.entity.ListCinema;
+import com.family.webserver.entity.MovieCinema;
 import com.family.webserver.service.CityCinemaService;
 import com.family.webserver.service.CityMovieService;
 import com.family.webserver.service.CityScreeningService;
@@ -34,26 +35,21 @@ public class CityCinemaController {
   @ResponseBody
   List<ListCinema> getCityCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
                                   @RequestParam(value = "lat", required = false) String lat,
-                                  @RequestParam(value = "lng", required = false) String lng,
-                                  @RequestParam(value = "orderBy", required = false) String orderBy,
-                                  @RequestParam(value = "distinctId", required = false) Integer distinctId,
-                                  @RequestParam(value = "nameLike", required = false) String nameLike) {
+                                  @RequestParam(value = "lng", required = false) String lng) {
 
-    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng, orderBy, distinctId, nameLike);
+    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng);
     return retList;
   }
 
   @RequestMapping(value = "/DateMovieCinemas", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<ListCinema> getCityMovieCinemabyDate(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                            @RequestParam(value = "movieId", required = true) Integer movieId,
-                                            @RequestParam(value = "showDate", required = true) Date showDate,
-                                            @RequestParam(value = "lat", required = true) String lat,
-                                            @RequestParam(value = "lng", required = true) String lng,
-                                            @RequestParam(value = "orderBy", required = false) String orderBy,
-                                            @RequestParam(value = "distinctId", required = false) Integer distinctId) {
-    List<ListCinema> cinemas = cservice.getMovieCinemaByCity(cityId, movieId, showDate, lat, lng, orderBy, distinctId);
+  List<MovieCinema> getCityMovieCinemabyDate(@RequestParam(value = "cityId", required = true) Integer cityId,
+                                             @RequestParam(value = "movieId", required = true) Integer movieId,
+                                             @RequestParam(value = "showDate", required = true) Date showDate,
+                                             @RequestParam(value = "lat", required = true) String lat,
+                                             @RequestParam(value = "lng", required = true) String lng) {
+    List<MovieCinema> cinemas = cservice.getMovieCinemaByCity(cityId, movieId, showDate, lat, lng);
     return cinemas;
   }
 

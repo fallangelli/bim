@@ -2,6 +2,7 @@ package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.ListCinema;
+import com.family.webserver.entity.MovieCinema;
 import com.family.webserver.mapper.CinemaMapper;
 import com.family.webserver.mapper.CityCinemaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,11 @@ public class CityCinemaService {
     return cmapper.selectByPrimaryKey(cityId);
   }
 
-  public List<ListCinema> getCityCinemas(Integer cityId, String lat, String lng, String orderBy, Integer distinctId, String nameLike) {
-    return ccmapper.selectCityCinemas(cityId, lat, lng, orderBy, distinctId, nameLike);
+  public List<ListCinema> getCityCinemas(Integer cityId, String lat, String lng) {
+    return ccmapper.selectCityCinemas(cityId, lat, lng);
   }
 
-  public List<ListCinema> getMovieCinemaByCity(Integer cityId, Integer movieId, Date showDate, String lat, String lng, String orderBy, Integer distinctId) {
-    return ccmapper.selectMovieCinemaByCity(cityId, movieId, showDate, lat, lng, orderBy, distinctId);
+  public List<MovieCinema> getMovieCinemaByCity(Integer cityId, Integer movieId, Date showDate, String lat, String lng) {
+    return ccmapper.selectMovieCinemaByCity(cityId, movieId, showDate, lat, lng);
   }
 }

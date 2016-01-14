@@ -28,6 +28,13 @@
       <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
     </header>
 
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="输入影院名称或拼音首字母" ng-model="nameLike" autocorrect="off">
+      </label>
+    </div>
+
     <div class="button-bar">
       <a ng-style="distanceOrderStyle" class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
       <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
@@ -51,7 +58,8 @@
 
 
     <div ng-if="cinemas" class="list">
-      <a class="item" collection-repeat="cinema in cinemas"
+      <a class="item" collection-repeat="cinema in cinemas | filterNameCinema : nameLike
+         | filterDistinctCinema : currDistinctId | orderCinema: orderBy"
          href="/#/screening/{{cinema.id}}/{{movieId}}/{{showDate}}">
         {{cinema.name}}
         <p>{{cinema.address}}</p>

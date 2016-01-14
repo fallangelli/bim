@@ -3,6 +3,7 @@ package com.family.webserver.service;
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.CityHotMovie;
 import com.family.webserver.entity.CityWithArea;
+import com.family.webserver.entity.ListCity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,11 @@ public class HomeServiceTest {
     List<Cinema> cinemas = service.getNearCinemas("23.02362", "113.1147");
     System.out.println(cinemas);
   }
+
+  @Test
+  public void testGetAllCities() {
+    List<ListCity> cities = service.getAllCities();
+    System.out.println(cities);
+  }
+
 }

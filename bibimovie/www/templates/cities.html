@@ -1,0 +1,48 @@
+<ion-view view-title="选择城市">
+
+  <div class="bar bar-header">
+    <a class="button bar-balanced button-clear" href="/#/">
+      <h4>返回</h4>
+    </a>
+
+    <div class="title">选择城市</div>
+  </div>
+
+
+  <ion-content class="padding has-header">
+    <div id="当前" class="item item-divider">
+      当前城市
+    </div>
+    <a class="item">
+      {{currCityName}}
+    </a>
+
+    <div ng-repeat="cityList in cityLists">
+      <div class="row">
+        <div class="col">.col</div>
+        <div class="col">.col</div>
+        <div class="col">.col</div>
+        <div class="col">.col</div>
+        <div class="col">.col</div>
+      </div>
+
+      <div id="{{cityList.firstLetter}}" class="item item-divider">
+        {{cityList.firstLetter}}
+      </div>
+      <a class="item" ng-repeat="city in cityList.cities">
+        {{city.name}}
+      </a>
+    </div>
+
+  </ion-content>
+</ion-view>
+
+
+<div class="city-index left-in">
+  <ul>
+    <li ng-click="goto('当前')">当前</li>
+    <li ng-repeat="cityList in cityLists" ng-click="goto(cityList.firstLetter)">
+      {{cityList.firstLetter}}
+    </li>
+  </ul>
+</div>

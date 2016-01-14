@@ -24,7 +24,7 @@ public class CinemaScreeningServiceTest {
 
   @Test
   public void testGetMovieCinemaShowDatesByCity() throws Exception {
-    CityMovieWithShowDates dates = service.getCityMovieWithShowDates(1, 1554, 2);
+    CityMovieWithShowDates dates = service.getCityMovieWithShowDates(1, 1554, null);
     System.out.println("return size : " + dates);
   }
 

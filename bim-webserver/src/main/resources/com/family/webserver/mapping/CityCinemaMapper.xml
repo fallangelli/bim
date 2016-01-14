@@ -7,6 +7,7 @@
     SELECT
     cn.id,
     ca.area,
+    ca.id AS districtId,
     cn.name,
     cn.address,
     cn.latitude,
@@ -15,29 +16,22 @@
     cn.has_imax AS hasImax,
     cn.tel,
     min(s.sale_price) AS minPrice,
-    count(DISTINCT s.source) as sourceCount,
+    count(DISTINCT s.source) AS sourceCount,
     GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
     FROM cinema cn
     LEFT JOIN city_area ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN screening s ON cn.id = s.cinema_id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} and s.sale_price is not null
-    <if test="distinctId!=null and distinctId!=''">
-      and ca.id=${distinctId}
-    </if>
-    <if test="nameLike!=null and nameLike!=''">
-      and cn.name like concat('%','${nameLike}','%')
-    </if>
+    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.sale_price IS NOT NULL
     GROUP BY cn.id
-    <if test="orderBy!=null and orderBy!=''">
-      ORDER BY ${orderBy}
-    </if>
+    ORDER BY len
   </select>
 
   <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">
     SELECT
     cn.id,
     ca.area,
+    ca.id AS districtId,
     cn.name,
     cn.address,
     cn.latitude,
@@ -56,13 +50,9 @@
     LEFT JOIN screening s ON cn.id = s.cinema_id
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
     to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
-    <if test="distinctId!=null and distinctId!=''">
-      and ca.id = ${distinctId}
-    </if>
     GROUP BY cn.id
-    <if test="orderBy!=null and orderBy!=''">
-      order by ${orderBy}
-    </if>
+    ORDER BY len
+
   </select>
 
   <select id="selectMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">

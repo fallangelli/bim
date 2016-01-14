@@ -2,6 +2,7 @@ package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.ListCinema;
+import com.family.webserver.entity.MovieCinema;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +33,14 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testGetCinemaByCity() throws Exception {
-    List<ListCinema> listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "len", null, null);
-    System.out.println("return size : " + listCinemas.size());
-    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", null, null);
-    System.out.println("return size : " + listCinemas.size());
-
-    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", 1, null);
-    System.out.println("return size : " + listCinemas.size());
-
-    listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397", "minPrice", null, "东");
+    List<ListCinema> listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397");
     System.out.println("return size : " + listCinemas.size());
   }
 
   @Test
   public void testGetMovieCinemaByCity() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-12");
-    List<ListCinema> listCinemas = service.getMovieCinemaByCity(2861, 1713, date, "11", "11", null, null);
+    List<MovieCinema> listCinemas = service.getMovieCinemaByCity(2861, 1713, date, "11", "11");
 
 
     System.out.println("return size : " + listCinemas.size());

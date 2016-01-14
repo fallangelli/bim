@@ -14,6 +14,16 @@
     </collection>
   </resultMap>
 
+  <resultMap type="com.family.webserver.entity.ListCity" id="cityGroupFL">
+    <id column="fl" property="firstLetter"/>
+    <collection property="cities" ofType="com.family.webserver.entity.City" column="fl">
+      <id column="id" property="id"/>
+      <result column="fl" property="firstLetter"/>
+      <result column="name" property="name"/>
+      <result column="pinyin" property="pinyin"/>
+    </collection>
+  </resultMap>
+
   <select id="selectHomeHotMoviesByCity" parameterType="java.lang.Integer"
           resultType="com.family.webserver.entity.CityHotMovie">
     SELECT
@@ -21,7 +31,7 @@
       s.movie_id AS     movieId,
       m.name     AS     movieName,
       m.image,
-    m.content,
+      m.content,
       m.rating   AS     rating,
       min(s.sale_price) minPrice,
       count(s.movie_id) screeningCount
@@ -46,15 +56,15 @@
   <select id="selectCityInfo" parameterType="java.lang.Integer"
           resultMap="cityWithAreaMap">
     SELECT
-    c.id,
-    c.name,
-    c.first_letter,
-    c.pinyin,
-    ca.id AS area_id,
-    ca.city_id,
-    ca.area
+      c.id,
+      c.name,
+      c.first_letter,
+      c.pinyin,
+      ca.id AS area_id,
+      ca.city_id,
+      ca.area
     FROM city c
-    LEFT JOIN city_area ca ON c.id = ca.city_id
+      LEFT JOIN city_area ca ON c.id = ca.city_id
     WHERE c.id = #{cityId,jdbcType=INTEGER}
   </select>
 
@@ -84,4 +94,74 @@
     ORDER BY len
     LIMIT 3
   </select>
+
+
+  <select id="selectCitiesGroupFL" resultMap="cityGroupFL">
+    SELECT
+      id,
+      ' 热门' fl,
+      name,
+      pinyin
+    FROM city
+    WHERE name LIKE '%北京%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%上海%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%深证%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%广州%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%成都%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%武汉%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%重庆%'
+    UNION SELECT
+            id,
+            ' 热门' fl,
+            name,
+            pinyin
+          FROM city
+          WHERE name LIKE '%杭州%'
+    UNION
+    SELECT DISTINCT
+      c1.id,
+      c.first_letter fl,
+      c1.name,
+      c1.pinyin
+    FROM city c
+      RIGHT JOIN city c1 ON c.first_letter = c1.first_letter
+    ORDER BY fl
+  </select>
+
 </mapper>

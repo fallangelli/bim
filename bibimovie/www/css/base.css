@@ -285,3 +285,27 @@ header .movieTxt {
   line-height: 1.8em;
   text-align: center;
 }
+
+.city-index.left-in {
+  opacity: 1;
+  -webkit-transform: translate(0);
+  -ms-transform: translate(0);
+  transform: translate(0);
+}
+
+.city-index {
+  z-index: 1001;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  border: 1px solid #ccc;
+  padding: 3px 0;
+  width: 40px;
+  height: 90%;
+  background: hsla(0, 0%, 100%, .5);
+  -webkit-transform: translate(100%, 50px);
+  -ms-transform: translate(100%, 50px);
+  transform: translate(100%, 50px);
+  background-color: oldlace;
+  text-align: center;
+}

@@ -3,6 +3,7 @@ package com.family.webserver.controller;
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.CityHotMovie;
 import com.family.webserver.entity.CityWithArea;
+import com.family.webserver.entity.ListCity;
 import com.family.webserver.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,14 @@ public class HomeController {
   List<Cinema> getNearCinemas(@RequestParam(value = "lat", required = true) String lat,
                               @RequestParam(value = "lng", required = true) String lng) {
     return service.getNearCinemas(lat, lng);
+
+  }
+
+  @RequestMapping(value = "/getAllCities", method = RequestMethod.GET, produces = "application/json")
+  public
+  @ResponseBody
+  List<ListCity> getAllCities() {
+    return service.getAllCities();
 
   }
 }

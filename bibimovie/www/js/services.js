@@ -269,6 +269,7 @@ angular.module('bibimovie.services', [])
   }])
 
   .factory('CitiesService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
+
     return {
       getAllCities: function (cityId, cinemaId, movieId, showDate, startTime) {
         var deferred = $q.defer();
@@ -283,6 +284,17 @@ angular.module('bibimovie.services', [])
           });
 
         return deferred.promise;
+      },
+
+      elmYPosition: function (eID) {
+        var elm = document.getElementById(eID);
+        var y = elm.offsetTop;
+        var node = elm;
+        while (node.offsetParent && node.offsetParent != document.body) {
+          node = node.offsetParent;
+          y += node.offsetTop;
+        }
+        return y;
       }
     }
   }])

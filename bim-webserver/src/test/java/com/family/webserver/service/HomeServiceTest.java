@@ -26,7 +26,7 @@ public class HomeServiceTest {
 
   @Test
   public void testGetHotMoviesByCity() {
-    List<List<CityHotMovie>> movies = service.getHotMoviesByCity(2861);
+    List<CityHotMovie> movies = service.getHotMoviesByCity(2861);
     System.out.println(movies);
   }
 

@@ -1,4 +1,9 @@
 angular.module('bibimovie.controllers', [])
+  .config(function ($anchorScrollProvider) {
+    $anchorScrollProvider.disableAutoScrolling();
+  })
+
+
   .controller('HomeCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, Geolocation) {
 
     $ionicLoading.show({template: '加载中...'});
@@ -559,7 +564,7 @@ angular.module('bibimovie.controllers', [])
     }
   })
 
-  .controller('CitiesCtrl', function ($scope, $http, $location, $anchorScroll, $ionicLoading, ApiEndpoint, $stateParams, CitiesService, Geolocation) {
+  .controller('CitiesCtrl', function ($scope, $http, $location, $ionicScrollDelegate, $ionicLoading, ApiEndpoint, $stateParams, CitiesService, Geolocation) {
     $ionicLoading.show({template: '加载中...'})
     var currTime = new Date();
     if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
@@ -577,10 +582,39 @@ angular.module('bibimovie.controllers', [])
         alert("无法得到当前城市信息");
       })
     }
+    $scope.letterGroupA = ['A', 'B', 'C', 'D', 'E', 'F'];
+    $scope.letterGroupB = ['G', 'H', 'J', 'K', 'L', 'M'];
+    $scope.letterGroupC = ['N', 'P', 'Q', 'R', 'S', 'T'];
+    $scope.letterGroupD = ['W', 'X', 'Y', 'Z'];
+
+    $scope.gotoElement = function (eID) {
+      // set the location.hash to the id of
+      // the element you wish to scroll to.
+      //$location.hash('bottom');
+
+
+      var stopY = CitiesService.elmYPosition(eID)
+      $ionicScrollDelegate.scrollTo(0, stopY - 40);
+      // call $anchorScroll()
+      //CitiesService.scrollTo(eID);
+
+    };
 
     $scope.goto = function (id) {
       $location.hash(id);
       $anchorScroll();
+      //$ionicScrollDelegate.scrollTo(0,1000);
+    }
+    $scope.goTop = function (id) {
+      $ionicScrollDelegate.scrollTop();
+    }
+
+    $scope.func = function (e) {
+
+      for (var item in  e) {
+        console.log(item);
+      }
+      return item;
     }
 
     function loadCities() {

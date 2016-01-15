@@ -17,32 +17,52 @@
       {{currCityName}}
     </a>
 
-    <div ng-repeat="cityList in cityLists">
+    <div class="item item-divider">按字母排序</div>
+    <div class="item">
       <div class="row">
-        <div class="col">.col</div>
-        <div class="col">.col</div>
-        <div class="col">.col</div>
-        <div class="col">.col</div>
-        <div class="col">.col</div>
+        <div class="col" ng-repeat="letter in letterGroupA" ng-click="gotoElement(letter)">
+          <button class="button-full"><h2>{{letter}}</h2></button>
+        </div>
       </div>
+      <div class="row">
+        <div class="col" ng-repeat="letter in letterGroupB" ng-click="gotoElement(letter)">
+          <button class="button-full"><h2>{{letter}}</h2></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" ng-repeat="letter in letterGroupC" ng-click="gotoElement(letter)">
+          <button class="button-full"><h2>{{letter}}</h2></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" ng-repeat="letter in letterGroupD" ng-click="gotoElement(letter)">
+          <button class="button-full"><h2>{{letter}}</h2></button>
+        </div>
+      </div>
+    </div>
 
-      <div id="{{cityList.firstLetter}}" class="item item-divider">
-        {{cityList.firstLetter}}
+
+    <div ng-repeat="(k,v) in cityLists">
+      <div id="{{k}}" class="item item-divider">
+        {{k}}
       </div>
-      <a class="item" ng-repeat="city in cityList.cities">
-        {{city.name}}
-      </a>
+      <div class="item" style="padding: 3px">
+        <div class="row" ng-repeat="groups in v">
+          <div class="col col-25" ng-repeat="group in groups">
+            <h3 style="text-align: left">{{group.name}}</h3>
+          </div>
+        </div>
+      </div>
     </div>
 
   </ion-content>
 </ion-view>
 
 
-<div class="city-index left-in">
+<div>
   <ul>
-    <li ng-click="goto('当前')">当前</li>
-    <li ng-repeat="cityList in cityLists" ng-click="goto(cityList.firstLetter)">
-      {{cityList.firstLetter}}
-    </li>
+    <div class="gototop" ng-click="goTop()"
+         style="display: block; transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+      <img src="img/gototop.png" width="50%"></div>
   </ul>
 </div>

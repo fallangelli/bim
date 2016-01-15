@@ -8,7 +8,6 @@ import com.family.webserver.mapper.HomeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ALL")
@@ -17,16 +16,10 @@ public class HomeService {
   @Autowired
   private HomeMapper mapper;
 
-  public List<List<CityHotMovie>> getHotMoviesByCity(Integer cityId) {
+  public List<CityHotMovie> getHotMoviesByCity(Integer cityId) {
     List<CityHotMovie> hotMovies = mapper.selectHomeHotMoviesByCity(cityId);
 
-    int midIndex = hotMovies.size() / 2;
-    List<CityHotMovie> a = hotMovies.subList(0, midIndex);
-    List<CityHotMovie> b = hotMovies.subList(midIndex, hotMovies.size());
-    List<List<CityHotMovie>> retVal = new ArrayList<>();
-    retVal.add(a);
-    retVal.add(b);
-    return retVal;
+    return hotMovies;
   }
 
 

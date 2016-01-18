@@ -9,9 +9,9 @@
     </ion-refresher>
 
     <header>
-      <a href="/#/">
+      <div ng-click="goBack()">
         <div class="go_back"></div>
-      </a>
+      </div>
 
       <div class="page_title">全部影院</div>
       <a href="/#/cities/cinemalist" class="city" ng-show="currCityId != -1">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="button-bar">
-      <a ng-if="$scope.currLat&&$scope.currLng" ng-style="distanceOrderStyle"
+      <a ng-if="currLat && currLng" ng-style="distanceOrderStyle"
          class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
       <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
       <button ng-style="distinctFilterStyle" ng-click="openPopover($event)"

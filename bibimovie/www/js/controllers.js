@@ -4,7 +4,6 @@ angular.module('bibimovie.controllers', [])
   })
 
   .controller('HomeCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, Geolocation) {
-    $scope.doRefresh();
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'});
       var currTime = new Date();
@@ -28,10 +27,12 @@ angular.module('bibimovie.controllers', [])
         }, function (error) {
           alert("无法得到当前城市信息" + error);
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
       }
     }
 
+    $scope.doRefresh();
 
     function loadHotMovies() {
       var url = ApiEndpoint.server_url + "home/hotMovies?cityId=" + $scope.currCityId;
@@ -43,6 +44,7 @@ angular.module('bibimovie.controllers', [])
         .error(function (data, header, config, status) {
           alert("读取电影信息错误");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         });
     }
 
@@ -54,31 +56,44 @@ angular.module('bibimovie.controllers', [])
           var cinemas = angular.fromJson(data)
           $scope.nearCinemaList = cinemas;
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
         .error(function (data, header, config, status) {
           alert("读取附近影院信息错误");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         });
     }
   })
 
-  .controller('MovieListCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, MovieListService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      loadMovies();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+  .controller('MovieListCtrl', function ($scope, $http, $location, $ionicHistory, $ionicLoading, ApiEndpoint, MovieListService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadMovies();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          loadMovies();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
+    }
+    $scope.doRefresh();
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
     }
 
     function loadMovies() {
@@ -86,45 +101,52 @@ angular.module('bibimovie.controllers', [])
       promise.then(function (val) {
           $scope.movies = val;
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取上映影片信息");
         });
     }
+
+
   })
 
-  .controller('CinemaListCtrl', function ($scope, $http, $ionicPopover, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    $scope.orderBy = 'len';
-    $scope.nameLike = '';
-    $scope.currDistinctId = null;
-    $scope.currDistinctName = '全部';
-    $scope.distanceOrderStyle = {color: 'red'};
+  .controller('CinemaListCtrl', function ($scope, $http, $location, $ionicHistory, $ionicPopover, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
 
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      $scope.currLat = window.localStorage['curr_lat'];
-      $scope.currLng = window.localStorage['curr_lng'];
-      loadCinemas();
-      loadAreas();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+      $scope.orderBy = 'len';
+      $scope.nameLike = '';
+      $scope.currDistinctId = null;
+      $scope.currDistinctName = '全部';
+      $scope.distanceOrderStyle = {color: 'red'};
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
         $scope.currLng = window.localStorage['curr_lng'];
         loadCinemas();
         loadAreas();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          $scope.currLat = window.localStorage['curr_lat'];
+          $scope.currLng = window.localStorage['curr_lng'];
+          loadCinemas();
+          loadAreas();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
     }
-
+    $scope.doRefresh();
     $ionicPopover.fromTemplateUrl('my-popover.html', {
       scope: $scope
     }).then(function (popover) {
@@ -162,15 +184,25 @@ angular.module('bibimovie.controllers', [])
       $scope.priceOrderStyle = {color: 'red'};
     }
 
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
+    }
+
     function loadAreas() {
       var promise = CinemaListService.getCityInfo($scope.currCityId);
       promise.then(function (val) {
           var jsonObject = angular.fromJson(val);
           $scope.areas = jsonObject['areas'];
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取影院信息");
         });
     }
@@ -180,9 +212,11 @@ angular.module('bibimovie.controllers', [])
       promise.then(function (val) {
           $scope.cinemas = val;
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取影院信息");
         });
     }
@@ -201,37 +235,46 @@ angular.module('bibimovie.controllers', [])
     }
   })
 
-  .controller('MovieCinemaCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $ionicPopover, $stateParams, $http, $ionicLoading, ApiEndpoint, MovieCinemaService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    $scope.nameLike = '';
-    $scope.orderBy = 'len';
-    $scope.currDistinctId = null;
-    $scope.currDistinctName = '全部';
-    $scope.distanceOrderStyle = {color: 'red'};
+  .controller('MovieCinemaCtrl', function ($scope, $timeout, $location, $ionicHistory, $ionicSlideBoxDelegate, $ionicPopover, $stateParams, $http, $ionicLoading, ApiEndpoint, MovieCinemaService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
 
-    var currTime = new Date();
+      $scope.nameLike = '';
+      $scope.orderBy = 'len';
+      $scope.currDistinctId = null;
+      $scope.currDistinctName = '全部';
+      $scope.distanceOrderStyle = {color: 'red'};
 
+      var currTime = new Date();
 
-    if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      $scope.currLat = window.localStorage['curr_lat'];
-      $scope.currLng = window.localStorage['curr_lng'];
-      loadMovieCinemaDates();
-      loadAreas();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
         $scope.currLng = window.localStorage['curr_lng'];
         loadMovieCinemaDates();
         loadAreas();
-      }, function () {
-        alert("无法得到当前位置");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          $scope.currLat = window.localStorage['curr_lat'];
+          $scope.currLng = window.localStorage['curr_lng'];
+          loadMovieCinemaDates();
+          loadAreas();
+        }, function () {
+          alert("无法得到当前位置");
+        })
+      }
+    }
+    $scope.doRefresh();
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
     }
 
     $ionicPopover.fromTemplateUrl('my-popover.html', {
@@ -312,10 +355,12 @@ angular.module('bibimovie.controllers', [])
             $scope.showDates = null;
           }
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           alert("无法获取影片影院信息");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
     }
 
@@ -329,10 +374,12 @@ angular.module('bibimovie.controllers', [])
           $scope.cinemas = cinemas;
           $scope.showDate = date;
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           alert("无法获取影片影院信息");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
     }
 
@@ -342,9 +389,11 @@ angular.module('bibimovie.controllers', [])
           var jsonObject = angular.fromJson(val);
           $scope.areas = jsonObject['areas'];
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取影院信息");
         });
     }
@@ -352,23 +401,35 @@ angular.module('bibimovie.controllers', [])
   })
 
 
-  .controller('ScreeningCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, $stateParams, ScreeningService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      loadScreening();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+  .controller('ScreeningCtrl', function ($scope, $http, $ionicLoading, $ionicHistory, $location, ApiEndpoint, $stateParams, ScreeningService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadScreening();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          loadScreening();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
+    }
+
+    $scope.doRefresh();
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
     }
 
     function loadScreening() {
@@ -382,65 +443,92 @@ angular.module('bibimovie.controllers', [])
           $scope.showDate = jsonObject['showDate'];
           $scope.Screenings = jsonObject['minSource'];
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取排片信息");
         });
     }
   })
 
-  .controller('MovieCtrl', function ($scope, $http, $ionicLoading, $filter, ApiEndpoint, $stateParams, MovieService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      loadMovie();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+  .controller('MovieCtrl', function ($scope, $http, $ionicLoading, $filter, $ionicHistory, $location, ApiEndpoint, $stateParams, MovieService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadMovie();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          loadMovie();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
     }
 
+    $scope.doRefresh();
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
+    }
     function loadMovie() {
       var promise = MovieService.getMovie($stateParams.movieId);
       promise.then(function (val) {
           var jsonObject = angular.fromJson(val);
           $scope.movie = jsonObject;
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取排片信息");
         });
     }
   })
 
 
-  .controller('CinemaCtrl', function ($scope, $http, $ionicLoading, $ionicSlideBoxDelegate, $filter, ApiEndpoint, $stateParams, CinemaService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      loadCinema();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+  .controller('CinemaCtrl', function ($scope, $http, $ionicLoading, $location, $ionicHistory, $ionicSlideBoxDelegate, $filter, ApiEndpoint, $stateParams, CinemaService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadCinema();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          loadCinema();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
+    }
+
+    $scope.doRefresh();
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
     }
 
     function loadCinema() {
@@ -450,9 +538,11 @@ angular.module('bibimovie.controllers', [])
           $scope.cinema = jsonObject['cinema'];
           $scope.movies = jsonObject['showingMovies'];
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取影院详情信息");
         });
     }
@@ -506,10 +596,12 @@ angular.module('bibimovie.controllers', [])
           $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
           $scope.currDateHasChanged(0);
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           alert("无法获取影院影片日期信息");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
     }
 
@@ -520,33 +612,46 @@ angular.module('bibimovie.controllers', [])
           $scope.currScreenings = jsonObject['minSource'];
 
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           alert("无法获取该日影院影片信息");
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         })
     }
   })
 
-  .controller('SourceCtrl', function ($scope, $http, $ionicLoading, $filter, ApiEndpoint, $stateParams, SourceService, Geolocation) {
-    $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      loadSource();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+  .controller('SourceCtrl', function ($scope, $http, $ionicLoading, $ionicHistory, $location, $filter, ApiEndpoint, $stateParams, SourceService, Geolocation) {
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'})
+
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadSource();
-      }, function () {
-        alert("无法得到当前城市信息");
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          loadSource();
+        }, function () {
+          alert("无法得到当前城市信息");
+        })
+      }
     }
 
+    $scope.doRefresh();
+
+    $scope.goBack = function () {
+      var history = $ionicHistory.viewHistory();
+      if (history.backView)
+        history.backView.go();
+      $location.path("/");
+    }
 
     function loadSource() {
       var promise = SourceService.getSource($scope.currCityId, $stateParams.cinemaId,
@@ -556,9 +661,11 @@ angular.module('bibimovie.controllers', [])
           $scope.showDate = $stateParams.showDate;
           $scope.startTime = $stateParams.startTime.substr(0, 5);
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取来源信息");
         });
     }
@@ -618,9 +725,11 @@ angular.module('bibimovie.controllers', [])
       promise.then(function (val) {
           $scope.cityLists = angular.fromJson(val);
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
           alert("无法获取来源信息");
         });
     }

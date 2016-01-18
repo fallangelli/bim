@@ -9,9 +9,9 @@
     </ion-refresher>
 
     <header>
-      <a href="/#/">
+      <div ng-click="goBack()">
         <div class="go_back"></div>
-      </a>
+      </div>
 
       <div class="page_title">电影详情</div>
       <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
@@ -20,10 +20,10 @@
 
 
     <div class="row">
-      <div class="col col-40">
-        <img src="{{movie.image}}">
+      <div class="col col-30">
+        <img style="width: 100%" src="{{movie.image}}">
       </div>
-      <div class="col col-60">
+      <div class="col col-60" style="min-width: 100px">
         <h4> {{movie.name}}</h4>
         <h5> {{movie.content}}</h5>
         <h5><span ng-if="movie.isImax">iMAX</span> <span ng-if="movie.is3d">3D</span></h5>

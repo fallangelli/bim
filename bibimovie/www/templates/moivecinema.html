@@ -20,9 +20,9 @@
     </ion-refresher>
 
     <header>
-      <a href="/#/">
+      <div ng-click="goBack()">
         <div class="go_back"></div>
-      </a>
+      </div>
 
       <div class="page_title">选择影院</div>
       <a href="/#/cities/moviecinema" class="city" ng-show="currCityId != -1">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>

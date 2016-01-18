@@ -16,15 +16,19 @@
     cn.has_imax AS hasImax,
     cn.tel,
     min(s.sale_price) AS minPrice,
-    count(DISTINCT s.source) AS sourceCount,
-    GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len,
+    </if>
+    count(DISTINCT s.source) AS sourceCount
     FROM cinema cn
     LEFT JOIN city_area ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN screening s ON cn.id = s.cinema_id
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.sale_price IS NOT NULL
     GROUP BY cn.id
-    ORDER BY len
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      ORDER BY len
+    </if>
   </select>
 
   <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">
@@ -40,10 +44,11 @@
     cn.has_imax AS hasImax,
     cn.tel,
     min(s.sale_price) AS minPrice,
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len,
+    </if>
     count(DISTINCT s.source) AS sourceCount,
-    count(DISTINCT
-    s.start_time) AS leftScreening,
-    GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
+    count(DISTINCT s.start_time) AS leftScreening
     FROM cinema cn
     LEFT JOIN city_area ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
@@ -51,8 +56,9 @@
     WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
     to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
     GROUP BY cn.id
-    ORDER BY len
-
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      ORDER BY len
+    </if>
   </select>
 
   <select id="selectMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">

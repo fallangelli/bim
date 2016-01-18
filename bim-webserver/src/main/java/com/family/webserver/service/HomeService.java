@@ -31,8 +31,8 @@ public class HomeService {
     return mapper.selectCityInfo(cityId);
   }
 
-  public List<Cinema> getNearCinemas(String lat, String lng) {
-    return mapper.selectNearCinemas(lat, lng);
+  public List<Cinema> getNearCinemas(Integer cityId, String lat, String lng) {
+    return mapper.selectNearCinemas(cityId, lat, lng);
   }
 
   public List<ListCity> getAllCities() {

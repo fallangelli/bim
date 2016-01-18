@@ -15,7 +15,7 @@ public interface HomeMapper {
 
   CityWithArea selectCityInfo(@Param("cityId") Integer cityId);
 
-  List<Cinema> selectNearCinemas(@Param("lat") String lat, @Param("lng") String lng);
+  List<Cinema> selectNearCinemas(@Param("cityId") Integer cityId, @Param("lat") String lat, @Param("lng") String lng);
 
   List<ListCity> selectCitiesGroupFL();
 }

@@ -33,7 +33,9 @@ public class HomeServiceTest {
 
   @Test
   public void testGetNearCinemas() {
-    List<Cinema> cinemas = service.getNearCinemas("23.02362", "113.1147");
+    List<Cinema> cinemas = service.getNearCinemas(1, "23.02362", "113.1147");
+    System.out.println(cinemas);
+    cinemas = service.getNearCinemas(1, "", "");
     System.out.println(cinemas);
   }
 

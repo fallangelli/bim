@@ -1,7 +1,7 @@
 <ion-view view-title="选择城市">
 
   <div class="bar bar-header">
-    <a class="button bar-balanced button-clear" href="/#/">
+    <a class="button bar-balanced button-clear" href="/#/{{oriPath}}">
       <h4>返回</h4>
     </a>
 
@@ -13,8 +13,9 @@
     <div id="当前" class="item item-divider">
       当前城市
     </div>
-    <a class="item">
-      {{currCityName}}
+
+    <a class="button button-clear" href="/#/{{oriPath}}">
+      <h4 style="text-align: left">{{currCityName}}</h4>
     </a>
 
     <div class="item item-divider">按字母排序</div>
@@ -49,7 +50,10 @@
       <div class="item" style="padding: 3px">
         <div class="row" ng-repeat="groups in v">
           <div class="col col-25" ng-repeat="group in groups">
-            <h3 style="text-align: left">{{group.name}}</h3>
+            <button class="button button-clear" ng-click="switchCity(group.id,group.name)">
+              <h3 style="text-align: left">{{group.name}}</h3>
+            </button>
+
           </div>
         </div>
       </div>

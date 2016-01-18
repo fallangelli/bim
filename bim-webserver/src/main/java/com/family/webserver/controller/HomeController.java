@@ -56,9 +56,10 @@ public class HomeController {
   @RequestMapping(value = "/getNearCinemas", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<Cinema> getNearCinemas(@RequestParam(value = "lat", required = true) String lat,
-                              @RequestParam(value = "lng", required = true) String lng) {
-    return service.getNearCinemas(lat, lng);
+  List<Cinema> getNearCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
+                              @RequestParam(value = "lat", required = false) String lat,
+                              @RequestParam(value = "lng", required = false) String lng) {
+    return service.getNearCinemas(cityId, lat, lng);
 
   }
 

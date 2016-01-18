@@ -3,34 +3,35 @@ angular.module('bibimovie.controllers', [])
     $anchorScrollProvider.disableAutoScrolling();
   })
 
-
   .controller('HomeCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, Geolocation) {
-
-    $ionicLoading.show({template: '加载中...'});
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-      window.localStorage['curr_lat'] && window.localStorage['curr_lng'] &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-      $scope.currCityId = window.localStorage['curr_city_id'];
-      $scope.currCityName = window.localStorage['curr_city_name'];
-      $scope.currLat = window.localStorage['curr_lat'];
-      $scope.currLng = window.localStorage['curr_lng'];
-      loadHotMovies();
-      loadNearCinemas();
-    } else {
-      var promiseCity = Geolocation.initCurrentCity();
-      promiseCity.then(function () {
+    $scope.doRefresh();
+    $scope.doRefresh = function () {
+      $ionicLoading.show({template: '加载中...'});
+      var currTime = new Date();
+      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
+        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
         $scope.currLng = window.localStorage['curr_lng'];
         loadHotMovies();
         loadNearCinemas();
-      }, function () {
-        alert("无法得到当前城市信息");
-        $ionicLoading.hide();
-      })
+      } else {
+        var promiseCity = Geolocation.initCurrentCity();
+        promiseCity.then(function () {
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          $scope.currLat = window.localStorage['curr_lat'];
+          $scope.currLng = window.localStorage['curr_lng'];
+          loadHotMovies();
+          loadNearCinemas();
+        }, function (error) {
+          alert("无法得到当前城市信息" + error);
+          $ionicLoading.hide();
+        })
+      }
     }
+
 
     function loadHotMovies() {
       var url = ApiEndpoint.server_url + "home/hotMovies?cityId=" + $scope.currCityId;
@@ -46,7 +47,8 @@ angular.module('bibimovie.controllers', [])
     }
 
     function loadNearCinemas() {
-      var url = ApiEndpoint.server_url + "home/getNearCinemas?lat=" + $scope.currLat + "&lng=" + $scope.currLng;
+      var url = ApiEndpoint.server_url + "home/getNearCinemas?cityId=" + $scope.currCityId;
+      if ($scope.currLat && $scope.currLng) url += "&lat=" + $scope.currLat + "&lng=" + $scope.currLng;
       $http.get(url)
         .success(function (data) {
           var cinemas = angular.fromJson(data)
@@ -102,7 +104,6 @@ angular.module('bibimovie.controllers', [])
 
     var currTime = new Date();
     if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-      window.localStorage['curr_lat'] && window.localStorage['curr_lng'] &&
       window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
       $scope.currCityId = window.localStorage['curr_city_id'];
       $scope.currCityName = window.localStorage['curr_city_name'];
@@ -212,7 +213,6 @@ angular.module('bibimovie.controllers', [])
 
 
     if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-      window.localStorage['curr_lat'] && window.localStorage['curr_lng'] &&
       window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
       $scope.currCityId = window.localStorage['curr_city_id'];
       $scope.currCityName = window.localStorage['curr_city_name'];
@@ -565,6 +565,8 @@ angular.module('bibimovie.controllers', [])
   })
 
   .controller('CitiesCtrl', function ($scope, $http, $location, $ionicScrollDelegate, $ionicLoading, ApiEndpoint, $stateParams, CitiesService, Geolocation) {
+    $scope.oriPath = $stateParams.oriPath;
+
     $ionicLoading.show({template: '加载中...'})
     var currTime = new Date();
     if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
@@ -588,33 +590,27 @@ angular.module('bibimovie.controllers', [])
     $scope.letterGroupD = ['W', 'X', 'Y', 'Z'];
 
     $scope.gotoElement = function (eID) {
-      // set the location.hash to the id of
-      // the element you wish to scroll to.
-      //$location.hash('bottom');
-
-
       var stopY = CitiesService.elmYPosition(eID)
       $ionicScrollDelegate.scrollTo(0, stopY - 40);
-      // call $anchorScroll()
-      //CitiesService.scrollTo(eID);
-
     };
 
     $scope.goto = function (id) {
       $location.hash(id);
       $anchorScroll();
-      //$ionicScrollDelegate.scrollTo(0,1000);
     }
     $scope.goTop = function (id) {
       $ionicScrollDelegate.scrollTop();
     }
 
-    $scope.func = function (e) {
 
-      for (var item in  e) {
-        console.log(item);
-      }
-      return item;
+    $scope.switchCity = function (id, name) {
+      window.localStorage['curr_city_id'] = id;
+      window.localStorage['curr_city_name'] = name;
+      var expirationTime = new Date();
+      expirationTime.setMinutes(expirationTime.getMinutes() + 20, expirationTime.getSeconds(), 0);
+      window.localStorage['expiration_time'] = expirationTime;
+      $location.path($scope.oriPath);
+      location.reload();
     }
 
     function loadCities() {

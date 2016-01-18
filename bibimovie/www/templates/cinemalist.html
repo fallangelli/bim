@@ -14,7 +14,8 @@
       </a>
 
       <div class="page_title">全部影院</div>
-      <a href="switchCity.html" class="city">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <a href="/#/cities/cinemalist" class="city" ng-show="currCityId != -1">&nbsp;&nbsp;{{currCityName}}&nbsp;</a>
+      <a href="/#/cities/cinemalist" class="city" ng-show="currCityId==-1">&nbsp;&nbsp;定位中...&nbsp;</a>
       <span class="movieTxt" style="margin-left: 10px;">当前城市：</span>
     </header>
 
@@ -26,7 +27,8 @@
     </div>
 
     <div class="button-bar">
-      <a ng-style="distanceOrderStyle" class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
+      <a ng-if="$scope.currLat&&$scope.currLng" ng-style="distanceOrderStyle"
+         class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
       <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
       <button ng-style="distinctFilterStyle" ng-click="openPopover($event)"
               class="button button-outline button-positive">

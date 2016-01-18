@@ -16,8 +16,10 @@ angular.module('bibimovie.services', [])
               deferred.resolve(window.localStorage['curr_city_name']);
             }
             else {
-              alert('查询当前坐标错误' + this.getStatus());
-              deferred.reject();
+              alert('无法得到位置信息');
+              window.localStorage['curr_city_name'] = '北京';
+              deferred.resolve(window.localStorage['curr_city_name']);
+              //deferred.reject();
             }
           }, {enableHighAccuracy: false})
 
@@ -27,8 +29,8 @@ angular.module('bibimovie.services', [])
               $http.get(url)
                 .success(function (data) {
                   window.localStorage['curr_city_id'] = data;
-                  var curTime = new Date()
-                  var expirationTime = new Date(curTime.getTime() + 30 * 60 * 1000)
+                  var expirationTime = new Date();
+                  expirationTime.setMinutes(expirationTime.getMinutes() + 20, expirationTime.getSeconds(), 0);
                   window.localStorage['expiration_time'] = expirationTime;
                   deferredCityId.resolve(data);
                 })

@@ -71,28 +71,18 @@
   <select id="selectNearCinemas"
           resultType="com.family.webserver.entity.Cinema">
     SELECT
-      *,
-      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len
-    FROM cinema
-    WHERE MBRContains
-    (
-      LineString
-      (
-        Point
-        (
-          #{lat,jdbcType=VARCHAR} + 10 / (111.1 / COS(RADIANS(#{lng,jdbcType=VARCHAR}))),
-          #{lng,jdbcType=VARCHAR} + 10 / 111.1
-        ),
-        Point
-        (
-          #{lat,jdbcType=VARCHAR} - 10 / (111.1 / COS(RADIANS(#{lng,jdbcType=VARCHAR}))),
-          #{lng,jdbcType=VARCHAR} - 10 / 111.1
-        )
-      ),
-      pos
-    )
-    ORDER BY len
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len,
+    </if>
+    cn.*
+    FROM cinema cn
+    left join city_area ca on cn.district_id = ca.id
+    WHERE ca.city_id = #{cityId,jdbcType=INTEGER}
+    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+      ORDER BY len
+    </if>
     LIMIT 3
+
   </select>
 
 

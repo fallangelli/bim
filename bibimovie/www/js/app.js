@@ -73,7 +73,7 @@ angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controlle
       })
 
       .state('cities', {
-        url: '/cities',
+        url: '/cities/:oriPath',
         templateUrl: 'templates/cities.html',
         controller: 'CitiesCtrl'
       })

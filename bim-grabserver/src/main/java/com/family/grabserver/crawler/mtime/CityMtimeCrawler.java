@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.mtime;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.CityMtime;
+import com.family.grabserver.entity.bim_grab.CityMtime;
 import com.family.grabserver.model.mtime.CityMtimeModel;
 import com.family.grabserver.model.mtime.CityareaMtimeModel;
 import com.family.grabserver.pipeline.maoyan.CityareaMtimePipeline;

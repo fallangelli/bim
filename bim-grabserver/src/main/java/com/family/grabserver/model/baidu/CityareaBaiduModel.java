@@ -16,14 +16,16 @@ public class CityareaBaiduModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/script[3]")
   private String area;
 
-
   @ExtractByUrl("c=(\\d*)[&]?")
   private String cityId = "";
+
+  @ExtractByUrl("cityName=(\\d*)[&]?")
+  private String cityName = "";
 
   public static void main(String[] args) {
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
       new ConsolePageModelPipeline(), CityareaBaiduModel.class)
-      .addUrl("http://m.dianying.baidu.com/info/cinema/nearby?sfrom=newnuomi&from=webapp&c=132&district=%E5%85%A8%E9%83%A8%E5%95%86%E5%9C%88").thread(1).run();
+      .addUrl("http://m.dianying.baidu.com/info/cinema/nearby?sfrom=newnuomi&from=webapp&c=132&cityName=重庆市&district=%E5%85%A8%E9%83%A8%E5%95%86%E5%9C%88").thread(1).run();
   }
 
   public String getArea() {
@@ -42,6 +44,13 @@ public class CityareaBaiduModel implements AfterExtractor {
     this.cityId = cityId;
   }
 
+  public String getCityName() {
+    return cityName;
+  }
+
+  public void setCityName(String cityName) {
+    this.cityName = cityName;
+  }
 
   @Override
   public void afterProcess(Page page) {

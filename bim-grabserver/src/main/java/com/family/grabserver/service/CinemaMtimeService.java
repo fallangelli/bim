@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemaMtime;
-import com.family.grabserver.mapper.CinemaMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CinemaMtime;
+import com.family.grabserver.mapper.bim_grab.CinemaMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

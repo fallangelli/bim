@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.ScreeningMtime;
+import com.family.grabserver.entity.bim_grab.ScreeningMtime;
 import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.service.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;
@@ -86,7 +86,7 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
       }
 
     } catch (DuplicateKeyException de) {
-      logger.warn("猫眼上映信息键值重复");
+      logger.warn("时光上映信息键值重复");
     } catch (JSONException je) {
       je.printStackTrace();
       logger.error(model.getContext());

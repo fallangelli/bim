@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.MovieshowingMaoyan;
+import com.family.grabserver.entity.bim_grab.MovieshowingMaoyan;
 import com.family.grabserver.model.maoyan.MovieshowingMaoyanModel;
 import com.family.grabserver.service.MovieshowingMaoyanService;
 import org.slf4j.LoggerFactory;

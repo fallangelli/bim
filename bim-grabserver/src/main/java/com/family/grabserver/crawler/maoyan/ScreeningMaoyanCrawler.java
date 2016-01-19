@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.maoyan;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.CinemamovieMaoyan;
+import com.family.grabserver.entity.bim_grab.CinemamovieMaoyan;
 import com.family.grabserver.model.maoyan.MovieshowingMaoyanModel;
 import com.family.grabserver.model.maoyan.ScreeningMaoyanModel;
 import com.family.grabserver.pipeline.maoyan.MovieshowingMaoyanPipeline;
@@ -71,7 +71,7 @@ public class ScreeningMaoyanCrawler {
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(1).run();
+      .thread(1200).run();
   }
 
 }

@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CityBaidu;
-import com.family.grabserver.mapper.CityBaiduMapper;
+import com.family.grabserver.entity.bim_grab.CityBaidu;
+import com.family.grabserver.mapper.bim_grab.CityBaiduMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

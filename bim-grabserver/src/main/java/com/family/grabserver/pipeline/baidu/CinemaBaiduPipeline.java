@@ -2,7 +2,7 @@ package com.family.grabserver.pipeline.baidu;
 
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemaBaidu;
+import com.family.grabserver.entity.bim_grab.CinemaBaidu;
 import com.family.grabserver.model.baidu.CinemaBaiduModel;
 import com.family.grabserver.service.CinemaBaiduService;
 import org.slf4j.LoggerFactory;

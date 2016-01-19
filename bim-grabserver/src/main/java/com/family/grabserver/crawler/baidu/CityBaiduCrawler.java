@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.baidu;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.CityBaidu;
+import com.family.grabserver.entity.bim_grab.CityBaidu;
 import com.family.grabserver.model.baidu.CityBaiduModel;
 import com.family.grabserver.model.baidu.CityareaBaiduModel;
 import com.family.grabserver.pipeline.baidu.CityBaiduPipeline;
@@ -47,7 +47,7 @@ public class CityBaiduCrawler {
     List<String> urls = new ArrayList<String>();
     for (CityBaidu city : cities) {
       urls.add("http://m.dianying.baidu.com/info/cinema/nearby?sfrom=newnuomi&from=webapp&" +
-        "&c=" + city.getId() + "&district=%E5%85%A8%E9%83%A8%E5%95%86%E5%9C%88");
+        "&c=" + city.getId() + "&cityName=" + city.getName() + "&district=%E5%85%A8%E9%83%A8%E5%95%86%E5%9C%88");
     }
 
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),

@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.baidu;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.CinemaBaidu;
+import com.family.grabserver.entity.bim_grab.CinemaBaidu;
 import com.family.grabserver.model.baidu.ScreeningBaiduModel;
 import com.family.grabserver.pipeline.baidu.ScreeningBaiduPipeline;
 import com.family.grabserver.service.CinemaBaiduService;

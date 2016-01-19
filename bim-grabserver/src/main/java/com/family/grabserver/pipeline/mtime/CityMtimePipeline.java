@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CityMtime;
+import com.family.grabserver.entity.bim_grab.CityMtime;
 import com.family.grabserver.model.mtime.CityMtimeModel;
 import com.family.grabserver.service.CityMtimeService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.MovieshowingMtime;
+import com.family.grabserver.entity.bim_grab.MovieshowingMtime;
 import com.family.grabserver.model.mtime.MovieshowingMtimeModel;
 import com.family.grabserver.service.MovieshowingMtimeService;
 import com.family.grabserver.util.JsonStringUtil;

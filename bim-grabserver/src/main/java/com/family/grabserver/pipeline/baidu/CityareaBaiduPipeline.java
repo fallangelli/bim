@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CityareaBaidu;
+import com.family.grabserver.entity.bim_grab.CityareaBaidu;
 import com.family.grabserver.model.baidu.CityareaBaiduModel;
 import com.family.grabserver.service.CityareaBaiduService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,7 @@ public class CityareaBaiduPipeline implements PageModelPipeline<CityareaBaiduMod
       CityareaBaidu record = new CityareaBaidu();
       record.setId(area.getInteger("id"));
       record.setCityId(Integer.parseInt(model.getCityId()));
+      record.setCityName(model.getCityName());
       record.setName(area.getString("name"));
 
       service.insertOrUpate(record);

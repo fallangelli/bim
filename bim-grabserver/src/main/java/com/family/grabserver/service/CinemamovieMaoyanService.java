@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemamovieMaoyan;
-import com.family.grabserver.mapper.CinemamovieMaoyanMapper;
+import com.family.grabserver.entity.bim_grab.CinemamovieMaoyan;
+import com.family.grabserver.mapper.bim_grab.CinemamovieMaoyanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -78,9 +78,9 @@ public class MainRunner {
   }
 
   public void grabScreening() {
-//    screeningMaoyanCrawler.crawl();
+    screeningMaoyanCrawler.crawl();
     screeningMtimeCrawler.crawl();
-//    screeningBaiduCrawler.crawl();
+    screeningBaiduCrawler.crawl();
   }
 
 }

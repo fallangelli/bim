@@ -51,12 +51,12 @@ public class MainRunner {
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
-    final MainRunner grabMaoyanRunner = applicationContext.getBean(MainRunner.class);
-//    grabMaoyanRunner.grabCity();
-//    grabMaoyanRunner.grabCinema();
-//    grabMaoyanRunner.grabCinemamovie();
-//    grabMaoyanRunner.grabScreening();
-    grabMaoyanRunner.mergeService.merge();
+    final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
+    grabRunner.grabCity();
+    grabRunner.grabCinema();
+    grabRunner.grabCinemamovie();
+    grabRunner.grabScreening();
+    grabRunner.mergeService.merge();
   }
 
   public void grabCity() {

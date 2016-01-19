@@ -14,7 +14,7 @@ import com.family.grab.pipeline.ConsolePipeline;
 public class ScreeningBaiduModel implements AfterExtractor {
 
 
-  @ExtractBy(value = "/html/body/script[3]")
+  @ExtractBy(value = "/html/body/script[2]")
   private String context;
 
 

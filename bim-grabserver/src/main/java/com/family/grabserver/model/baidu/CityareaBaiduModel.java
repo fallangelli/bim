@@ -13,7 +13,7 @@ import com.family.grab.model.annotation.TargetUrl;
 public class CityareaBaiduModel implements AfterExtractor {
 
 
-  @ExtractBy(value = "/html/body/script[4]")
+  @ExtractBy(value = "/html/body/script[3]")
   private String area;
 
 

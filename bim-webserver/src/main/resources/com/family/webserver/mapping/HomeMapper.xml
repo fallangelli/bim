@@ -89,60 +89,74 @@
   <select id="selectCitiesGroupFL" resultMap="cityGroupFL">
     SELECT
       id,
-      ' 热门' fl,
+    '热门' fl,
       name,
       pinyin
     FROM city
     WHERE name LIKE '%北京%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%上海%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
-          WHERE name LIKE '%深证%'
+    WHERE name LIKE '%深圳%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%广州%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%成都%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%武汉%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%重庆%'
     UNION SELECT
             id,
-            ' 热门' fl,
+    '热门' fl,
             name,
             pinyin
           FROM city
           WHERE name LIKE '%杭州%'
+    UNION SELECT
+    id,
+    '热门' fl,
+    name,
+    pinyin
+    FROM city
+    WHERE name LIKE '%南京%'
+    UNION SELECT
+    id,
+    '热门' fl,
+    name,
+    pinyin
+    FROM city
+    WHERE name LIKE '%天津%'
     UNION
     SELECT DISTINCT
       c1.id,

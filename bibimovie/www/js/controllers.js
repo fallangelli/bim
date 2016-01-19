@@ -783,3 +783,19 @@ angular.module('bibimovie.controllers', [])
       return items;
     }
   })
+
+  .filter('orderCities', function () {
+    return function (items, orderBy) {
+      if (items) {
+        var tmpItem = {};
+        tmpItem['热门'] = items['热门'];
+        angular.forEach(items, function (value, key) {
+          if (!value.hasOwnProperty('热门')) {
+            tmpItem[key] = value;
+          }
+        });
+        return tmpItem;
+      }
+      return items;
+    }
+  })

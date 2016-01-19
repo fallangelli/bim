@@ -25,9 +25,10 @@ public class MergeService {
       e.printStackTrace();
       return;
     }
+    mapper.merge_city_mtime();
 
     mapper.merge_city_maoyan();
-    mapper.merge_city_mtime();
+
     mapper.merge_city_baidu();
 
     mapper.merge_city_area_maoyan();

@@ -34,8 +34,7 @@ public class ScreeningMtimeModel implements AfterExtractor {
     final ScreeningMtimePipeline pipeline = applicationContext.getBean(ScreeningMtimePipeline.class);
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
       pipeline, ScreeningMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/showtime/ShowTimesByCinemaMovieDate.api?" +
-        "cinemaId=2342&movieId=216036&date=2015-12-10").thread(1).run();
+      .addUrl("http://m.mtime.cn/Service/callback.mi/showtime/ShowTimesByCinemaMovieDate.api?cinemaId=4185&movieId=216885&date=2016-01-21").thread(1).run();
   }
 
   public String getContext() {
@@ -69,6 +68,7 @@ public class ScreeningMtimeModel implements AfterExtractor {
   public void setShowDate(String showDate) {
     this.showDate = showDate;
   }
+
 //    @Override
 //    public String toString() {
 //        String retVal = context;
@@ -77,7 +77,10 @@ public class ScreeningMtimeModel implements AfterExtractor {
 
   @Override
   public void afterProcess(Page page) {
-
+    if (context.trim().length() < 5) {
+      page.addTargetRequest(page.getRequest());
+      context = null;
+    }
   }
 
 }

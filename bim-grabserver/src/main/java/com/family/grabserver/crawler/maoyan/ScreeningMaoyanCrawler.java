@@ -68,10 +68,10 @@ public class ScreeningMaoyanCrawler {
       urls.add(movieUrl);
     }
     logger.info("开始抓取 猫眼 场次信息");
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(1500).run();
+      .thread(1).run();
   }
 
 }

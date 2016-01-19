@@ -43,7 +43,7 @@
     </div>
 
 
-    <div ng-repeat="(k,v) in cityLists">
+    <div ng-repeat="(k,v) in cityLists| orderCities">
       <div id="{{k}}" class="item item-divider">
         {{k}}
       </div>

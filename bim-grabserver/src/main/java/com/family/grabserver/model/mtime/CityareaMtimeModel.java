@@ -17,7 +17,7 @@ public class CityareaMtimeModel implements AfterExtractor {
   private String context;
 
 
-  @ExtractByUrl("locationId=(\\d*)[&]?")
+  @ExtractByUrl("locationId=(\\d*)?[&]")
   private String cityId = "";
 
   public static void main(String[] args) {

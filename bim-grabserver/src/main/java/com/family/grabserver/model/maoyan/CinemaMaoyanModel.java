@@ -15,7 +15,7 @@ public class CinemaMaoyanModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/text()")
   private String context;
 
-  @ExtractByUrl("cityId=(\\d*)[&]?")
+  @ExtractByUrl("cityId=(\\d*)?[&]")
   private String cityId = "";
 
   public static void main(String[] args) {

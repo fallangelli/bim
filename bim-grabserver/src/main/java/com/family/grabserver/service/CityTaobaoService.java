@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.bim_grab.CityTaobao;
-import com.family.grabserver.mapper.bim_grab.CityTaobaoMapper;
+import com.family.grabserver.entity.CityTaobao;
+import com.family.grabserver.mapper.CityTaobaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

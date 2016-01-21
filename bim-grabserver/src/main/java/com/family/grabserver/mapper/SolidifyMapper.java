@@ -1,6 +1,12 @@
 package com.family.grabserver.mapper;
 
+import com.family.grabserver.entity.Cityarea;
+
+import java.util.List;
+
 public interface SolidifyMapper {
+
+  List<Cityarea> selectCityAreas(Integer cityId);
 
   void merge_city_maoyan();
 

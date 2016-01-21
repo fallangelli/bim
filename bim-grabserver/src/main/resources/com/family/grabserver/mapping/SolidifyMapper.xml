@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.grabserver.mapper.SolidifyMapper">
 
+  <select id="selectCityAreas" resultType="com.family.grabserver.entity.Cityarea">
+    SELECT *
+    FROM cityarea
+    WHERE city_id = #{cityId,jdbcType=INTEGER}
+  </select>
+
   <insert id="merge_city_maoyan">
     INSERT INTO bim_base.city (id_maoyan, name, first_letter, pinyin)
       SELECT

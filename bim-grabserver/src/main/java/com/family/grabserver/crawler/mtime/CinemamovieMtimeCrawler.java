@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.mtime;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.bim_grab.CinemaMtime;
+import com.family.grabserver.entity.CinemaMtime;
 import com.family.grabserver.model.mtime.CinemamovieMtimeModel;
 import com.family.grabserver.pipeline.mtime.CinemamoiveMtimePipeline;
 import com.family.grabserver.service.CinemaMtimeService;

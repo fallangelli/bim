@@ -23,19 +23,22 @@ public class CinemaBaiduModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/a[@class='schedule-info touching border border-bottom']/div/p/text()", multi = true)
   private List<String> listAddress;
 
-  @ExtractByUrl("c=(\\d*)[&]?")
+  @ExtractByUrl("c=(\\d*)?[&]")
   private String cityId;
 
-  @ExtractByUrl("areaId=(\\d*)[&]?")
+  @ExtractByUrl("cityName=([\\w\\W]*?)?[&]")
+  private String cityName;
+
+  @ExtractByUrl("areaId=(\\d*)?[&]")
   private String areaId;
 
-  @ExtractByUrl("areaName=([\\w\\W]*?)[&]")
+  @ExtractByUrl("areaName=([\\w\\W]*?)?[&]")
   private String areaName;
 
   public static void main(String[] args) {
     OOSpider.create(Site.me().setSleepTime(1000)
       , new ConsolePageModelPipeline(), CinemaBaiduModel.class)
-      .addUrl("http://m.dianying.baidu.com/api/portal/loadMoreCinema?c=131&areaId=2305&areaName=昌平&pageSize=1000&pageNum=0")
+      .addUrl("http://m.dianying.baidu.com/api/portal/loadMoreCinema?c=131&cityName=北京&areaId=2305&areaName=昌平&pageSize=1000&pageNum=0")
       .thread(1).run();
   }
 
@@ -85,6 +88,14 @@ public class CinemaBaiduModel implements AfterExtractor {
 
   public void setCityId(String cityId) {
     this.cityId = cityId;
+  }
+
+  public String getCityName() {
+    return cityName;
+  }
+
+  public void setCityName(String cityName) {
+    this.cityName = cityName;
   }
 
   @Override

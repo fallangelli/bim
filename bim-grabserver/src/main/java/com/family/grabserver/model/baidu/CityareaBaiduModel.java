@@ -16,10 +16,10 @@ public class CityareaBaiduModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/script[3]")
   private String area;
 
-  @ExtractByUrl("c=(\\d*)[&]?")
+  @ExtractByUrl("c=(\\d*)?[&]")
   private String cityId = "";
 
-  @ExtractByUrl("cityName=(\\d*)[&]?")
+  @ExtractByUrl("cityName=([\\w\\W]*?)?[&]")
   private String cityName = "";
 
   public static void main(String[] args) {

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.bim_grab.CinemamovieMtime;
+import com.family.grabserver.entity.CinemamovieMtime;
 import com.family.grabserver.model.mtime.MovieshowingMtimeModel;
 import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.pipeline.mtime.MovieshowingMtimePipeline;

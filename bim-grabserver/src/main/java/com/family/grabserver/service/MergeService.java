@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
+import com.family.grabserver.mapper.CityMapper;
 import com.family.grabserver.mapper.SolidifyMapper;
-import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -17,6 +17,9 @@ public class MergeService {
   @Autowired
   private SolidifyMapper mapper;
   @Autowired
+  private CityMapper cmapper;
+
+  @Autowired
   private CityMaoyanService cityServiceMaoyan;
 
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
@@ -29,13 +32,13 @@ public class MergeService {
 
   public void merge() {
     logger.info("开始执行合并");
-    try {
-      SqlUtil.truncateTable("bim_base.screening");
-      SqlUtil.truncateTable("bim_base.movieshowing");
-    } catch (Exception e) {
-      e.printStackTrace();
-      return;
-    }
+//    try {
+//      SqlUtil.truncateTable("bim_base.screening");
+//      SqlUtil.truncateTable("bim_base.movieshowing");
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      return;
+//    }
     mapper.merge_city_mtime();
 //    List<CityMaoyan> cityMaoyanList = csMaoyan.selectAll();
 //    for(CityMaoyan city : cityMaoyanList){

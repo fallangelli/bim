@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.maoyan;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
+import com.family.grabserver.entity.CinemaMaoyan;
 import com.family.grabserver.model.maoyan.CinemamovieMaoyanModel;
 import com.family.grabserver.pipeline.maoyan.CinemamoiveMaoyanPipeline;
 import com.family.grabserver.service.CinemaMaoyanService;

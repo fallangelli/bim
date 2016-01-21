@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.bim_grab.ScreeningMtime;
+import com.family.grabserver.entity.ScreeningMtime;
 import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.service.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;

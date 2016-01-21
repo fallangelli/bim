@@ -1,9 +1,10 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.bim_grab.CityBaidu;
-import com.family.grabserver.mapper.bim_grab.CityBaiduMapper;
+import com.family.grabserver.entity.CityBaidu;
+import com.family.grabserver.mapper.CityBaiduMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +31,10 @@ public class CityBaiduService {
         else
           return mapper.insert(record);
       }
+    } catch (DuplicateKeyException de) {
+      logger.warn("百度-城市 重复键值");
     } catch (Exception e) {
-      logger.info("百度 出现重复城市");
+      e.printStackTrace();
     }
     return -1;
   }

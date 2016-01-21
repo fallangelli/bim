@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.bim_grab.MovieshowingBaidu;
-import com.family.grabserver.mapper.bim_grab.MovieshowingBaiduMapper;
+import com.family.grabserver.entity.MovieshowingBaidu;
+import com.family.grabserver.mapper.MovieshowingBaiduMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

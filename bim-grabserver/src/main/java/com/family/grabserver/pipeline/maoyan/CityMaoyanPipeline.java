@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.bim_grab.CityMaoyan;
+import com.family.grabserver.entity.CityMaoyan;
 import com.family.grabserver.model.maoyan.CityMaoyanModel;
 import com.family.grabserver.service.CityMaoyanService;
 import org.springframework.beans.factory.annotation.Autowired;

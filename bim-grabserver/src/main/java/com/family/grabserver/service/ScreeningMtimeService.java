@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.bim_grab.ScreeningMtime;
-import com.family.grabserver.mapper.bim_grab.ScreeningMtimeMapper;
+import com.family.grabserver.entity.ScreeningMtime;
+import com.family.grabserver.mapper.ScreeningMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

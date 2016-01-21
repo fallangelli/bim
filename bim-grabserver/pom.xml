@@ -17,7 +17,6 @@
     <mybatis.generator.configurationFile>./src/main/resources/generatorConfig.xml
     </mybatis.generator.configurationFile>
     <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
-    <mybatis.generator.tableNames></mybatis.generator.tableNames>
   </properties>
 
   <build>

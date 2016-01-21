@@ -16,7 +16,7 @@ public class CinemaMtimeModel implements AfterExtractor {
   private String context;
 
 
-  @ExtractByUrl("cinemaId=(\\d*)[&]?")
+  @ExtractByUrl("cinemaId=(\\d*)?[&]")
   private String cinemaId = "";
 
   public static void main(String[] args) {

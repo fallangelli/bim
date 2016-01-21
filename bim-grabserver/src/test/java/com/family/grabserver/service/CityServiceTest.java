@@ -14,17 +14,12 @@ public class CityServiceTest {
 
   @Test
   public void testGetMostSimilarCity() throws Exception {
-    System.out.println(service.getMostSimilarCity("开远").getName());
-
-    System.out.println(service.getMostSimilarCity("綦江").getName());
-    System.out.println(service.getMostSimilarCity("青岛").getName());
-    System.out.println(service.getMostSimilarCity("延边").getName());
-    System.out.println(service.getMostSimilarCity("张家港").getName());
+    System.out.println(service.getMostSimilarCity("陵水").getName());
   }
 
 
   @Test
   public void testeGetMostSimilarArea() throws Exception {
-    System.out.println(service.getMostSimilarArea(120000, "天津", "滨海新区").getName());
+    System.out.println(service.getMostSimilarArea(422800, "恩施", "恩施").getName());
   }
 }

@@ -60,7 +60,8 @@ public class CityService {
       List<Cityarea> areas = smapper.selectCityAreas(cityId);
       for (Cityarea area : areas) {
         if (area.getName().contains("市辖") ||
-          CityMerge.compareWithouKeyWord(city.getName(), area.getName()))
+          CityMerge.compareWithouKeyWord(city.getName(), area.getName()) ||
+          CityMerge.compareWithouKeyWord(cityName, area.getName()))
           return area;
       }
       return null;

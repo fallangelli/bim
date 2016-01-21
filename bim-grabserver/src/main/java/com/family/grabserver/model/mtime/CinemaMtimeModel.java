@@ -12,7 +12,7 @@ import com.family.grabserver.pipeline.mtime.CinemaMtimePipeline;
 @TargetUrl(value = "http://m.mtime.cn/[\\w\\W]*")
 public class CinemaMtimeModel implements AfterExtractor {
 
-  @ExtractBy(value = "/html/body/text()")
+  @ExtractBy(value = "/html/body")
   private String context;
 
 
@@ -22,7 +22,7 @@ public class CinemaMtimeModel implements AfterExtractor {
   public static void main(String[] args) {
     OOSpider.create(Site.me().setSleepTime(1000)
       , new CinemaMtimePipeline(), CinemaMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=1052")
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=1542")
       .thread(1).run();
   }
 
@@ -50,7 +50,10 @@ public class CinemaMtimeModel implements AfterExtractor {
 
   @Override
   public void afterProcess(Page page) {
-
+    context = context.replace("<body>", "");
+    context = context.replace("</body>", "");
+    context = context.replace("</strong>", "");
+    context = context.replace("\n", "");
   }
 
 }

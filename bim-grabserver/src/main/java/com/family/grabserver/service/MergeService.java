@@ -39,7 +39,7 @@ public class MergeService {
 //      e.printStackTrace();
 //      return;
 //    }
-    mapper.merge_city_mtime();
+//    mapper.merge_city_mtime();
 //    List<CityMaoyan> cityMaoyanList = csMaoyan.selectAll();
 //    for(CityMaoyan city : cityMaoyanList){
 //      if(Levenshtein.participle(city.getName(),))

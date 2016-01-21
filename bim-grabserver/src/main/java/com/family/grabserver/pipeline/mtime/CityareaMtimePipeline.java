@@ -1,4 +1,4 @@
-package com.family.grabserver.pipeline.maoyan;
+package com.family.grabserver.pipeline.mtime;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -6,10 +6,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.CinemaMtime;
+import com.family.grabserver.entity.City;
+import com.family.grabserver.entity.Cityarea;
 import com.family.grabserver.entity.CityareaMtime;
 import com.family.grabserver.model.mtime.CityareaMtimeModel;
 import com.family.grabserver.service.CinemaMtimeService;
+import com.family.grabserver.service.CityService;
 import com.family.grabserver.service.CityareaMtimeService;
+import com.family.grabserver.util.CityMerge;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +25,10 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
   private CityareaMtimeService service;
   @Autowired
   private CinemaMtimeService cinemaService;
+  @Autowired
+  private CityService cservice;
 
+  private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
   @Override
   public void process(CityareaMtimeModel model, Task task) {
@@ -32,6 +40,7 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       JSONObject district = (JSONObject) districtOb;
       CityareaMtime record = new CityareaMtime();
       record.setId(district.getInteger("id"));
+      record.setCityName(model.getCityName());
       record.setCityId(Integer.parseInt(model.getCityId()));
       record.setName(district.getString("name"));
 
@@ -44,13 +53,13 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       JSONObject cinema = (JSONObject) cinemaOb;
       CinemaMtime record = new CinemaMtime();
       record.setId(cinema.getInteger("id"));
-      if (cinema.getInteger("districtId") == 0) {
-        record.setArea("市区");
-      } else {
+      record.setMtimeCityName(model.getCityName());
+      if (cinema.getInteger("districtId") == 0)
+        record.setMtimeArea(model.getCityName());
+      else {
         CityareaMtime area = service.selectByPrimaryKey(cinema.getInteger("districtId"));
-        record.setArea(area.getName());
+        record.setMtimeArea(CityMerge.getAreaWithTrans(model.getCityName(), area.getName()));
       }
-
       record.setCityId(Integer.parseInt(model.getCityId()));
       record.setName(cinema.getString("name"));
       record.setAddress(cinema.getString("address"));
@@ -59,6 +68,21 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       record.setTel(cinema.getString("tele"));
       record.setRoute(cinema.getString("route"));
 
+      cinemaService.insertOrUpate(record);
+
+      City simCity = cservice.getMostSimilarCity(model.getCityName());
+      if (simCity != null) {
+        record.setCityId(simCity.getId());
+        record.setCityName(simCity.getName());
+
+        Cityarea simArea = cservice.getMostSimilarArea(simCity.getId(), record.getMtimeCityName(), record.getMtimeArea());
+        if (simArea != null) {
+          record.setAreaId(simArea.getId());
+          record.setAreaName(simArea.getName());
+        } else
+          logger.error("无法找到归并地区：" + model.getCityName() + " - " + record.getMtimeArea());
+      } else
+        logger.error("无法找到归并城市：" + model.getCityName());
 
       cinemaService.insertOrUpate(record);
     }

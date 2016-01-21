@@ -16,7 +16,7 @@ public class MovieshowingMtimeModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/text()")
   private String context;
 
-  @ExtractByUrl("movieId=(\\d*)?[&]")
+  @ExtractByUrl("movieId=(\\d*)")
   private String movieId = "";
 
   public static void main(String[] args) {

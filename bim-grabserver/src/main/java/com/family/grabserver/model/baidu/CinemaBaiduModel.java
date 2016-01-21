@@ -23,16 +23,16 @@ public class CinemaBaiduModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/a[@class='schedule-info touching border border-bottom']/div/p/text()", multi = true)
   private List<String> listAddress;
 
-  @ExtractByUrl("c=(\\d*)?[&]")
+  @ExtractByUrl("c=(\\d*)")
   private String cityId;
 
-  @ExtractByUrl("cityName=([\\w\\W]*?)?[&]")
+  @ExtractByUrl("cityName=(.*?)(?=&)")
   private String cityName;
 
-  @ExtractByUrl("areaId=(\\d*)?[&]")
+  @ExtractByUrl("areaId=(\\d*)")
   private String areaId;
 
-  @ExtractByUrl("areaName=([\\w\\W]*?)?[&]")
+  @ExtractByUrl("areaName=(.*?)(?=&)")
   private String areaName;
 
   public static void main(String[] args) {

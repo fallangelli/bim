@@ -5,8 +5,8 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.CityMtime;
 import com.family.grabserver.model.mtime.CityMtimeModel;
 import com.family.grabserver.model.mtime.CityareaMtimeModel;
-import com.family.grabserver.pipeline.maoyan.CityareaMtimePipeline;
 import com.family.grabserver.pipeline.mtime.CityMtimePipeline;
+import com.family.grabserver.pipeline.mtime.CityareaMtimePipeline;
 import com.family.grabserver.service.CityMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CityMtimeCrawler {
     List<String> urls = new ArrayList<String>();
     for (CityMtime city : allCity) {
       urls.add("http://m.mtime.cn/Service/callback.mi/Showtime/BaseCityData.api?" +
-        "locationId=" + city.getId());
+        "cityName=" + city.getName() + "&locationId=" + city.getId());
     }
 
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),

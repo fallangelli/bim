@@ -3,7 +3,10 @@
 <mapper namespace="com.family.grabserver.mapper.SolidifyMapper">
 
   <select id="selectCityAreas" resultType="com.family.grabserver.entity.Cityarea">
-    SELECT *
+    SELECT
+      id,
+      city_id cityId,
+      name
     FROM cityarea
     WHERE city_id = #{cityId,jdbcType=INTEGER}
   </select>
@@ -30,12 +33,12 @@
   </insert>
   <insert id="merge_city_baidu">
     INSERT INTO bim_base.city (id_baidu, name, first_letter, pinyin)
-    SELECT
-    id,
-    name,
-    first_letter,
-    pinyin
-    FROM bim_grab.city_baidu b
+      SELECT
+        id,
+        name,
+        first_letter,
+        pinyin
+      FROM bim_grab.city_baidu b
     ON DUPLICATE KEY UPDATE id_baidu = b.id;
   </insert>
   <insert id="merge_city_area_mtime">
@@ -72,17 +75,17 @@
 
   <insert id="merge_city_area_baidu">
     INSERT INTO bim_base.city_area (city_id, area)
-    SELECT
-    tmp.city_id,
-    tmp.area
-    FROM (
-    SELECT
-    c.id AS city_id,
-    cim.city_id id_baidu,
-    cim.area AS area
-    FROM bim_grab.cinema_baidu cim
-    JOIN bim_base.city c ON c.id_baidu = cim.city_id
-    GROUP BY cim.city_id, cim.area) tmp
+      SELECT
+        tmp.city_id,
+        tmp.area
+      FROM (
+             SELECT
+               c.id     AS city_id,
+               cim.city_id id_baidu,
+               cim.area AS area
+             FROM bim_grab.cinema_baidu cim
+               JOIN bim_base.city c ON c.id_baidu = cim.city_id
+             GROUP BY cim.city_id, cim.area) tmp
     ON DUPLICATE KEY UPDATE bim_base.city_area.area = tmp.area;
   </insert>
 
@@ -231,23 +234,23 @@
 
   <insert id="merge_screening_baidu">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
-    version, sale_price, cinema_price, source, ticket_url)
-    SELECT
-    c.id AS cinema_id,
-    m.id AS movie_id,
-    show_date,
-    start_time,
-    end_time,
-    language,
-    hall,
-    version,
-    sale_price,
-    cinema_price,
-    'baidu',
-    ticket_url
-    FROM bim_grab.screening_baidu pm
-    JOIN bim_base.movieshowing m ON pm.movie_id = m.id_baidu
-    JOIN bim_base.cinema c ON pm.cinema_id = c.id_baidu
+                                    version, sale_price, cinema_price, source, ticket_url)
+      SELECT
+        c.id AS cinema_id,
+        m.id AS movie_id,
+        show_date,
+        start_time,
+        end_time,
+        language,
+        hall,
+        version,
+        sale_price,
+        cinema_price,
+        'baidu',
+        ticket_url
+      FROM bim_grab.screening_baidu pm
+        JOIN bim_base.movieshowing m ON pm.movie_id = m.id_baidu
+        JOIN bim_base.cinema c ON pm.cinema_id = c.id_baidu
     ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
   </insert>
 </mapper>

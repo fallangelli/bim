@@ -5,7 +5,6 @@ import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.CityBaidu;
 import com.family.grabserver.model.baidu.CityBaiduModel;
 import com.family.grabserver.service.CityBaiduService;
-import com.family.grabserver.util.Cn2Spell;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,8 +31,6 @@ public class CityBaiduPipeline implements PageModelPipeline<CityBaiduModel> {
       record.setId(Integer.parseInt(listId.get(i)));
       String name = model.getListName().get(i);
       record.setName(name);
-      record.setFirstLetter(Cn2Spell.getFirstLetter(name));
-      record.setPinyin(Cn2Spell.converterToSpell(name));
 
       service.insertOrUpate(record);
     }

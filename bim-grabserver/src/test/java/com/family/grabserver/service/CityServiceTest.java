@@ -25,6 +25,6 @@ public class CityServiceTest {
 
   @Test
   public void testeGetMostSimilarArea() throws Exception {
-    System.out.println(service.getMostSimilarArea(110000, "东城").getName());
+    System.out.println(service.getMostSimilarArea(120000, "天津", "滨海新区").getName());
   }
 }

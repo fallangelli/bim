@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.family.grabserver.mapper.bim_base.SolidifyMapper">
+
+  <select id="selectCityAreas" resultType="com.family.grabserver.entity.bim_base.Cityarea">
+    SELECT
+      id,
+      city_id cityId,
+      name
+    FROM bim_base.cityarea
+    WHERE city_id = #{cityId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="merge_screening_maoyan">
+    INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall, version,
+                                    sale_price, cinema_price, source, ticket_url)
+      SELECT
+        c.id AS cinema_id,
+        m.id AS movie_id,
+        show_date,
+        start_time,
+        end_time,
+        language,
+        hall,
+        version,
+        sale_price,
+        cinema_price,
+        'maoyan',
+        ticket_url
+      FROM bim_grab.screening_maoyan pm
+        JOIN bim_base.movieshowing m ON pm.movie_id = m.id_maoyan
+        JOIN bim_base.cinema c ON pm.cinema_id = c.id_maoyan
+    ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
+  </insert>
+
+  <insert id="merge_screening_mtime">
+    INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
+                                    version, sale_price, cinema_price, source, ticket_url)
+      SELECT
+        c.id AS cinema_id,
+        m.id AS movie_id,
+        show_date,
+        start_time,
+        end_time,
+        language,
+        hall,
+        version,
+        sale_price,
+        cinema_price,
+        'mtime',
+        ticket_url
+      FROM bim_grab.screening_mtime pm
+        JOIN bim_base.movieshowing m ON pm.movie_id = m.id_mtime
+        JOIN bim_base.cinema c ON pm.cinema_id = c.id_mtime
+    ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
+  </insert>
+
+  <insert id="merge_screening_baidu">
+    INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
+                                    version, sale_price, cinema_price, source, ticket_url)
+      SELECT
+        c.id AS cinema_id,
+        m.id AS movie_id,
+        show_date,
+        start_time,
+        end_time,
+        language,
+        hall,
+        version,
+        sale_price,
+        cinema_price,
+        'baidu',
+        ticket_url
+      FROM bim_grab.screening_baidu pm
+        JOIN bim_base.movieshowing m ON pm.movie_id = m.id_baidu
+        JOIN bim_base.cinema c ON pm.cinema_id = c.id_baidu
+    ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
+  </insert>
+</mapper>

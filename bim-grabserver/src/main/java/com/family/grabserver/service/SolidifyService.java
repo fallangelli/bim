@@ -1,10 +1,10 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.SolidifyUtil.MovieSolidfier;
 import com.family.grabserver.mapper.bim_base.CinemaMapper;
 import com.family.grabserver.mapper.bim_base.CityMapper;
 import com.family.grabserver.mapper.bim_base.MovieshowingMapper;
-import com.family.grabserver.mapper.bim_grab.SolidifyMapper;
+import com.family.grabserver.mapper.bim_base.SolidifyMapper;
+import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -46,45 +46,25 @@ public class SolidifyService {
   }
 
   public void merge() {
+    logger.info("清除过期数据");
+    try {
+      SqlUtil.truncateTable("bim_base.screening");
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
+    }
+
     logger.info("开始执行合并");
+
 //    CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
 //    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
 
-    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
-    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
-//    try {
-//      SqlUtil.truncateTable("bim_base.screening");
-//      SqlUtil.truncateTable("bim_base.movieshowing");
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//      return;
-//    }
-//    mapper.merge_city_mtime();
-//    List<CityMaoyan> cityMaoyanList = csMaoyan.selectAll();
-//    for(CityMaoyan city : cityMaoyanList){
-//      if(Levenshtein.participle(city.getName(),))
-//    }
-//
-//
-//    mapper.merge_city_maoyan();
-//
-//    mapper.merge_city_baidu();
-//
-//    mapper.merge_city_area_maoyan();
-//    mapper.merge_city_area_mtime();
-//    mapper.merge_city_area_baidu();
-//
-//    mapper.merge_movieshowing_maoyan();
-//    mapper.merge_movieshowing_mtime();
-//    mapper.merge_movieshowing_baidu();
-//
-//    mapper.merge_cinema_maoyan();
-//    mapper.merge_cinema_mtime();
-//    mapper.merge_cinema_baidu();
-//
-//    mapper.merge_screening_maoyan();
-//    mapper.merge_screening_mtime();
-//    mapper.merge_screening_baidu();
+//    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
+//    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
+
+    mapper.merge_screening_mtime();
+    mapper.merge_screening_baidu();
+
   }
 
 }

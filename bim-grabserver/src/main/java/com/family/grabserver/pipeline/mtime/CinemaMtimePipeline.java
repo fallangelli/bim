@@ -23,7 +23,7 @@ public class CinemaMtimePipeline implements PageModelPipeline<CinemaMtimeModel> 
 
     CinemaMtime record = service.selectByPrimaryKey(Integer.parseInt(model.getCinemaId()));
     if (record != null) {
-      record.setRating(cinema.getString("rating"));
+      record.setRating(cinema.getDouble("rating"));
       JSONObject feature = (JSONObject) cinema.get("feature");
       record.setHas3d(feature.getBoolean("has3D") == null ? false : feature.getBoolean("has3D"));
       record.setHasImax(feature.getBoolean("hasIMAX") == null ? false : feature.getBoolean("hasIMAX"));

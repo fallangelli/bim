@@ -1,8 +1,9 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.SolidifyUtil.CinemaSolidfier;
+import com.family.grabserver.SolidifyUtil.MovieSolidfier;
 import com.family.grabserver.mapper.bim_base.CinemaMapper;
 import com.family.grabserver.mapper.bim_base.CityMapper;
+import com.family.grabserver.mapper.bim_base.MovieshowingMapper;
 import com.family.grabserver.mapper.bim_grab.SolidifyMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,16 @@ public class SolidifyService {
   private CinemaBaiduService cbService;
   @Autowired
   private CinemaMtimeService cmService;
+
+  @Autowired
+  private MovieshowingMtimeService mmService;
+  @Autowired
+  private MovieshowingBaiduService mbService;
+
   @Autowired
   private CinemaMapper caMapper;
+  @Autowired
+  private MovieshowingMapper mMapper;
 
 
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
@@ -39,8 +48,10 @@ public class SolidifyService {
   public void merge() {
     logger.info("开始执行合并");
 //    CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
-    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
+//    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
 
+    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
+    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
 //    try {
 //      SqlUtil.truncateTable("bim_base.screening");
 //      SqlUtil.truncateTable("bim_base.movieshowing");

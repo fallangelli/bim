@@ -34,7 +34,7 @@ public class CinemaSolidfier {
           if (record.getLongitude() == null || record.getLongitude().length() <= 0) {
             record.setLongitude(cm.getLongitude());
           }
-          if (record.getRating() == null || record.getRating().length() <= 0) {
+          if (record.getRating() == null || record.getRating() <= 0) {
             record.setRating(cm.getRating());
           }
           if (record.getHas3d() == null) {

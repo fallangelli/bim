@@ -5,11 +5,17 @@ import com.family.grabserver.mapper.bim_grab.MovieshowingBaiduMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @SuppressWarnings("ALL")
 @Service
 public class MovieshowingBaiduService {
   @Autowired
   private MovieshowingBaiduMapper mapper;
+
+  public List<MovieshowingBaidu> selectAll() {
+    return mapper.selectAll();
+  }
 
   public MovieshowingBaidu selectByPrimaryKey(Integer id) {
     return mapper.selectByPrimaryKey(id);

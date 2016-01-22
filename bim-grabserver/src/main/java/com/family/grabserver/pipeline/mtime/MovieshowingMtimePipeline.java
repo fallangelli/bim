@@ -31,7 +31,7 @@ public class MovieshowingMtimePipeline implements PageModelPipeline<Movieshowing
     record.setId(Integer.parseInt(model.getMovieId()));
     record.setName(movie.getString("titleCn"));
     record.setImage(movie.getString("image"));
-    record.setRating(movie.getString("rating"));
+    record.setRating(movie.getDouble("rating"));
     record.setIsImax(movie.getBoolean("isIMAX"));
     record.setIs3d(movie.getBoolean("is3D"));
 

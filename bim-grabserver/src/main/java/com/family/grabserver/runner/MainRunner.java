@@ -11,7 +11,7 @@ import com.family.grabserver.crawler.mtime.CinemaMtimeCrawler;
 import com.family.grabserver.crawler.mtime.CinemamovieMtimeCrawler;
 import com.family.grabserver.crawler.mtime.CityMtimeCrawler;
 import com.family.grabserver.crawler.mtime.ScreeningMtimeCrawler;
-import com.family.grabserver.service.MergeService;
+import com.family.grabserver.service.SolidifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -47,7 +47,7 @@ public class MainRunner {
   public ScreeningBaiduCrawler screeningBaiduCrawler;
 
   @Autowired
-  public MergeService mergeService;
+  public SolidifyService mergeService;
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");

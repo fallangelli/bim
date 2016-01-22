@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MergeServiceTest {
 
   @Autowired
-  private MergeService service;
+  private SolidifyService service;
 
   @Before
   public void setUp() throws Exception {

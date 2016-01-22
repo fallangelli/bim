@@ -8,18 +8,6 @@ public interface SolidifyMapper {
 
   List<Cityarea> selectCityAreas(Integer cityId);
 
-  void merge_city_maoyan();
-
-  void merge_city_mtime();
-
-  void merge_city_baidu();
-
-  void merge_city_area_maoyan();
-
-  void merge_city_area_mtime();
-
-  void merge_city_area_baidu();
-
   void merge_movieshowing_maoyan();
 
   void merge_movieshowing_mtime();

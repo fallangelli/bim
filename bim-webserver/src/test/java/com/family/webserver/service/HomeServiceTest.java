@@ -18,6 +18,7 @@ public class HomeServiceTest {
   @Autowired
   private HomeService service;
 
+
   @Test
   public void testGetCityInfoFromName() {
     CityWithArea city = service.getCityInfo(1);

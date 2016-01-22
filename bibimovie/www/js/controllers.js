@@ -740,6 +740,7 @@ angular.module('bibimovie.controllers', [])
       if (items) {
         for (var i = 0; i < items.length; i++) {
           for (var j = i; j < items.length; j++) {
+           
             if (items[i][orderBy] > items[j][orderBy]) {
               var temp = items[i];
               items[i] = items[j];

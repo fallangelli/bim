@@ -7,8 +7,8 @@ import com.family.webserver.utils.Cn2Spell;
  */
 public class ListCinema {
   Integer id;
-  String area;
   String name;
+  String areaName;
   String address;
   String latitude;
   String longitude;
@@ -29,12 +29,12 @@ public class ListCinema {
     this.id = id;
   }
 
-  public String getArea() {
-    return area;
+  public String getAreaName() {
+    return areaName;
   }
 
-  public void setArea(String area) {
-    this.area = area;
+  public void setAreaName(String areaName) {
+    this.areaName = areaName;
   }
 
   public String getName() {

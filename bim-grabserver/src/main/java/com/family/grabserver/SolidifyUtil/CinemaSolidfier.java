@@ -28,11 +28,21 @@ public class CinemaSolidfier {
           if (record.getAddress().length() < cm.getAddress().length()) {
             record.setAddress(cm.getAddress());
           }
-          if (record.getLatitude() == null || record.getLatitude().length() <= 0) {
-            record.setLatitude(cm.getLatitude());
+          if (record.getLatitude() == null || record.getLatitude().length() <= 0
+            || record.getLatitude().compareTo("0") == 0) {
+            if (cm.getLatitude() != null && cm.getLatitude().length() > 0
+              && cm.getLatitude().compareTo("0") != 0)
+              record.setLatitude(cm.getLatitude());
+            else
+              record.setLongitude(null);
           }
-          if (record.getLongitude() == null || record.getLongitude().length() <= 0) {
-            record.setLongitude(cm.getLongitude());
+          if (record.getLongitude() == null || record.getLongitude().length() <= 0
+            || record.getLongitude().compareTo("0") == 0) {
+            if (cm.getLongitude() != null && cm.getLongitude().length() > 0
+              && cm.getLongitude().compareTo("0") != 0)
+              record.setLongitude(cm.getLongitude());
+            else
+              record.setLongitude(null);
           }
           if (record.getRating() == null || record.getRating() <= 0) {
             record.setRating(cm.getRating());
@@ -66,8 +76,16 @@ public class CinemaSolidfier {
         record.setDistrictId(cm.getAreaId());
         record.setName(cm.getName());
         record.setAddress(cm.getAddress());
-        record.setLatitude(cm.getLatitude());
-        record.setLongitude(cm.getLongitude());
+        if (cm.getLatitude() != null && cm.getLatitude().length() > 0
+          && cm.getLatitude().compareTo("0") != 0)
+          record.setLatitude(cm.getLatitude());
+        else
+          record.setLongitude(null);
+        if (cm.getLongitude() != null && cm.getLongitude().length() > 0
+          && cm.getLongitude().compareTo("0") != 0)
+          record.setLongitude(cm.getLongitude());
+        else
+          record.setLongitude(null);
         record.setRating(cm.getRating());
         record.setHas3d(cm.getHas3d());
         record.setHasImax(cm.getHasImax());

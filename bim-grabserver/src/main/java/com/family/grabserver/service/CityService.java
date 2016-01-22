@@ -52,12 +52,12 @@ public class CityService {
     City city = mapper.selectByPrimaryKey(cityId);
     if (CityMerge.compareWithouKeyWord(city.getName(), "东莞") ||
       CityMerge.compareWithouKeyWord(city.getName(), "中山")) {
-      List<Cityarea> areas = smapper.selectCityAreas(cityId);
+      List<Cityarea> areas = smapper.selectCityareas(cityId);
       return areas.get(0);
     }
 
     if (CityMerge.compareWithouKeyWord(city.getName(), areaName)) {
-      List<Cityarea> areas = smapper.selectCityAreas(cityId);
+      List<Cityarea> areas = smapper.selectCityareas(cityId);
       for (Cityarea area : areas) {
         if (area.getName().contains("市辖") ||
           CityMerge.compareWithouKeyWord(city.getName(), area.getName()) ||
@@ -68,7 +68,7 @@ public class CityService {
     }
 
     if (CityMerge.compareWithouKeyWord(city.getName(), areaName)) {
-      List<Cityarea> areas = smapper.selectCityAreas(cityId);
+      List<Cityarea> areas = smapper.selectCityareas(cityId);
       for (Cityarea area : areas) {
         if (area.getName().contains("市辖") ||
           CityMerge.compareWithouKeyWord(city.getName(), area.getName()))
@@ -77,7 +77,7 @@ public class CityService {
       return null;
     }
 
-    List<Cityarea> areas = smapper.selectCityAreas(cityId);
+    List<Cityarea> areas = smapper.selectCityareas(cityId);
     for (Cityarea area : areas) {
       if (areaName.contains("市辖") && area.getName().contains("市辖"))
         return area;

@@ -5,7 +5,7 @@ import java.util.List;
 public class CityWithArea {
 
   Integer id;
-  List<CityArea> areas;
+  List<Cityarea> areas;
   private String firstLetter;
   private String name;
   private String pinyin;
@@ -42,11 +42,11 @@ public class CityWithArea {
     this.pinyin = pinyin;
   }
 
-  public List<CityArea> getAreas() {
+  public List<Cityarea> getAreas() {
     return areas;
   }
 
-  public void setAreas(List<CityArea> areas) {
+  public void setAreas(List<Cityarea> areas) {
     this.areas = areas;
   }
 }

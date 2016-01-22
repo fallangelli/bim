@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface SolidifyMapper {
 
-  List<Cityarea> selectCityAreas(Integer cityId);
+  List<Cityarea> selectCityareas(Integer cityId);
+
+  void fillPositions();
 
   void merge_screening_mtime();
 

@@ -4,13 +4,13 @@
 
   <resultMap type="com.family.webserver.entity.CityWithArea" id="cityWithAreaMap">
     <id column="id" property="id"/>
-    <result column="name" property="name"/>
+    <result column="city_name" property="name"/>
     <result column="first_letter" property="firstLetter"/>
     <result column="pinyin" property="pinyin"/>
-    <collection property="areas" ofType="com.family.webserver.entity.CityArea" column="city_id">
+    <collection property="areas" ofType="com.family.webserver.entity.Cityarea" column="city_id">
       <id column="area_id" property="id"/>
       <result column="city_id" property="cityId"/>
-      <result column="area" property="area"/>
+      <result column="area_name" property="name"/>
     </collection>
   </resultMap>
 
@@ -37,7 +37,7 @@
       count(s.movie_id) screeningCount
     FROM screening s
       INNER JOIN cinema cn ON s.cinema_id = cn.id
-      INNER JOIN city_area ca ON cn.district_id = ca.id
+    INNER JOIN cityarea ca ON cn.district_id = ca.id
       INNER JOIN city ct ON ca.city_id = ct.id
       INNER JOIN movieshowing m ON s.movie_id = m.id
     WHERE ct.id = #{id,jdbcType=INTEGER} AND to_days(s.show_date) >= to_days(now()) AND s.sale_price > 0
@@ -57,14 +57,14 @@
           resultMap="cityWithAreaMap">
     SELECT
       c.id,
-      c.name,
+    c.name city_name,
       c.first_letter,
       c.pinyin,
       ca.id AS area_id,
       ca.city_id,
-      ca.area
+    ca.name area_name
     FROM city c
-      LEFT JOIN city_area ca ON c.id = ca.city_id
+    LEFT JOIN cityarea ca ON c.id = ca.city_id
     WHERE c.id = #{cityId,jdbcType=INTEGER}
   </select>
 
@@ -76,10 +76,10 @@
     </if>
     cn.*
     FROM cinema cn
-    left join city_area ca on cn.district_id = ca.id
+    left join cityarea ca on cn.district_id = ca.id
     WHERE ca.city_id = #{cityId,jdbcType=INTEGER}
     <if test="lat!=null and lat!='' and lng!=null and lng!=''">
-      ORDER BY len
+      ORDER BY IF(ISNULL(len),1,0), len
     </if>
     LIMIT 3
 

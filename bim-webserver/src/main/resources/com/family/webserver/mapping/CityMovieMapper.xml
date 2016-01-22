@@ -15,7 +15,7 @@
       count(s.movie_id) screeningCount
     FROM screening s
       INNER JOIN cinema cn ON s.cinema_id = cn.id
-      INNER JOIN city_area ca ON cn.district_id = ca.id
+    INNER JOIN cityarea ca ON cn.district_id = ca.id
       INNER JOIN city ct ON ca.city_id = ct.id
       INNER JOIN movieshowing m ON s.movie_id = m.id
     WHERE ct.id = #{cityId,jdbcType=INTEGER} AND to_days(s.show_date) >= to_days(now()) AND s.sale_price > 0

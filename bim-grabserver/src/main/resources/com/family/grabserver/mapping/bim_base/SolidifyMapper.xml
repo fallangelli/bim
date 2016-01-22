@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.grabserver.mapper.bim_base.SolidifyMapper">
 
-  <select id="selectCityAreas" resultType="com.family.grabserver.entity.bim_base.Cityarea">
+  <select id="selectCityareas" resultType="com.family.grabserver.entity.bim_base.Cityarea">
     SELECT
       id,
       city_id cityId,
@@ -10,6 +10,11 @@
     FROM bim_base.cityarea
     WHERE city_id = #{cityId,jdbcType=INTEGER}
   </select>
+
+  <insert id="fillPositions">
+    UPDATE bim_base.cinema
+    SET pos = GeomFromText(concat('POINT(', latitude, ' ', longitude, ')'))
+  </insert>
 
   <insert id="merge_screening_maoyan">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall, version,

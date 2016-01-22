@@ -18,10 +18,8 @@ public class HomeService {
 
   public List<CityHotMovie> getHotMoviesByCity(Integer cityId) {
     List<CityHotMovie> hotMovies = mapper.selectHomeHotMoviesByCity(cityId);
-
     return hotMovies;
   }
-
 
   public Integer getCityIdFromName(String cityName) {
     return mapper.selectCityIdFromName(cityName);

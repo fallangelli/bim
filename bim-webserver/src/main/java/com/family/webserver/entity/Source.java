@@ -68,6 +68,8 @@ public class Source {
       return "猫眼";
     else if (source.compareToIgnoreCase("mtime") == 0)
       return "时光";
+    else if (source.compareToIgnoreCase("baidu") == 0)
+      return "百度";
     else
       return source;
   }

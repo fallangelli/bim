@@ -22,7 +22,7 @@ public class CinemaMtimeModel implements AfterExtractor {
   public static void main(String[] args) {
     OOSpider.create(Site.me().setSleepTime(1000)
       , new CinemaMtimePipeline(), CinemaMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=1542")
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=3980")
       .thread(1).run();
   }
 

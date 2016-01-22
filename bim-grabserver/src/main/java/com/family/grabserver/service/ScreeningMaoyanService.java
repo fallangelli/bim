@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.ScreeningMaoyan;
-import com.family.grabserver.mapper.ScreeningMaoyanMapper;
+import com.family.grabserver.entity.bim_grab.ScreeningMaoyan;
+import com.family.grabserver.mapper.bim_grab.ScreeningMaoyanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +11,9 @@ public class ScreeningMaoyanService {
   @Autowired
   private ScreeningMaoyanMapper mapper;
 
-  public int insertOrUpate(ScreeningMaoyan record) {
-    if (record.getId() == null)
-      return mapper.insert(record);
-    else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else
-        return mapper.insert(record);
-    }
+  public int insertOrUpdate(ScreeningMaoyan record) {
+    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+    else return mapper.insert(record);
   }
 
 }

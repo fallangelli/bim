@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemaMaoyan;
+import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
 import com.family.grabserver.model.maoyan.CinemaMaoyanModel;
 import com.family.grabserver.service.CinemaMaoyanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
 //todo
 //                record.setTel();
 
-        service.insertOrUpate(record);
+        service.insertOrUpdate(record);
       }
     }
 

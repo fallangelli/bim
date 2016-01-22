@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.ScreeningMtime;
+import com.family.grabserver.entity.bim_grab.ScreeningMtime;
 import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.service.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;
@@ -82,7 +82,7 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
         record.setVersion(show.getString("versionDesc"));
         record.setSalePrice(show.getFloat("salePrice") / 100);
         record.setCinemaPrice(show.getFloat("cinemaPrice") / 100);
-        service.insertOrUpate(record);
+        service.insertOrUpdate(record);
       }
 
     } catch (DuplicateKeyException de) {

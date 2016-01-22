@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemaTaobao;
+import com.family.grabserver.entity.bim_grab.CinemaTaobao;
 import com.family.grabserver.model.taobao.CinemaTaobaoModel;
 import com.family.grabserver.service.CinemaTaobaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class CinemaTaobaoPipeline implements PageModelPipeline<CinemaTaobaoModel
         record.setPreferential(Cinema.get("activities") != null ? true : false);
         record.setTel(Cinema.getString("phone"));
 
-        service.insertOrUpate(record);
+        service.insertOrUpdate(record);
       }
 
     }

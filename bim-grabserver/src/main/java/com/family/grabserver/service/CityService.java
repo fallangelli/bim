@@ -1,10 +1,10 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.City;
-import com.family.grabserver.entity.Cityarea;
-import com.family.grabserver.mapper.CityMapper;
-import com.family.grabserver.mapper.CityareaMapper;
-import com.family.grabserver.mapper.SolidifyMapper;
+import com.family.grabserver.entity.bim_base.City;
+import com.family.grabserver.entity.bim_base.Cityarea;
+import com.family.grabserver.mapper.bim_base.CityMapper;
+import com.family.grabserver.mapper.bim_base.CityareaMapper;
+import com.family.grabserver.mapper.bim_grab.SolidifyMapper;
 import com.family.grabserver.util.CityMerge;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

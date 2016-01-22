@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemamovieMtime;
-import com.family.grabserver.mapper.CinemamovieMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CinemamovieMtime;
+import com.family.grabserver.mapper.bim_grab.CinemamovieMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +17,10 @@ public class CinemamovieMtimeService {
     return mapper.selectAll();
   }
 
-  public int insertOrUpate(CinemamovieMtime record) {
+  public int insertOrUpdate(CinemamovieMtime record) {
 
-    if (record.getId() == null)
-      return mapper.insert(record);
-    else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else
-        return mapper.insert(record);
-    }
+    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+    else return mapper.insert(record);
   }
 
 }

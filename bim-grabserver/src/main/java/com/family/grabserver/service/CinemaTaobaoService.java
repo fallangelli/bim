@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemaTaobao;
-import com.family.grabserver.mapper.CinemaTaobaoMapper;
+import com.family.grabserver.entity.bim_grab.CinemaTaobao;
+import com.family.grabserver.mapper.bim_grab.CinemaTaobaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +21,9 @@ public class CinemaTaobaoService {
     return mapper.selectByPrimaryKey(id);
   }
 
-  public int insertOrUpate(CinemaTaobao record) {
-    if (record.getId() == null)
-      return mapper.insert(record);
-    else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else
-        return mapper.insert(record);
-    }
+  public int insertOrUpdate(CinemaTaobao record) {
+    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+    else return mapper.insert(record);
   }
 
 }

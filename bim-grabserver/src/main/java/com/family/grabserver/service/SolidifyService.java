@@ -1,15 +1,14 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemaBaidu;
-import com.family.grabserver.mapper.CityMapper;
-import com.family.grabserver.mapper.SolidifyMapper;
+import com.family.grabserver.SolidifyUtil.CinemaSolidfier;
+import com.family.grabserver.mapper.bim_base.CinemaMapper;
+import com.family.grabserver.mapper.bim_base.CityMapper;
+import com.family.grabserver.mapper.bim_grab.SolidifyMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/8.
@@ -20,10 +19,13 @@ public class SolidifyService {
   @Autowired
   private SolidifyMapper mapper;
   @Autowired
-  private CityMapper cmapper;
+  private CityMapper cMapper;
   @Autowired
   private CinemaBaiduService cbService;
-
+  @Autowired
+  private CinemaMtimeService cmService;
+  @Autowired
+  private CinemaMapper caMapper;
 
 
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
@@ -36,10 +38,8 @@ public class SolidifyService {
 
   public void merge() {
     logger.info("开始执行合并");
-    List<CinemaBaidu> cinemaBaiduList = cbService.selectAll();
-    for (CinemaBaidu cinema : cinemaBaiduList) {
-
-    }
+//    CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
+    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
 
 //    try {
 //      SqlUtil.truncateTable("bim_base.screening");
@@ -68,7 +68,7 @@ public class SolidifyService {
 //    mapper.merge_movieshowing_baidu();
 //
 //    mapper.merge_cinema_maoyan();
-    mapper.merge_cinema_mtime();
+//    mapper.merge_cinema_mtime();
 //    mapper.merge_cinema_baidu();
 //
 //    mapper.merge_screening_maoyan();

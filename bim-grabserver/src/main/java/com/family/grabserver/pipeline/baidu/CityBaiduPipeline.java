@@ -2,7 +2,7 @@ package com.family.grabserver.pipeline.baidu;
 
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CityBaidu;
+import com.family.grabserver.entity.bim_grab.CityBaidu;
 import com.family.grabserver.model.baidu.CityBaiduModel;
 import com.family.grabserver.service.CityBaiduService;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class CityBaiduPipeline implements PageModelPipeline<CityBaiduModel> {
       String name = model.getListName().get(i);
       record.setName(name);
 
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
     }
 
   }

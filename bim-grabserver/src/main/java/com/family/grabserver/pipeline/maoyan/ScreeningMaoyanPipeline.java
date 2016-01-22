@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.ScreeningMaoyan;
+import com.family.grabserver.entity.bim_grab.ScreeningMaoyan;
 import com.family.grabserver.model.maoyan.ScreeningMaoyanModel;
 import com.family.grabserver.service.ScreeningMaoyanService;
 import com.family.grabserver.util.MaoyanPriceDecoder;
@@ -114,7 +114,7 @@ public class ScreeningMaoyanPipeline implements PageModelPipeline<ScreeningMaoya
           continue;
         }
         try {
-          service.insertOrUpate(record);
+          service.insertOrUpdate(record);
         } catch (DuplicateKeyException de) {
           logger.warn("猫眼上映信息键值重复");
         }

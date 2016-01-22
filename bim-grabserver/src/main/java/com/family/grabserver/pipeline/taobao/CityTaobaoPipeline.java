@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CityTaobao;
+import com.family.grabserver.entity.bim_grab.CityTaobao;
 import com.family.grabserver.model.taobao.CityTaobaoModel;
 import com.family.grabserver.service.CityTaobaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CityTaobaoPipeline implements PageModelPipeline<CityTaobaoModel> {
         record.setPinyin(py);
         record.setFirstLetter(firstLetter.toUpperCase());
 
-        service.insertOrUpate(record);
+        service.insertOrUpdate(record);
       }
 
     }

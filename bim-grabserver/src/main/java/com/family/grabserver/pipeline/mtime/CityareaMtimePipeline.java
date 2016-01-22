@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemaMtime;
-import com.family.grabserver.entity.City;
-import com.family.grabserver.entity.Cityarea;
-import com.family.grabserver.entity.CityareaMtime;
+import com.family.grabserver.entity.bim_base.City;
+import com.family.grabserver.entity.bim_base.Cityarea;
+import com.family.grabserver.entity.bim_grab.CinemaMtime;
+import com.family.grabserver.entity.bim_grab.CityareaMtime;
 import com.family.grabserver.model.mtime.CityareaMtimeModel;
 import com.family.grabserver.service.CinemaMtimeService;
 import com.family.grabserver.service.CityService;
@@ -44,7 +44,7 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       record.setCityId(Integer.parseInt(model.getCityId()));
       record.setName(district.getString("name"));
 
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
     }
 
     JSONArray cinemas = ob.getJSONArray("cinemas");
@@ -68,7 +68,7 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       record.setTel(cinema.getString("tele"));
       record.setRoute(cinema.getString("route"));
 
-      cinemaService.insertOrUpate(record);
+      cinemaService.insertOrUpdate(record);
 
       City simCity = cservice.getMostSimilarCity(model.getCityName());
       if (simCity != null) {
@@ -84,7 +84,7 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
       } else
         logger.error("无法找到归并城市：" + model.getCityName());
 
-      cinemaService.insertOrUpate(record);
+      cinemaService.insertOrUpdate(record);
     }
   }
 }

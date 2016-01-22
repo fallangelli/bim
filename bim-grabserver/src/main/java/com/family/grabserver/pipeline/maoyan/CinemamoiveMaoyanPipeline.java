@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemamovieMaoyan;
+import com.family.grabserver.entity.bim_grab.CinemamovieMaoyan;
 import com.family.grabserver.model.maoyan.CinemamovieMaoyanModel;
 import com.family.grabserver.service.CinemamovieMaoyanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CinemamoiveMaoyanPipeline implements PageModelPipeline<CinemamovieM
       record.setMovieId(moive.getInteger("id"));
       record.setCinemaId(Integer.parseInt(model.getCinemaid()));
 
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
     }
   }
 }

@@ -23,7 +23,7 @@
     </commentGenerator>
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://127.0.0.1:3306/bim_grab?characterEncoding=UTF-8"
+                    connectionURL="jdbc:mysql://127.0.0.1:3306?characterEncoding=UTF-8"
                     userId="root"
                     password="root">
     </jdbcConnection>
@@ -47,7 +47,13 @@
     </javaClientGenerator>
 
     <!-- 表映射的配置-->
-    <table tableName="%">
+    <table catalog="bim_base" schema="" tableName="%">
+      <ignoreColumn column="update_time"/>
+      <ignoreColumn column="create_time"/>
+    </table>
+
+    <!-- 表映射的配置-->
+    <table catalog="bim_grab" schema="" tableName="%">
       <ignoreColumn column="update_time"/>
       <ignoreColumn column="create_time"/>
     </table>

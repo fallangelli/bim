@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.MovieshowingBaidu;
-import com.family.grabserver.entity.ScreeningBaidu;
+import com.family.grabserver.entity.bim_grab.MovieshowingBaidu;
+import com.family.grabserver.entity.bim_grab.ScreeningBaidu;
 import com.family.grabserver.model.baidu.ScreeningBaiduModel;
 import com.family.grabserver.service.MovieshowingBaiduService;
 import com.family.grabserver.service.ScreeningBaiduService;
@@ -47,7 +47,7 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
           movieRecord.setContent(movie.getString("summary"));
           movieRecord.setImage(movie.getJSONObject("posterUrl").getString("medium"));
           movieRecord.setRating(movie.getString("score"));
-          movieService.insertOrUpate(movieRecord);
+          movieService.insertOrUpdate(movieRecord);
         }
 
         JSONArray schedules = movie.getJSONArray("schedules");
@@ -83,7 +83,7 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
             record.setCinemaPrice(dailySchedule.getFloat("originalPrice"));
             record.setTicketUrl("http://m.dianying.baidu.com/ticket/select?movieId=" +
               movieId + "&cinemaId=" + cinemaId + "&seqNo=" + seqNo + "&date=" + showDay + "&orderId=");
-            service.insertOrUpate(record);
+            service.insertOrUpdate(record);
           }
         }
       }

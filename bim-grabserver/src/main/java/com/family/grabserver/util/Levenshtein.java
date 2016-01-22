@@ -67,8 +67,8 @@ public class Levenshtein {
 
   public static void main(String[] args) {
     Levenshtein lt = new Levenshtein();
-    String str = "张家口";
-    String target = "张家港";
+    String str = "北京市海淀区四道口2号B座京果商厦3层北侧";
+    String target = "北京市海淀区四道口2号B座京果商厦三层北侧";
     System.out.println("similarityRatio=" + lt.getSimilarityRatio(str, target));
   }
 }

@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.MovieshowingBaidu;
-import com.family.grabserver.mapper.MovieshowingBaiduMapper;
+import com.family.grabserver.entity.bim_grab.MovieshowingBaidu;
+import com.family.grabserver.mapper.bim_grab.MovieshowingBaiduMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class MovieshowingBaiduService {
     return mapper.selectByPrimaryKey(id);
   }
 
-  public int insertOrUpate(MovieshowingBaidu record) {
+  public int insertOrUpdate(MovieshowingBaidu record) {
     if (record.getId() == null)
       return mapper.insert(record);
     else {

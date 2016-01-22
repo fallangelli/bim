@@ -2,9 +2,9 @@ package com.family.grabserver.pipeline.baidu;
 
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemaBaidu;
-import com.family.grabserver.entity.City;
-import com.family.grabserver.entity.Cityarea;
+import com.family.grabserver.entity.bim_base.City;
+import com.family.grabserver.entity.bim_base.Cityarea;
+import com.family.grabserver.entity.bim_grab.CinemaBaidu;
 import com.family.grabserver.model.baidu.CinemaBaiduModel;
 import com.family.grabserver.service.CinemaBaiduService;
 import com.family.grabserver.service.CityService;
@@ -42,7 +42,7 @@ public class CinemaBaiduPipeline implements PageModelPipeline<CinemaBaiduModel> 
       record.setBaiduCityName(model.getCityName());
       record.setBaiduArea(CityMerge.getAreaWithTrans(model.getCityName(), model.getAreaName()));
       record.setAddress(model.getListAddress().get(i));
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
 
       City simCity = cservice.getMostSimilarCity(model.getCityName());
       if (simCity != null) {
@@ -59,7 +59,7 @@ public class CinemaBaiduPipeline implements PageModelPipeline<CinemaBaiduModel> 
         logger.error("无法找到归并城市：" + model.getCityName());
 
 
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
     }
 
   }

@@ -60,7 +60,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
     value="classpath:me/gacl/mapping/*.xml"指的是classpath(类路径)下me.gacl.mapping包中的所有xml文件
     UserMapper.xml位于me.gacl.mapping包下，这样UserMapper.xml就可以被自动扫描
      -->
-    <property name="mapperLocations" value="classpath:com/family/grabserver/mapping/*.xml"/>
+    <property name="mapperLocations" value="classpath:com/family/grabserver/mapping/*/*.xml"/>
   </bean>
   <!-- 配置扫描器 -->
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

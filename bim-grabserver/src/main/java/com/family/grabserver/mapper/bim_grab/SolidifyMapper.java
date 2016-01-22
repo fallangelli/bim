@@ -1,6 +1,6 @@
-package com.family.grabserver.mapper;
+package com.family.grabserver.mapper.bim_grab;
 
-import com.family.grabserver.entity.Cityarea;
+import com.family.grabserver.entity.bim_base.Cityarea;
 
 import java.util.List;
 

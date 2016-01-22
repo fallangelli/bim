@@ -2,7 +2,7 @@ package com.family.grabserver.crawler.baidu;
 
 import com.family.grab.Site;
 import com.family.grab.model.OOSpider;
-import com.family.grabserver.entity.CityBaidu;
+import com.family.grabserver.entity.bim_grab.CityBaidu;
 import com.family.grabserver.model.baidu.CityBaiduModel;
 import com.family.grabserver.model.baidu.CityareaBaiduModel;
 import com.family.grabserver.pipeline.baidu.CityBaiduPipeline;

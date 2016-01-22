@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
-import com.family.grabserver.entity.CinemamovieMtime;
+import com.family.grabserver.entity.bim_grab.CinemamovieMtime;
 import com.family.grabserver.model.mtime.CinemamovieMtimeModel;
 import com.family.grabserver.service.CinemaMtimeService;
 import com.family.grabserver.service.CinemamovieMtimeService;
@@ -34,7 +34,7 @@ public class CinemamoiveMtimePipeline implements PageModelPipeline<CinemamovieMt
       record.setMovieId(movie.getInteger("movieId"));
       record.setCinemaId(Integer.parseInt(model.getCinemaid()));
       record.setShowDates(movie.getString("showDates"));
-      service.insertOrUpate(record);
+      service.insertOrUpdate(record);
     }
   }
 }

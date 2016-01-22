@@ -1,7 +1,7 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CityMtime;
-import com.family.grabserver.mapper.CityMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CityMtime;
+import com.family.grabserver.mapper.bim_grab.CityMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +21,9 @@ public class CityMtimeService {
     return mapper.deleteByPrimaryKey(id);
   }
 
-  public int insertOrUpate(CityMtime record) {
-    if (record.getId() == null)
-      return mapper.insert(record);
-    else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else
-        return mapper.insert(record);
-    }
+  public int insertOrUpdate(CityMtime record) {
+    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+    else return mapper.insert(record);
   }
 
 }

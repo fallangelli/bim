@@ -1,7 +1,8 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.entity.CinemaMaoyan;
-import com.family.grabserver.mapper.CinemaMaoyanMapper;
+
+import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
+import com.family.grabserver.mapper.bim_grab.CinemaMaoyanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,9 @@ public class CinemaMaoyanService {
     return mapper.selectAll();
   }
 
-  public int insertOrUpate(CinemaMaoyan record) {
-    if (record.getId() == null)
-      return mapper.insert(record);
-    else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else
-        return mapper.insert(record);
-    }
+  public int insertOrUpdate(CinemaMaoyan record) {
+    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+    else return mapper.insert(record);
   }
 
 }

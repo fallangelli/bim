@@ -16,14 +16,12 @@ public class MovieshowingMaoyanService {
   }
 
   public int insertOrUpdate(MovieshowingMaoyan record) {
-    if (record.getId() == null)
+    if (record.getId() == null) {
       return mapper.insert(record);
-    else {
-      //电影信息不覆盖
+    } else {
       if (mapper.selectByPrimaryKey(record.getId()) != null)
-        return 0;
-      else
-        return mapper.insert(record);
+        return mapper.updateByPrimaryKey(record);
+      else return mapper.insert(record);
     }
   }
 

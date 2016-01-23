@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MainRunner {
-
   @Autowired
   public CityMaoyanCrawler cityMaoyanCrawler;
   @Autowired
@@ -28,7 +27,6 @@ public class MainRunner {
   public CinemamovieMaoyanCrawler cinemamovieMaoyanCrawler;
   @Autowired
   public ScreeningMaoyanCrawler screeningMaoyanCrawler;
-
 
   @Autowired
   public CityMtimeCrawler cityMtimeCrawler;
@@ -52,34 +50,34 @@ public class MainRunner {
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
-    grabRunner.grabCity();
-    grabRunner.grabCinema();
-    grabRunner.grabCinemamovie();
+//    grabRunner.grabCity();
+//    grabRunner.grabCinema();
+//    grabRunner.grabCinemamovie();
     grabRunner.grabScreening();
     grabRunner.mergeService.merge();
   }
 
   public void grabCity() {
-    cityMaoyanCrawler.crawl();
+//    cityMaoyanCrawler.crawl();
     cityMtimeCrawler.crawl();
     cityBaiduCrawler.crawl();
   }
 
 
   public void grabCinema() {
-    cinemaMaoyanCrawler.crawl();
+//    cinemaMaoyanCrawler.crawl();
     cinemaMtimeCrawler.crawl();
     cinemaBaiduCrawler.crawl();
   }
 
   public void grabCinemamovie() {
-    cinemamovieMaoyanCrawler.crawl();
+//    cinemamovieMaoyanCrawler.crawl();
     cinemamovieMtimeCrawler.crawl();
   }
 
   public void grabScreening() {
-    screeningMaoyanCrawler.crawl();
-    screeningMtimeCrawler.crawl();
+//    screeningMaoyanCrawler.crawl();
+//    screeningMtimeCrawler.crawl();
     screeningBaiduCrawler.crawl();
   }
 

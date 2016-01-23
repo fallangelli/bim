@@ -11,9 +11,8 @@ public class ScreeningBaiduService {
   @Autowired
   private ScreeningBaiduMapper mapper;
 
-  public int insertOrUpdate(ScreeningBaidu record) {
-    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
-    else return mapper.insert(record);
+  public int insert(ScreeningBaidu record) {
+    return mapper.insert(record);
   }
 
 }

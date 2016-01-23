@@ -14,6 +14,8 @@ public class CityServiceTest {
 
   @Test
   public void testGetMostSimilarCity() throws Exception {
+
+
     System.out.println(service.getMostSimilarCity("陵水").getName());
   }
 

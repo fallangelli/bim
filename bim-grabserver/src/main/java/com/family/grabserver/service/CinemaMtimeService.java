@@ -22,10 +22,12 @@ public class CinemaMtimeService {
   }
 
   public int insertOrUpdate(CinemaMtime record) {
-    if (mapper.selectByPrimaryKey(record.getId()) != null)
-      return mapper.updateByPrimaryKey(record);
-    else
+    if (record.getId() == null) {
       return mapper.insert(record);
+    } else {
+      if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+      else return mapper.insert(record);
+    }
   }
 
 }

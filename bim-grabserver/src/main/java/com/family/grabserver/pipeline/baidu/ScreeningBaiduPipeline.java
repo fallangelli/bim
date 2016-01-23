@@ -12,7 +12,6 @@ import com.family.grabserver.service.MovieshowingBaiduService;
 import com.family.grabserver.service.ScreeningBaiduService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +31,6 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
   @Override
   public void process(ScreeningBaiduModel model, Task task) {
     try {
-
       String context = model.getContext();
       JSONArray movies = JSON.parseObject(context).getJSONArray("movies");
       for (Object movieOb : movies) {
@@ -83,12 +81,10 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
             record.setCinemaPrice(dailySchedule.getFloat("originalPrice"));
             record.setTicketUrl("http://m.dianying.baidu.com/ticket/select?movieId=" +
               movieId + "&cinemaId=" + cinemaId + "&seqNo=" + seqNo + "&date=" + showDay + "&orderId=");
-            service.insertOrUpdate(record);
+            service.insert(record);
           }
         }
       }
-    } catch (DuplicateKeyException de) {
-      logger.warn("重复键值");
     } catch (Exception e) {
       e.printStackTrace();
     }

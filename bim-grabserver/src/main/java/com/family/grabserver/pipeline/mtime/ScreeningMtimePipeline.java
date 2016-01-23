@@ -2,7 +2,6 @@ package com.family.grabserver.pipeline.mtime;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
@@ -11,7 +10,6 @@ import com.family.grabserver.model.mtime.ScreeningMtimeModel;
 import com.family.grabserver.service.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
@@ -82,14 +80,10 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
         record.setVersion(show.getString("versionDesc"));
         record.setSalePrice(show.getFloat("salePrice") / 100);
         record.setCinemaPrice(show.getFloat("cinemaPrice") / 100);
-        service.insertOrUpdate(record);
+        service.insert(record);
       }
-
-    } catch (DuplicateKeyException de) {
-      logger.warn("时光上映信息键值重复");
-    } catch (JSONException je) {
-      je.printStackTrace();
-      logger.error(model.getContext());
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
   }

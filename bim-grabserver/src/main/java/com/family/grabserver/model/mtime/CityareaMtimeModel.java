@@ -3,11 +3,13 @@ package com.family.grabserver.model.mtime;
 import com.family.grab.Page;
 import com.family.grab.Site;
 import com.family.grab.model.AfterExtractor;
-import com.family.grab.model.ConsolePageModelPipeline;
 import com.family.grab.model.OOSpider;
 import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
 import com.family.grab.model.annotation.TargetUrl;
+import com.family.grabserver.pipeline.mtime.CityareaMtimePipeline;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @TargetUrl(value = "http://m.mtime.cn/Service[\\w\\W]*")
 public class CityareaMtimeModel implements AfterExtractor {
@@ -24,9 +26,12 @@ public class CityareaMtimeModel implements AfterExtractor {
   private String cityName = "";
 
   public static void main(String[] args) {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
+    final CityareaMtimePipeline pipeline = applicationContext.getBean(CityareaMtimePipeline.class);
+
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
-      new ConsolePageModelPipeline(), CityareaMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/BaseCityData.api?locationId=480&cityName=唐山").thread(1).run();
+      pipeline, CityareaMtimeModel.class)
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/BaseCityData.api?cityName=乐山&locationId=898").thread(1).run();
   }
 
   public String getContext() {
@@ -60,6 +65,7 @@ public class CityareaMtimeModel implements AfterExtractor {
     context = context.replace("\n", "");
     context = context.replace("<strong>", "");
     context = context.replace("</strong>", "");
+    context = context.replace("</p>", "");
   }
 
 }

@@ -25,19 +25,35 @@ public class CityService {
   @Autowired
   private SolidifyMapper smapper;
 
+  private List<City> allCities;
+
+  private List<Cityarea> allCityAreas;
+
+  public List<City> getAllCities() {
+    if (allCities == null || allCities.size() <= 0)
+      allCities = mapper.selectAll();
+    return allCities;
+  }
+
+  public List<Cityarea> getAllCityAreas() {
+    if (allCityAreas == null || allCityAreas.size() <= 0)
+      allCityAreas = caMapper.selectAll();
+    return allCityAreas;
+  }
+
   public List<City> selectAll() {
-    return mapper.selectAll();
+    return allCities;
   }
 
   public City getMostSimilarCity(String cityName) {
-    List<City> cities = mapper.selectAll();
+    List<City> cities = getAllCities();
     for (City city : cities) {
       if (CityMerge.compareWithouKeyWord(cityName, city.getName()))
         return city;
       else
         continue;
     }
-    List<Cityarea> areas = caMapper.selectAll();
+    List<Cityarea> areas = getAllCityAreas();
     for (Cityarea area : areas) {
       if (CityMerge.compareWithouKeyWord(cityName, area.getName()))
         return mapper.selectByPrimaryKey(area.getCityId());
@@ -48,7 +64,6 @@ public class CityService {
   }
 
   public Cityarea getMostSimilarArea(Integer cityId, String cityName, String areaName) {
-
     City city = mapper.selectByPrimaryKey(cityId);
     if (CityMerge.compareWithouKeyWord(city.getName(), "东莞") ||
       CityMerge.compareWithouKeyWord(city.getName(), "中山")) {

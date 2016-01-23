@@ -15,7 +15,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -114,9 +113,9 @@ public class ScreeningMaoyanPipeline implements PageModelPipeline<ScreeningMaoya
           continue;
         }
         try {
-          service.insertOrUpdate(record);
-        } catch (DuplicateKeyException de) {
-          logger.warn("猫眼上映信息键值重复");
+          service.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
         }
       }
     }

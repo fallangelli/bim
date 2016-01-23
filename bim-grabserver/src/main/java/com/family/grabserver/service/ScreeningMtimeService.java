@@ -11,9 +11,8 @@ public class ScreeningMtimeService {
   @Autowired
   private ScreeningMtimeMapper mapper;
 
-  public int insertOrUpdate(ScreeningMtime record) {
-    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
-    else return mapper.insert(record);
+  public int insert(ScreeningMtime record) {
+    return mapper.insert(record);
   }
 
 }

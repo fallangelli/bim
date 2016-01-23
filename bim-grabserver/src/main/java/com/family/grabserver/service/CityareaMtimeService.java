@@ -16,8 +16,12 @@ public class CityareaMtimeService {
   }
 
   public int insertOrUpdate(CityareaMtime record) {
-    if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
-    else return mapper.insert(record);
+    if (record.getId() == null) {
+      return mapper.insert(record);
+    } else {
+      if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+      else return mapper.insert(record);
+    }
   }
 
 }

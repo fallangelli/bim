@@ -82,7 +82,8 @@
     WHERE cn.id = #{cinemaId,jdbcType=INTEGER}
           AND s.movie_id = #{movieId,jdbcType=INTEGER} AND
           if(to_days(now()) = to_days(#{showDate,jdbcType=DATE}),
-             time_to_sec(s.start_time) > time_to_sec(now()) + 60 * 30,
+    time_to_sec(s.start_time) > (time_to_sec(now()) + 60 * 30) AND
+    to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE}),
              to_days(s.show_date) = to_days(#{showDate,jdbcType=DATE})
           )
     GROUP BY s.start_time

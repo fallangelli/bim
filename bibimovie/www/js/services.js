@@ -197,8 +197,8 @@ angular.module('bibimovie.services', [])
           + cinemaId + "&movieId=" + movieId + "&showDate=" + date;
         $http.get(url)
           .success(function (data) {
-            var cinemas = angular.fromJson(data);
-            deferred.resolve(cinemas);
+            // var cinemas = angular.fromJson(data);
+            deferred.resolve(data);
           })
           .error(function (data, header, config, status) {
             deferred.reject();

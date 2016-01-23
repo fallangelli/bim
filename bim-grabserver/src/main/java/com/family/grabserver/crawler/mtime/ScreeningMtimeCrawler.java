@@ -77,7 +77,7 @@ public class ScreeningMtimeCrawler {
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMtimeModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(1000).run();
+      .thread(600).run();
   }
 
 }

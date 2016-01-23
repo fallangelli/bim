@@ -9,7 +9,7 @@
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="name" jdbcType="VARCHAR" property="name"/>
     <result column="image" jdbcType="VARCHAR" property="image"/>
-    <result column="rating" jdbcType="DOUBLE" property="rating"/>
+    <result column="rating" jdbcType="REAL" property="rating"/>
     <result column="is_imax" jdbcType="BIT" property="isImax"/>
     <result column="is_3d" jdbcType="BIT" property="is3d"/>
     <result column="directors" jdbcType="VARCHAR" property="directors"/>
@@ -40,7 +40,7 @@
     runTime, id_maoyan, id_mtime,
     id_baidu)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
-    #{rating,jdbcType=DOUBLE}, #{isImax,jdbcType=BIT}, #{is3d,jdbcType=BIT}, #{directors,jdbcType=VARCHAR},
+    #{rating,jdbcType=REAL}, #{isImax,jdbcType=BIT}, #{is3d,jdbcType=BIT}, #{directors,jdbcType=VARCHAR},
     #{actors,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
     #{runtime,jdbcType=VARCHAR}, #{idMaoyan,jdbcType=INTEGER}, #{idMtime,jdbcType=INTEGER},
     #{idBaidu,jdbcType=INTEGER})
@@ -53,7 +53,7 @@
     update bim_base.movieshowing
     set name = #{name,jdbcType=VARCHAR},
     image = #{image,jdbcType=VARCHAR},
-    rating = #{rating,jdbcType=DOUBLE},
+    rating = #{rating,jdbcType=REAL},
     is_imax = #{isImax,jdbcType=BIT},
     is_3d = #{is3d,jdbcType=BIT},
     directors = #{directors,jdbcType=VARCHAR},

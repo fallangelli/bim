@@ -9,7 +9,7 @@
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="name" jdbcType="VARCHAR" property="name"/>
     <result column="image" jdbcType="VARCHAR" property="image"/>
-    <result column="rating" jdbcType="DOUBLE" property="rating"/>
+    <result column="rating" jdbcType="REAL" property="rating"/>
     <result column="content" jdbcType="VARCHAR" property="content"/>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -28,7 +28,7 @@
     insert into bim_grab.movieshowing_baidu (id, name, image,
     rating, content)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
-    #{rating,jdbcType=DOUBLE}, #{content,jdbcType=VARCHAR})
+    #{rating,jdbcType=REAL}, #{content,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.family.grabserver.entity.bim_grab.MovieshowingBaidu">
     <!--
@@ -38,7 +38,7 @@
     update bim_grab.movieshowing_baidu
     set name = #{name,jdbcType=VARCHAR},
     image = #{image,jdbcType=VARCHAR},
-    rating = #{rating,jdbcType=DOUBLE},
+    rating = #{rating,jdbcType=REAL},
     content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

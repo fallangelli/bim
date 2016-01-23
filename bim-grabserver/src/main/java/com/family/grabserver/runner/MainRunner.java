@@ -50,9 +50,9 @@ public class MainRunner {
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
-//    grabRunner.grabCity();
-//    grabRunner.grabCinema();
-//    grabRunner.grabCinemamovie();
+    grabRunner.grabCity();
+    grabRunner.grabCinema();
+    grabRunner.grabCinemamovie();
     grabRunner.grabScreening();
     grabRunner.mergeService.merge();
   }
@@ -77,7 +77,7 @@ public class MainRunner {
 
   public void grabScreening() {
 //    screeningMaoyanCrawler.crawl();
-//    screeningMtimeCrawler.crawl();
+    screeningMtimeCrawler.crawl();
     screeningBaiduCrawler.crawl();
   }
 

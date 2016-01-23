@@ -66,7 +66,14 @@ public class CinemaSolidfier {
             record.setRoute(cm.getRoute());
           }
           record.setIdMtime(cm.getId());
-          caMapper.updateByPrimaryKey(record);
+          try {
+            caMapper.updateByPrimaryKey(record);
+          } catch (Exception e) {
+            e.printStackTrace();
+            isMatched = true;
+            break;
+          }
+
           isMatched = true;
           break;
         }
@@ -94,10 +101,15 @@ public class CinemaSolidfier {
         record.setTel(cm.getTel());
         record.setRoute(cm.getRoute());
         record.setIdMtime(cm.getId());
-        if (caMapper.selectByPrimaryKey(record.getId()) != null)
-          caMapper.updateByPrimaryKey(record);
-        else
-          caMapper.insert(record);
+        try {
+          if (caMapper.selectByPrimaryKey(record.getId()) != null)
+            caMapper.updateByPrimaryKey(record);
+          else
+            caMapper.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
       }
     }
   }
@@ -119,7 +131,14 @@ public class CinemaSolidfier {
             record.setAddress(cm.getAddress());
           }
           record.setIdBaidu(cm.getId());
-          caMapper.updateByPrimaryKey(record);
+          try {
+            caMapper.updateByPrimaryKey(record);
+          } catch (Exception e) {
+            e.printStackTrace();
+            isMatched = true;
+            break;
+          }
+
           isMatched = true;
           break;
         }
@@ -131,10 +150,15 @@ public class CinemaSolidfier {
         record.setName(cm.getName());
         record.setAddress(cm.getAddress());
         record.setIdBaidu(cm.getId());
-        if (caMapper.selectByPrimaryKey(record.getId()) != null)
-          caMapper.updateByPrimaryKey(record);
-        else
-          caMapper.insert(record);
+        try {
+          if (caMapper.selectByPrimaryKey(record.getId()) != null)
+            caMapper.updateByPrimaryKey(record);
+          else
+            caMapper.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
       }
     }
   }
@@ -143,12 +167,14 @@ public class CinemaSolidfier {
   private static Boolean isMatched(Pair<String, String> namePair, Pair<String, String> addressPair) {
     String nameA = namePair.getKey();
     String nameB = namePair.getValue();
-    if (Levenshtein.getSimilarityRatio(nameA, nameB) > 0.8) {
+    if (nameA.length() > 0 && nameB.length() > 0 &&
+      Levenshtein.getSimilarityRatio(nameA, nameB) > 0.8) {
       return true;
     } else {
       String addressA = addressPair.getKey();
       String addressB = addressPair.getValue();
-      if (Levenshtein.getSimilarityRatio(addressA, addressB) > 0.5) {
+      if (addressA.length() > 0 && addressB.length() > 0 &&
+        Levenshtein.getSimilarityRatio(addressA, addressB) > 0.5) {
         return true;
       }
     }

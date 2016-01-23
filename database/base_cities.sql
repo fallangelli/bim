@@ -9,8 +9,19 @@
 /*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- 导出  表 bim_base.city 结构
+DROP TABLE IF EXISTS `city`;
+CREATE TABLE IF NOT EXISTS `city` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `first_letter` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `pinyin` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- 正在导出表  bim_base.city 的数据：~391 rows (大约)
-DELETE FROM `city`;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
 INSERT INTO `city` (`id`, `name`, `first_letter`, `pinyin`) VALUES
 	(110000, '北京市', 'B', 'beijingshi'),
@@ -405,8 +416,19 @@ INSERT INTO `city` (`id`, `name`, `first_letter`, `pinyin`) VALUES
 	(820300, '路环岛', 'L', 'luhuandao');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 
--- 正在导出表  bim_base.cityarea 的数据：~1,924 rows (大约)
-DELETE FROM `cityarea`;
+
+-- 导出  表 bim_base.cityarea 结构
+DROP TABLE IF EXISTS `cityarea`;
+CREATE TABLE IF NOT EXISTS `cityarea` (
+  `id` int(16) NOT NULL,
+  `city_id` int(16) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `city_id_area` (`city_id`,`name`),
+  CONSTRAINT `fk_area_to_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- 正在导出表  bim_base.cityarea 的数据：~1,910 rows (大约)
 /*!40000 ALTER TABLE `cityarea` DISABLE KEYS */;
 INSERT INTO `cityarea` (`id`, `city_id`, `name`) VALUES
 	(110101, 110000, '东城区'),

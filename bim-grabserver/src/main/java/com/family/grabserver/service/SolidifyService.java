@@ -63,7 +63,6 @@ public class SolidifyService {
     mapper.fillPositions();
 
     MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
-    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
     MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
 
     mapper.merge_screening_mtime();

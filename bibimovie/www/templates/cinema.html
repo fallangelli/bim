@@ -79,7 +79,7 @@
       </ion-slide>
     </ion-slide-box>
 
-    <h2 ng-if="showDates.length<=0">当前影片无上映信息</h2>
+    <h3 ng-if="showDates.length<=0">当前影片无上映信息</h3>
     <ion-slide-box on-slide-changed="currDateHasChanged($index)" delegate-handle="slideDate"
                    show-pager="true" ng-if="showDates.length>0">
       <ion-slide ng-repeat="showDate in showDates" repeat-done="repeatDateDone()">
@@ -91,7 +91,8 @@
       </ion-slide>
     </ion-slide-box>
 
-    <ion-list ng-if="showDates.length>0">
+    <h3 ng-if="showDates.length<=0 || !currScreenings">当日已无场次</h3>
+    <ion-list ng-if="showDates.length>0 && currScreenings">
       <h4>日期:{{showDate}}</h4>
       <ion-item ng-repeat="screening in currScreenings"
                 class="item-icon-right" type="item-text-wrap"

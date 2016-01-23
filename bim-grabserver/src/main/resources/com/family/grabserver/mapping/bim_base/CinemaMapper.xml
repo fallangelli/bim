@@ -13,7 +13,7 @@
     <result column="latitude" jdbcType="VARCHAR" property="latitude"/>
     <result column="longitude" jdbcType="VARCHAR" property="longitude"/>
     <result column="pos" jdbcType="OTHER" property="pos"/>
-    <result column="rating" jdbcType="DOUBLE" property="rating"/>
+    <result column="rating" jdbcType="REAL" property="rating"/>
     <result column="has_3d" jdbcType="BIT" property="has3d"/>
     <result column="has_imax" jdbcType="BIT" property="hasImax"/>
     <result column="has_Wifi" jdbcType="BIT" property="hasWifi"/>
@@ -45,7 +45,7 @@
     )
     values (#{id,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
     #{address,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
-    #{pos,jdbcType=OTHER}, #{rating,jdbcType=DOUBLE}, #{has3d,jdbcType=BIT}, #{hasImax,jdbcType=BIT},
+    #{pos,jdbcType=OTHER}, #{rating,jdbcType=REAL}, #{has3d,jdbcType=BIT}, #{hasImax,jdbcType=BIT},
     #{hasWifi,jdbcType=BIT}, #{hasPark,jdbcType=BIT}, #{tel,jdbcType=VARCHAR}, #{route,jdbcType=VARCHAR},
     #{idMaoyan,jdbcType=INTEGER}, #{idMtime,jdbcType=INTEGER}, #{idBaidu,jdbcType=INTEGER}
     )
@@ -62,7 +62,7 @@
     latitude = #{latitude,jdbcType=VARCHAR},
     longitude = #{longitude,jdbcType=VARCHAR},
     pos = #{pos,jdbcType=OTHER},
-    rating = #{rating,jdbcType=DOUBLE},
+    rating = #{rating,jdbcType=REAL},
     has_3d = #{has3d,jdbcType=BIT},
     has_imax = #{hasImax,jdbcType=BIT},
     has_Wifi = #{hasWifi,jdbcType=BIT},

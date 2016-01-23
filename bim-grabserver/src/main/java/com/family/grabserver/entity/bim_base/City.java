@@ -97,6 +97,7 @@ public class City {
    * This method sets the value of the database column bim_base..city.first_letter
    *
    * @param firstLetter the value for bim_base..city.first_letter
+   *
    * @mbggenerated
    */
   public void setFirstLetter(String firstLetter) {
@@ -108,6 +109,7 @@ public class City {
    * This method returns the value of the database column bim_base..city.pinyin
    *
    * @return the value of bim_base..city.pinyin
+   *
    * @mbggenerated
    */
   public String getPinyin() {
@@ -119,6 +121,7 @@ public class City {
    * This method sets the value of the database column bim_base..city.pinyin
    *
    * @param pinyin the value for bim_base..city.pinyin
+   *
    * @mbggenerated
    */
   public void setPinyin(String pinyin) {

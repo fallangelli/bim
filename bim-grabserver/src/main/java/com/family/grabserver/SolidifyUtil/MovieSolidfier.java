@@ -19,7 +19,7 @@ public class MovieSolidfier {
 
       boolean isMatched = false;
       for (Movieshowing record : Movieshowings) {
-        if (cm.getName().compareTo(record.getName()) == 0) {
+        if (isMatched(cm.getName(), record.getName())) {
           if (record.getImage() == null || record.getImage().length() <= 0) {
             record.setImage(cm.getImage());
           }
@@ -48,7 +48,14 @@ public class MovieSolidfier {
             record.setRuntime(cm.getRuntime());
           }
           record.setIdMtime(cm.getId());
-          mMapper.updateByPrimaryKey(record);
+          try {
+            mMapper.updateByPrimaryKey(record);
+          } catch (Exception e) {
+            e.printStackTrace();
+            isMatched = true;
+            break;
+          }
+
           isMatched = true;
           break;
         }
@@ -67,10 +74,15 @@ public class MovieSolidfier {
         record.setContent(cm.getContent());
         record.setRuntime(cm.getRuntime());
         record.setIdMtime(cm.getId());
-        if (mMapper.selectByPrimaryKey(record.getId()) != null)
-          mMapper.updateByPrimaryKey(record);
-        else
-          mMapper.insert(record);
+        try {
+          if (mMapper.selectByPrimaryKey(record.getId()) != null)
+            mMapper.updateByPrimaryKey(record);
+          else
+            mMapper.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
       }
     }
   }
@@ -83,7 +95,7 @@ public class MovieSolidfier {
     for (MovieshowingBaidu cm : MovieshowingBaiduList) {
       boolean isMatched = false;
       for (Movieshowing record : baseMovieshowings) {
-        if (cm.getName().compareTo(record.getName()) == 0) {
+        if (isMatched(cm.getName(), record.getName())) {
           if (record.getImage() == null || record.getImage().length() <= 0) {
             record.setImage(cm.getImage());
           }
@@ -94,7 +106,13 @@ public class MovieSolidfier {
             record.setContent(cm.getContent());
           }
           record.setIdBaidu(cm.getId());
-          mMapper.updateByPrimaryKey(record);
+          try {
+            mMapper.updateByPrimaryKey(record);
+          } catch (Exception e) {
+            e.printStackTrace();
+            isMatched = true;
+            break;
+          }
           isMatched = true;
           break;
         }
@@ -107,13 +125,27 @@ public class MovieSolidfier {
         record.setRating(cm.getRating());
         record.setContent(cm.getContent());
         record.setIdBaidu(cm.getId());
-        if (mMapper.selectByPrimaryKey(record.getId()) != null)
-          mMapper.updateByPrimaryKey(record);
-        else
-          mMapper.insert(record);
+        try {
+          if (mMapper.selectByPrimaryKey(record.getId()) != null)
+            mMapper.updateByPrimaryKey(record);
+          else
+            mMapper.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
+
       }
     }
   }
 
+  private static Boolean isMatched(String nameA, String nameB) {
+    if (nameA.length() > 0 && nameB.length() > 0 &&
+      nameA.compareTo(nameB) == 0) {
+      return true;
+    }
+
+    return false;
+  }
 
 }

@@ -608,6 +608,13 @@ angular.module('bibimovie.controllers', [])
     function loadCinemaMovieSourcesByDate(cinemaId, movieId, date) {
       var promise = CinemaService.getCinemaMovieScreeningByDate(cinemaId, movieId, date);
       promise.then(function (data) {
+          if (!data) {
+            $scope.currScreenings = null;
+            $ionicLoading.hide();
+            $scope.$broadcast('scroll.refreshComplete');
+            return;
+          }
+
           var jsonObject = angular.fromJson(data);
           $scope.currScreenings = jsonObject['minSource'];
 

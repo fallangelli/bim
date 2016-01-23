@@ -2,26 +2,38 @@ angular.module('bibimovie.services', [])
 
   .provider('Geolocation', function () {
     this.$get = function ($q, $http, $ionicLoading, ApiEndpoint) {
+
       var service = {
         initCurrentCity: function () {
           var deferred = $q.defer();
           var deferredCityId = $q.defer();
           var promise = deferred.promise;
-          var geolocation = new BMap.Geolocation();
-          geolocation.getCurrentPosition(function (r) {
-            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              window.localStorage['curr_lat'] = r.point.lat;
-              window.localStorage['curr_lng'] = r.point.lng;
-              window.localStorage['curr_city_name'] = r.address.city;
-              deferred.resolve(window.localStorage['curr_city_name']);
+          if (navigator.geolocation) {
+            var getOptions = {
+              enableHighAccuracy: true,
+              timeout: 3000,
+              maximumAge: 0
+            };
+            navigator.geolocation.getCurrentPosition(getSuccess, getError, getOptions);
+            function getSuccess(position) {
+              window.localStorage['curr_lat'] = position.coords.latitude;
+              window.localStorage['curr_lng'] = position.coords.longitude;
+              var map = new BMap.Map("l-map");
+              var myGeo = new BMap.Geocoder();
+              myGeo.getLocation(new BMap.Point(window.localStorage['curr_lng'], window.localStorage['curr_lat']), function (result) {
+                if (result) {
+                  window.localStorage['curr_city_name'] = result.addressComponents.city;
+                  deferred.resolve(result.addressComponents.city);
+                }
+              });
             }
-            else {
+
+            function getError(error) {
               alert('无法得到位置信息');
-              window.localStorage['curr_city_name'] = '北京';
+              window.localStorage['curr_city_name'] = '北京市';
               deferred.resolve(window.localStorage['curr_city_name']);
-              //deferred.reject();
             }
-          }, {enableHighAccuracy: false})
+          }
 
           promise
             .then(function (val) {

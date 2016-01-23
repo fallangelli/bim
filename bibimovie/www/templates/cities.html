@@ -50,7 +50,8 @@
       <div class="item" style="padding: 3px">
         <div class="row" ng-repeat="groups in v">
           <div class="col col-25" ng-repeat="group in groups">
-            <button class="button button-clear" ng-click="switchCity(group.id,group.name)">
+            <button class="button button-full button-clear" style="margin-top: 1px;margin-bottom: 1px"
+                    ng-click="switchCity(group.id,group.name)">
               <h3 style="text-align: left">{{group.name}}</h3>
             </button>
 

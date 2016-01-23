@@ -25,15 +25,18 @@
     <h4>场次:{{showDate}} {{startTime| date:'shortTime'}}</h4>
 
     <div class="list">
-      <div class="item  item-icon-right" ng-repeat="source in sources">
+
+      <a class="item item-icon-right" ng-repeat="source in sources"
+         href="{{source.ticketURL}}">
         <h2 style="color: darkgoldenrod">{{source.source}}</h2>
-        <a href="{{source.ticketURL}}">
+
           <span class="badge badge-assertive" style="color: red">
             <h2 style="color: white">￥{{source.salePrice}} 去购票</h2>
           </span>
-        </a>
+
         <i class="icon ion-chevron-right icon-accessory"></i>
-      </div>
+      </a>
+      </a>
     </div>
 
   </ion-content>

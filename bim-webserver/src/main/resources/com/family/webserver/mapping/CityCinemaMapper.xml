@@ -17,18 +17,28 @@
     cn.tel,
     min(s.sale_price) AS minPrice,
     <if test="lat!=null and lat!='' and lng!=null and lng!=''">
-      GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len,
+      GLength(LineStringFromWKB(LineString(point(${lat}, ${lng}), pos))) len,
     </if>
     count(DISTINCT s.source) AS sourceCount
     FROM cinema cn
     LEFT JOIN cityarea ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
     LEFT JOIN screening s ON cn.id = s.cinema_id
-    WHERE c.id = #{cityId,jdbcType=INTEGER} AND s.sale_price IS NOT NULL
+    WHERE c.id = ${cityId} AND s.sale_price IS NOT NULL
+    <if test="districtId!=null and districtId!=''">
+      and ca.id=${districtId}
+    </if>
+    <if test="nameLike!=null and nameLike!=''">
+      and cn.name like concat('%','${nameLike}','%')
+    </if>
     GROUP BY cn.id
-    <if test="lat!=null and lat!='' and lng!=null and lng!=''">
+    <if test="lat!=null and lat!='' and lng!=null and lng!='' and orderBy!=null and orderBy!='' and orderBy=='len'">
       ORDER BY IF(ISNULL(len),1,0), len
     </if>
+    <if test="orderBy!=null and orderBy!='' and orderBy=='minPrice'">
+      ORDER BY minPrice
+    </if>
+    LIMIT ${startIndex}, ${pageCount};
   </select>
 
   <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">

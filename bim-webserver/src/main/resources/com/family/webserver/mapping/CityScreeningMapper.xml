@@ -38,8 +38,8 @@
     LEFT JOIN movieshowing m ON m.id = s.movie_id
     WHERE s.movie_id = #{movieId,jdbcType=INTEGER}
     and c.id = #{cityId,jdbcType=INTEGER}
-    <if test="distinctId!=null and distinctId!=''">
-      and ca.id = ${distinctId}
+    <if test="districtId!=null and districtId!=''">
+      and ca.id = ${districtId}
     </if>
     AND (to_days(s.show_date) > to_days(now()) OR
     (to_days(s.show_date) = to_days(now()) AND

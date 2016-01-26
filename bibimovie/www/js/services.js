@@ -60,13 +60,13 @@ angular.module('bibimovie.services', [])
   .factory('MovieCinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
 
     return {
-      getMovieCinemaDates: function (cityId, movieId, distinctId) {
+      getMovieCinemaDates: function (cityId, movieId, districtId) {
         var deferred = $q.defer();
         var promise = deferred.promise;
 
         var dates_url = ApiEndpoint.server_url + "cityScreening/CityMovieWithShowDates?" +
           "cityId=" + cityId + "&movieId=" + movieId;
-        if (distinctId) dates_url += "&distinctId=" + distinctId;
+        if (districtId) dates_url += "&districtId=" + districtId;
         $http.get(dates_url)
           .success(function (data) {
             if (data) {
@@ -139,10 +139,14 @@ angular.module('bibimovie.services', [])
 
   .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
-      getCinemas: function (cityId, lat, lng) {
-        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" + cityId;
+      getCinemas: function (cityId, lat, lng, orderBy, districtId, nameLike, currPage, pageCount) {
+        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" +
+          cityId + "&currPage=" + currPage + "&pageCount=" + pageCount;
         if (lat) url += "&lat=" + lat;
         if (lng) url += "&lng=" + lng;
+        if (orderBy) url += "&orderBy=" + orderBy;
+        if (districtId) url += "&districtId=" + districtId;
+        if (nameLike) url += "&nameLike=" + nameLike;
 
         var deferred = $q.defer();
         $http.get(url)

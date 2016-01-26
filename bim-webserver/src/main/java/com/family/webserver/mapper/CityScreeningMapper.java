@@ -11,7 +11,7 @@ import java.util.List;
 public interface CityScreeningMapper {
   CityMovieWithShowDates selectCityMovieWithShowDates(@Param("cityId") Integer cityId,
                                                       @Param("movieId") Integer movieId,
-                                                      @Param("distinctId") Integer distinctId);
+                                                      @Param("districtId") Integer districtId);
 
   List<String> selectCinemaMovieDates(@Param("cinemaId") Integer cinemaId,
                                       @Param("movieId") Integer movieId);

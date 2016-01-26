@@ -30,16 +30,15 @@
       <a ng-if="currLat && currLng" ng-style="distanceOrderStyle"
          class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
       <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
-      <button ng-style="distinctFilterStyle" ng-click="openPopover($event)"
+      <button ng-style="districtFilterStyle" ng-click="openPopover($event)"
               class="button button-outline button-positive">
-        筛选: {{currDistinctName}}
+        筛选: {{currDistrictName}}
       </button>
     </div>
 
     <div class="list">
       <a class="item" style="min-height: 90px"
-         ng-repeat="cinema in cinemas.messages | filterNameCinema : nameLike
-         | filterDistinctCinema : currDistinctId | orderCinema: orderBy"
+         ng-repeat="cinema in cinemas.messages"
          href="/#/cinema/{{cinema.id}}">
         {{cinema.name}}
         <p>
@@ -68,14 +67,14 @@
     <ion-content>
       <div class="list">
         <li class="item"
-            ng-click="filterByDistinct(null,'全部')">
+            ng-click="filterByDistrict(null,'全部')">
           <p>
             全部
           </p>
         </li>
         <li class="item"
             ng-repeat="area in areas"
-            ng-click="filterByDistinct(area.id,area.name)">
+            ng-click="filterByDistrict(area.id,area.name)">
           <p>
             {{area.name}}
           </p>

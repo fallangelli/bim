@@ -35,11 +35,16 @@ public class CityCinemaController {
   @ResponseBody
   List<ListCinema> getCityCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
                                   @RequestParam(value = "lat", required = false) String lat,
-                                  @RequestParam(value = "lng", required = false) String lng) {
-
-    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng);
-    List<ListCinema> tmp = retList.subList(1, 3);
-    return tmp;
+                                  @RequestParam(value = "lng", required = false) String lng,
+                                  @RequestParam(value = "orderBy", required = false) String orderBy,
+                                  @RequestParam(value = "districtId", required = false) Integer districtId,
+                                  @RequestParam(value = "nameLike", required = false) String nameLike,
+                                  @RequestParam(value = "currPage", required = true) Integer currPage,
+                                  @RequestParam(value = "pageCount", required = true) Integer pageCount) {
+    int startIndex = pageCount * (currPage - 1);
+    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng, orderBy,
+      districtId, nameLike, startIndex, pageCount);
+    return retList;
   }
 
   @RequestMapping(value = "/DateMovieCinemas", method = RequestMethod.GET, produces = "application/json")

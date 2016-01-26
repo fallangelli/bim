@@ -27,8 +27,8 @@ public class CityScreeningController {
   @ResponseBody
   CityMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
                                                    @RequestParam(value = "movieId", required = true) Integer movieId,
-                                                   @RequestParam(value = "distinctId", required = false) Integer distinctId) {
-    CityMovieWithShowDates movieWithShowDates = service.getCityMovieWithShowDates(cityId, movieId, distinctId);
+                                                   @RequestParam(value = "districtId", required = false) Integer districtId) {
+    CityMovieWithShowDates movieWithShowDates = service.getCityMovieWithShowDates(cityId, movieId, districtId);
     return movieWithShowDates;
   }
 

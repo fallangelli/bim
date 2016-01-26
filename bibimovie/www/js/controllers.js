@@ -115,24 +115,28 @@ angular.module('bibimovie.controllers', [])
   })
 
   .controller('CinemaListCtrl', function ($scope, $http, $location, $ionicHistory, $ionicPopover, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
+
+    $scope.orderBy = 'len';
+    $scope.nameLike = '';
+    $scope.currDistrictId = null;
+    $scope.currDistrictName = '全部';
+
     $scope.cinemas = {
       hasMore: true,
       messages: [],
       pagination: {
-        perPage: 5,
+        perPage: 10,
         currentPage: 1
       }
     };
+    if ($scope.currLat && $scope.currLng)
+      $scope.distanceOrderStyle = {color: 'red'};
+    else
+      $scope.priceOrderStyle = {color: 'red'};
 
     /* state:1初始化和刷新，2加载更多 */
     $scope.doRefresh = function (state) {
       $ionicLoading.show({template: '加载中...'})
-
-      $scope.orderBy = 'len';
-      $scope.nameLike = '';
-      $scope.currDistinctId = null;
-      $scope.currDistinctName = '全部';
-      $scope.distanceOrderStyle = {color: 'red'};
 
       var currTime = new Date();
       if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
@@ -180,26 +184,39 @@ angular.module('bibimovie.controllers', [])
       $scope.popover.hide();
     };
 
-    $scope.filterByDistinct = function (distinctId, distinctName) {
+
+    $scope.filterByName = function (nameLike) {
+      $ionicLoading.show({template: '加载中...'})
+      $scope.nameLike = nameLike;
+      $scope.doRefresh(1);
+    }
+
+    $scope.filterByDistrict = function (districtId, districtName) {
+      $ionicLoading.show({template: '加载中...'})
       $scope.closePopover();
-      $scope.currDistinctId = distinctId;
-      $scope.currDistinctName = distinctName;
-      if (distinctId)
-        $scope.distinctFilterStyle = {color: 'red'};
+      $scope.currDistrictId = districtId;
+      $scope.currDistrictName = districtName;
+      if (districtId)
+        $scope.districtFilterStyle = {color: 'red'};
       else
-        $scope.distinctFilterStyle = {color: 'blue'};
+        $scope.districtFilterStyle = {color: 'blue'};
+      $scope.doRefresh(1);
     }
 
     $scope.orderByDistance = function () {
+      $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "len";
       $scope.distanceOrderStyle = {color: 'red'};
       $scope.priceOrderStyle = {color: 'blue'};
+      $scope.doRefresh(1);
     }
 
     $scope.orderByPrice = function () {
+      $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "minPrice";
       $scope.distanceOrderStyle = {color: 'blue'};
       $scope.priceOrderStyle = {color: 'red'};
+      $scope.doRefresh(1);
     }
 
     $scope.goBack = function () {
@@ -225,7 +242,12 @@ angular.module('bibimovie.controllers', [])
     }
 
     function loadCinemas(state) {
-      var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng);
+      if (state == 1) {
+        $scope.cinemas.pagination.currentPage = 1;
+      }
+      var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng,
+        $scope.orderBy, $scope.currDistrictId, $scope.nameLike, $scope.cinemas.pagination.currentPage,
+        $scope.cinemas.pagination.perPage);
       promise.then(function (val) {
           //加载更多
           if (state == 2) {
@@ -235,12 +257,16 @@ angular.module('bibimovie.controllers', [])
             }
             else {
               $scope.cinemas.pagination.currentPage += 1;
-              // $scope.cinemas.messages = $scope.cinemas.messages.concat(val);
             }
           }
           //初始化和刷新
           else {
+            $scope.cinemas.pagination.currentPage = 1;
+            //if (val == null || val.length == 0) {
+            //  $scope.cinemas.hasMore = false;
+            //}
             $scope.cinemas.messages = val;
+
           }
           $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
@@ -262,8 +288,8 @@ angular.module('bibimovie.controllers', [])
 
       $scope.nameLike = '';
       $scope.orderBy = 'len';
-      $scope.currDistinctId = null;
-      $scope.currDistinctName = '全部';
+      $scope.currDistrictId = null;
+      $scope.currDistrictName = '全部';
       $scope.distanceOrderStyle = {color: 'red'};
 
       var currTime = new Date();
@@ -313,16 +339,15 @@ angular.module('bibimovie.controllers', [])
       $scope.popover.hide();
     };
 
-    $scope.filterByDistinct = function (distinctId, distinctName) {
+    $scope.filterByDistrict = function (districtId, districtName) {
       $scope.closePopover();
-      $scope.currDistinctId = distinctId;
-      $scope.currDistinctName = distinctName;
-      if (distinctId)
-        $scope.distinctFilterStyle = {color: 'red'};
+      $scope.currDistrictId = districtId;
+      $scope.currDistrictName = districtName;
+      if (districtId)
+        $scope.districtFilterStyle = {color: 'red'};
       else
-        $scope.distinctFilterStyle = {color: 'blue'};
-      loadMovieCinemaDates($scope.currDistinctId);
-
+        $scope.districtFilterStyle = {color: 'blue'};
+      loadMovieCinemaDates($scope.currDistrictId);
     }
 
     $scope.orderByDistance = function () {
@@ -340,13 +365,13 @@ angular.module('bibimovie.controllers', [])
 
     $scope.slideHasChanged = function (index) {
       $ionicLoading.show({template: '加载中...'})
-      loadMovieCinemasByDate($scope.showDates[index], $scope.orderBy, $scope.currDistinctId);
+      loadMovieCinemasByDate($scope.showDates[index], $scope.orderBy, $scope.currDistrictId);
     }
 
     $scope.repeatDone = function () {
       $ionicLoading.show({template: '加载中...'})
       $ionicSlideBoxDelegate.update();
-      loadMovieCinemasByDate($scope.showDates[$ionicSlideBoxDelegate.currentIndex()], $scope.orderBy, $scope.currDistinctId);
+      loadMovieCinemasByDate($scope.showDates[$ionicSlideBoxDelegate.currentIndex()], $scope.orderBy, $scope.currDistrictId);
     };
 
     $scope.lastSlide = function () {
@@ -358,9 +383,9 @@ angular.module('bibimovie.controllers', [])
     };
 
 
-    function loadMovieCinemaDates(distinctId) {
+    function loadMovieCinemaDates(districtId) {
       $ionicLoading.show({template: '加载中...'})
-      var promise = MovieCinemaService.getMovieCinemaDates($scope.currCityId, $stateParams.movieId, distinctId);
+      var promise = MovieCinemaService.getMovieCinemaDates($scope.currCityId, $stateParams.movieId, districtId);
       promise.then(function (data) {
           $scope.movieId = $stateParams.movieId;
           var jsonObject = angular.fromJson(data);
@@ -783,12 +808,12 @@ angular.module('bibimovie.controllers', [])
   })
 
 
-  .filter('filterDistinctCinema', function () {
-    return function (items, distinctId) {
-      if (items && distinctId) {
+  .filter('filterDistrictCinema', function () {
+    return function (items, districtId) {
+      if (items && districtId) {
         var array = [];
         for (var i = 0; i < items.length; i++) {
-          if (items[i].districtId == distinctId) {
+          if (items[i].districtId == districtId) {
             array.push(items[i]);
           }
         }

@@ -33,14 +33,26 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testGetCinemaByCity() throws Exception {
-    List<ListCinema> listCinemas = service.getCityCinemas(1, "39.91488908", "116.40387397");
+    List<ListCinema> listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "len",
+      null, null, 1, 10);
+    System.out.println("return size : " + listCinemas.size());
+    listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "minPrice",
+      null, null, 0, 10);
+    System.out.println("return size : " + listCinemas.size());
+
+    listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "minPrice",
+      1, null, 0, 10);
+    System.out.println("return size : " + listCinemas.size());
+
+    listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "minPrice",
+      null, "东", 0, 10);
     System.out.println("return size : " + listCinemas.size());
   }
 
   @Test
   public void testGetMovieCinemaByCity() throws Exception {
     Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2015-12-12");
-    List<MovieCinema> listCinemas = service.getMovieCinemaByCity(2861, 1713, date, "11", "11");
+    List<MovieCinema> listCinemas = service.getMovieCinemaByCity(110000, 1713, date, "11", "11");
 
 
     System.out.println("return size : " + listCinemas.size());

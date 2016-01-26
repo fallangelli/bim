@@ -23,8 +23,9 @@ public class CityCinemaService {
     return cmapper.selectByPrimaryKey(cityId);
   }
 
-  public List<ListCinema> getCityCinemas(Integer cityId, String lat, String lng) {
-    return ccmapper.selectCityCinemas(cityId, lat, lng);
+  public List<ListCinema> getCityCinemas(Integer cityId, String lat, String lng, String orderBy,
+                                         Integer districtId, String nameLike, Integer startIndex, Integer pageCount) {
+    return ccmapper.selectCityCinemas(cityId, lat, lng, orderBy, districtId, nameLike, startIndex, pageCount);
   }
 
   public List<MovieCinema> getMovieCinemaByCity(Integer cityId, Integer movieId, Date showDate, String lat, String lng) {

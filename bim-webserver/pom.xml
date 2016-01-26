@@ -307,7 +307,6 @@
       <version>${version.jackson}</version>
     </dependency>
 
-
     <dependency>
       <groupId>pinyin4j</groupId>
       <artifactId>pinyin4j</artifactId>

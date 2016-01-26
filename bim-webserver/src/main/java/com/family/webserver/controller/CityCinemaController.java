@@ -38,7 +38,8 @@ public class CityCinemaController {
                                   @RequestParam(value = "lng", required = false) String lng) {
 
     List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng);
-    return retList;
+    List<ListCinema> tmp = retList.subList(1, 3);
+    return tmp;
   }
 
   @RequestMapping(value = "/DateMovieCinemas", method = RequestMethod.GET, produces = "application/json")

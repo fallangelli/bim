@@ -2,7 +2,7 @@
 
 
   <ion-content class="padding">
-    <ion-refresher on-refresh="doRefresh()"
+    <ion-refresher on-refresh="doRefresh(1)"
                    pulling-text="松开刷新"
                    refreshing-text="更新历史数据，稍后..."
                    refreshing-icon="ion-loading-b">
@@ -37,8 +37,8 @@
     </div>
 
     <div class="list">
-      <a class="item"
-         collection-repeat="cinema in cinemas | filterNameCinema : nameLike
+      <a class="item" style="min-height: 90px"
+         ng-repeat="cinema in cinemas.messages | filterNameCinema : nameLike
          | filterDistinctCinema : currDistinctId | orderCinema: orderBy"
          href="/#/cinema/{{cinema.id}}">
         {{cinema.name}}
@@ -53,6 +53,9 @@
         </p>
       </a>
     </div>
+
+    <ion-infinite-scroll ng-if="cinemas.hasMore" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+
   </ion-content>
 </ion-view>
 

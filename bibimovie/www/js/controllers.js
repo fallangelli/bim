@@ -115,7 +115,17 @@ angular.module('bibimovie.controllers', [])
   })
 
   .controller('CinemaListCtrl', function ($scope, $http, $location, $ionicHistory, $ionicPopover, $ionicLoading, ApiEndpoint, CinemaListService, Geolocation) {
-    $scope.doRefresh = function () {
+    $scope.cinemas = {
+      hasMore: true,
+      messages: [],
+      pagination: {
+        perPage: 5,
+        currentPage: 1
+      }
+    };
+
+    /* state:1初始化和刷新，2加载更多 */
+    $scope.doRefresh = function (state) {
       $ionicLoading.show({template: '加载中...'})
 
       $scope.orderBy = 'len';
@@ -127,12 +137,12 @@ angular.module('bibimovie.controllers', [])
       var currTime = new Date();
       if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
         window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
-        $scope.currCityId = window.localStorage['curr_city_id'];
-        $scope.currCityName = window.localStorage['curr_city_name'];
-        $scope.currLat = window.localStorage['curr_lat'];
-        $scope.currLng = window.localStorage['curr_lng'];
-        loadCinemas();
-        loadAreas();
+          $scope.currCityId = window.localStorage['curr_city_id'];
+          $scope.currCityName = window.localStorage['curr_city_name'];
+          $scope.currLat = window.localStorage['curr_lat'];
+          $scope.currLng = window.localStorage['curr_lng'];
+        loadCinemas(state);
+          loadAreas();
       } else {
         var promiseCity = Geolocation.initCurrentCity();
         promiseCity.then(function () {
@@ -140,20 +150,27 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           $scope.currLat = window.localStorage['curr_lat'];
           $scope.currLng = window.localStorage['curr_lng'];
-          loadCinemas();
+
+          loadCinemas(state);
           loadAreas();
         }, function () {
           alert("无法得到当前城市信息");
         })
       }
-    }
-    $scope.doRefresh();
+      }
+
+
+    $scope.doRefresh(1);
+
     $ionicPopover.fromTemplateUrl('my-popover.html', {
       scope: $scope
     }).then(function (popover) {
       $scope.popover = popover;
-    });
+    })
 
+    $scope.loadMore = function () {
+      $scope.doRefresh(2);
+    };
 
     $scope.openPopover = function ($event) {
       $scope.popover.show($event);
@@ -185,7 +202,6 @@ angular.module('bibimovie.controllers', [])
       $scope.priceOrderStyle = {color: 'red'};
     }
 
-
     $scope.goBack = function () {
       var history = $ionicHistory.viewHistory();
       if (history.backView)
@@ -208,33 +224,37 @@ angular.module('bibimovie.controllers', [])
         });
     }
 
-    function loadCinemas() {
+    function loadCinemas(state) {
       var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng);
       promise.then(function (val) {
-          $scope.cinemas = val;
-          $ionicLoading.hide();
+          //加载更多
+          if (state == 2) {
+            $scope.cinemas.messages = $scope.cinemas.messages.concat(val);
+            if (val == null || val.length == 0) {
+              $scope.cinemas.hasMore = false;
+            }
+            else {
+              $scope.cinemas.pagination.currentPage += 1;
+              // $scope.cinemas.messages = $scope.cinemas.messages.concat(val);
+            }
+          }
+          //初始化和刷新
+          else {
+            $scope.cinemas.messages = val;
+          }
+          $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
+          $ionicLoading.hide();
         }
         , function () {
-          $ionicLoading.hide();
+          $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
+          $ionicLoading.hide();
           alert("无法获取影院信息");
         });
-    }
-
-
-    $scope.getItemHeight = function (item, index) {
-      //使索引项平均都有10px高，例如
-      return (index % 2) === 0 ? 80 : 90;
-    };
-  })
-  .directive('repeatDone', function () {
-    return function (scope, element, attrs) {
-      if (scope.$last) {
-        scope.$eval(attrs.repeatDone);
       }
     }
-  })
+  )
 
   .controller('MovieCinemaCtrl', function ($scope, $timeout, $location, $ionicHistory, $ionicSlideBoxDelegate, $ionicPopover, $stateParams, $http, $ionicLoading, ApiEndpoint, MovieCinemaService, Geolocation) {
     $scope.doRefresh = function () {

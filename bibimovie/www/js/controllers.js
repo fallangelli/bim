@@ -7,9 +7,7 @@ angular.module('bibimovie.controllers', [])
 
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'});
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
@@ -26,7 +24,7 @@ angular.module('bibimovie.controllers', [])
           loadHotMovies();
           loadNearCinemas();
         }, function (error) {
-          alert("无法得到当前城市信息" + error);
+          console.error("无法得到当前城市信息" + error);
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
@@ -43,7 +41,7 @@ angular.module('bibimovie.controllers', [])
           $scope.movieList = movies;
         })
         .error(function (data, header, config, status) {
-          alert("读取电影信息错误");
+          console.error("读取电影信息错误");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
@@ -60,7 +58,7 @@ angular.module('bibimovie.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         })
         .error(function (data, header, config, status) {
-          alert("读取附近影院信息错误");
+          console.error("读取附近影院信息错误");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
@@ -71,9 +69,7 @@ angular.module('bibimovie.controllers', [])
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadMovies();
@@ -84,7 +80,7 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           loadMovies();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
     }
@@ -107,7 +103,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取上映影片信息");
+          console.error("无法获取上映影片信息");
         });
     }
 
@@ -122,34 +118,31 @@ angular.module('bibimovie.controllers', [])
     $scope.currDistrictName = '全部';
 
     $scope.cinemas = {
-      hasMore: true,
+      hasMore: false,
       messages: [],
       pagination: {
         perPage: 10,
         currentPage: 1
       }
     };
-    if ($scope.currLat && $scope.currLng)
-      $scope.distanceOrderStyle = {color: 'red'};
-    else
-      $scope.priceOrderStyle = {color: 'red'};
+
 
     /* state:1初始化和刷新，2加载更多 */
     $scope.doRefresh = function (state) {
-      $ionicLoading.show({template: '加载中...'})
+      if (state == 1)
+        $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
           $scope.currCityId = window.localStorage['curr_city_id'];
           $scope.currCityName = window.localStorage['curr_city_name'];
           $scope.currLat = window.localStorage['curr_lat'];
           $scope.currLng = window.localStorage['curr_lng'];
-        loadCinemas(state);
+          loadCinemas(state);
           loadAreas();
       } else {
         var promiseCity = Geolocation.initCurrentCity();
         promiseCity.then(function () {
+
           $scope.currCityId = window.localStorage['curr_city_id'];
           $scope.currCityName = window.localStorage['curr_city_name'];
           $scope.currLat = window.localStorage['curr_lat'];
@@ -158,11 +151,10 @@ angular.module('bibimovie.controllers', [])
           loadCinemas(state);
           loadAreas();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
-      }
-
+    }
 
     $scope.doRefresh(1);
 
@@ -196,26 +188,19 @@ angular.module('bibimovie.controllers', [])
       $scope.closePopover();
       $scope.currDistrictId = districtId;
       $scope.currDistrictName = districtName;
-      if (districtId)
-        $scope.districtFilterStyle = {color: 'red'};
-      else
-        $scope.districtFilterStyle = {color: 'blue'};
+
       $scope.doRefresh(1);
     }
 
     $scope.orderByDistance = function () {
       $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "len";
-      $scope.distanceOrderStyle = {color: 'red'};
-      $scope.priceOrderStyle = {color: 'blue'};
       $scope.doRefresh(1);
     }
 
     $scope.orderByPrice = function () {
       $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "minPrice";
-      $scope.distanceOrderStyle = {color: 'blue'};
-      $scope.priceOrderStyle = {color: 'red'};
       $scope.doRefresh(1);
     }
 
@@ -224,7 +209,7 @@ angular.module('bibimovie.controllers', [])
       if (history.backView)
         history.backView.go();
       $location.path("/");
-    }
+      }
 
     function loadAreas() {
       var promise = CinemaListService.getCityInfo($scope.currCityId);
@@ -237,7 +222,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取影院信息");
+          console.error("无法获取影院信息");
         });
     }
 
@@ -245,6 +230,9 @@ angular.module('bibimovie.controllers', [])
       if (state == 1) {
         $scope.cinemas.pagination.currentPage = 1;
       }
+      if (!$scope.currLat || !$scope.currLng)
+        $scope.orderBy = "minPrice";
+
       var promise = CinemaListService.getCinemas($scope.currCityId, $scope.currLat, $scope.currLng,
         $scope.orderBy, $scope.currDistrictId, $scope.nameLike, $scope.cinemas.pagination.currentPage,
         $scope.cinemas.pagination.perPage);
@@ -258,26 +246,40 @@ angular.module('bibimovie.controllers', [])
             else {
               $scope.cinemas.pagination.currentPage += 1;
             }
-          }
+            }
           //初始化和刷新
-          else {
-            $scope.cinemas.pagination.currentPage = 1;
-            //if (val == null || val.length == 0) {
-            //  $scope.cinemas.hasMore = false;
-            //}
-            $scope.cinemas.messages = val;
+            else {
+              $scope.cinemas.pagination.currentPage += 1;
 
+            if ($scope.orderBy == 'len') {
+              $scope.distanceOrderStyle = {color: 'red'};
+              $scope.priceOrderStyle = {color: 'blue'};
+            }
+            if ($scope.orderBy == 'minPrice') {
+              $scope.distanceOrderStyle = {color: 'blue'};
+              $scope.priceOrderStyle = {color: 'red'};
+            }
+
+            if ($scope.currDistrictId)
+              $scope.districtFilterStyle = {color: 'red'};
+            else
+              $scope.districtFilterStyle = {color: 'blue'};
+
+            $scope.cinemas.messages = val;
+            $scope.cinemas.hasMore = true;
+            }
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+          $scope.$broadcast('scroll.refreshComplete');
+          $ionicLoading.hide();
           }
+        ,
+        function () {
           $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
           $ionicLoading.hide();
-        }
-        , function () {
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-          $scope.$broadcast('scroll.refreshComplete');
-          $ionicLoading.hide();
-          alert("无法获取影院信息");
-        });
+          console.error("无法获取影院信息");
+          }
+      );
       }
     }
   )
@@ -290,12 +292,8 @@ angular.module('bibimovie.controllers', [])
       $scope.orderBy = 'len';
       $scope.currDistrictId = null;
       $scope.currDistrictName = '全部';
-      $scope.distanceOrderStyle = {color: 'red'};
 
-      var currTime = new Date();
-
-      if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_name'] &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         $scope.currLat = window.localStorage['curr_lat'];
@@ -312,7 +310,7 @@ angular.module('bibimovie.controllers', [])
           loadMovieCinemaDates();
           loadAreas();
         }, function () {
-          alert("无法得到当前位置");
+          console.error("无法得到当前位置");
         })
       }
     }
@@ -343,10 +341,6 @@ angular.module('bibimovie.controllers', [])
       $scope.closePopover();
       $scope.currDistrictId = districtId;
       $scope.currDistrictName = districtName;
-      if (districtId)
-        $scope.districtFilterStyle = {color: 'red'};
-      else
-        $scope.districtFilterStyle = {color: 'blue'};
       loadMovieCinemaDates($scope.currDistrictId);
     }
 
@@ -396,6 +390,11 @@ angular.module('bibimovie.controllers', [])
             $ionicSlideBoxDelegate.update();
             if ($scope.showDates)
               loadMovieCinemasByDate($scope.showDates[0]);
+
+            if ($scope.currDistrictId)
+              $scope.districtFilterStyle = {color: 'red'};
+            else
+              $scope.districtFilterStyle = {color: 'blue'};
           }
           else {
             $scope.showDates = null;
@@ -404,26 +403,28 @@ angular.module('bibimovie.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
-          alert("无法获取影片影院信息");
+          console.error("无法获取影片影院信息");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
     }
 
     function loadMovieCinemasByDate(date) {
-      if (!date)
-        $scope.cinemas
+      if (!$scope.currLat || !$scope.currLng)
+        $scope.orderBy = "minPrice";
+
       var promise = MovieCinemaService.getMovieCinemasByDate($scope.currCityId, $stateParams.movieId, date,
         $scope.currLat, $scope.currLng);
       promise.then(function (data) {
           var cinemas = angular.fromJson(data);
           $scope.cinemas = cinemas;
           $scope.showDate = date;
+
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
-          alert("无法获取影片影院信息");
+          console.error("无法获取影片影院信息");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
@@ -440,7 +441,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取影院信息");
+          console.error("无法获取影院信息");
         });
     }
 
@@ -451,9 +452,7 @@ angular.module('bibimovie.controllers', [])
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadScreening();
@@ -464,7 +463,7 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           loadScreening();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
     }
@@ -494,7 +493,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取排片信息");
+          console.error("无法获取排片信息");
         });
     }
   })
@@ -503,9 +502,7 @@ angular.module('bibimovie.controllers', [])
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadMovie();
@@ -516,7 +513,7 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           loadMovie();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
     }
@@ -540,7 +537,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取排片信息");
+          console.error("无法获取排片信息");
         });
     }
   })
@@ -550,9 +547,7 @@ angular.module('bibimovie.controllers', [])
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadCinema();
@@ -563,7 +558,7 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           loadCinema();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
     }
@@ -589,7 +584,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取影院详情信息");
+          console.error("无法获取影院详情信息");
         });
     }
 
@@ -645,7 +640,7 @@ angular.module('bibimovie.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
-          alert("无法获取影院影片日期信息");
+          console.error("无法获取影院影片日期信息");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
@@ -668,7 +663,7 @@ angular.module('bibimovie.controllers', [])
           $scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
-          alert("无法获取该日影院影片信息");
+          console.error("无法获取该日影院影片信息");
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
@@ -679,9 +674,7 @@ angular.module('bibimovie.controllers', [])
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
-      var currTime = new Date();
-      if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-        window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+      if (Geolocation.hasValidLocalCity()) {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadSource();
@@ -692,7 +685,7 @@ angular.module('bibimovie.controllers', [])
           $scope.currCityName = window.localStorage['curr_city_name'];
           loadSource();
         }, function () {
-          alert("无法得到当前城市信息");
+          console.error("无法得到当前城市信息");
         })
       }
     }
@@ -719,7 +712,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取来源信息");
+          console.error("无法获取来源信息");
         });
     }
   })
@@ -728,9 +721,8 @@ angular.module('bibimovie.controllers', [])
     $scope.oriPath = $stateParams.oriPath;
 
     $ionicLoading.show({template: '加载中...'})
-    var currTime = new Date();
-    if (window.localStorage['curr_city_id'].length > 0 && window.localStorage['curr_city_name'].length > 0 &&
-      window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime) {
+
+    if (Geolocation.hasValidLocalCity()) {
       $scope.currCityId = window.localStorage['curr_city_id'];
       $scope.currCityName = window.localStorage['curr_city_name'];
       loadCities();
@@ -741,7 +733,7 @@ angular.module('bibimovie.controllers', [])
         $scope.currCityName = window.localStorage['curr_city_name'];
         loadCities();
       }, function () {
-        alert("无法得到当前城市信息");
+        console.error("无法得到当前城市信息");
       })
     }
     $scope.letterGroupA = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -783,7 +775,7 @@ angular.module('bibimovie.controllers', [])
         , function () {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
-          alert("无法获取来源信息");
+          console.error("无法获取来源信息");
         });
     }
   })
@@ -838,6 +830,24 @@ angular.module('bibimovie.controllers', [])
       return items;
     }
   })
+
+  .filter('orderCinema', function () {
+    return function (items, orderBy) {
+      if (items) {
+        for (var i = 0; i < items.length; i++) {
+          for (var j = i; j < items.length; j++) {
+            if (items[i][orderBy] > items[j][orderBy]) {
+              var temp = items[i];
+              items[i] = items[j];
+              items[j] = temp;
+            }
+          }
+        }
+      }
+      return items;
+    }
+  })
+
 
   .filter('orderCities', function () {
     return function (items, orderBy) {

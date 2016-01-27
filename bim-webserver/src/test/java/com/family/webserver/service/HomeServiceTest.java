@@ -2,7 +2,6 @@ package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
 import com.family.webserver.entity.CityHotMovie;
-import com.family.webserver.entity.CityWithArea;
 import com.family.webserver.entity.ListCity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +20,8 @@ public class HomeServiceTest {
 
   @Test
   public void testGetCityInfoFromName() {
-    CityWithArea city = service.getCityInfo(1);
-    System.out.println(city.getAreas());
+    Integer cityId = service.getCityIdFromName("北京市");
+    System.out.println(cityId);
   }
 
   @Test

@@ -22,7 +22,8 @@
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="输入影院名称或拼音首字母" ng-model="nameLike" autocorrect="off">
+        <input type="search" placeholder="输入影院名称或拼音首字母"
+               ng-change="filterByName(nameLike)" ng-model="nameLike" autocorrect="off">
       </label>
     </div>
 
@@ -53,7 +54,8 @@
       </a>
     </div>
 
-    <ion-infinite-scroll ng-if="cinemas.hasMore" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+    <ion-infinite-scroll ng-if="cinemas.hasMore" on-infinite="loadMore()"
+                         immediate-check="false" distance="1%"></ion-infinite-scroll>
 
   </ion-content>
 </ion-view>

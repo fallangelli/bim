@@ -29,7 +29,7 @@
       and ca.id=${districtId}
     </if>
     <if test="nameLike!=null and nameLike!=''">
-      and cn.name like concat('%','${nameLike}','%')
+      and (cn.name like concat('%','${nameLike}','%') or firstSpell like concat('%','${nameLike}','%'))
     </if>
     GROUP BY cn.id
     <if test="lat!=null and lat!='' and lng!=null and lng!='' and orderBy!=null and orderBy!='' and orderBy=='len'">
@@ -44,7 +44,7 @@
   <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">
     SELECT
     cn.id,
-    ca.name,
+    cn.name,
     ca.id AS districtId,
     cn.name,
     cn.address,

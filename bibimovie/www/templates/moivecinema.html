@@ -38,7 +38,7 @@
     </div>
 
     <div class="button-bar">
-      <a ng-if="$scope.currLat&&$scope.currLng" ng-style="distanceOrderStyle"
+      <a ng-if="currLat && currLng" ng-style="distanceOrderStyle"
          class="button button-outline button-positive" ng-click="orderByDistance()">最近</a>
       <a ng-style="priceOrderStyle" class="button button-outline button-positive" ng-click="orderByPrice()">最省</a>
       <button ng-style="districtFilterStyle" ng-click="openPopover($event)"
@@ -62,7 +62,7 @@
 
     <div ng-if="cinemas" class="list">
       <a class="item" collection-repeat="cinema in cinemas | filterNameCinema : nameLike
-         | filterDistrictIdCinema : currDistrictIdId | orderCinema: orderBy"
+         | filterDistrictCinema : currDistrictId | orderCinema: orderBy"
          href="/#/screening/{{cinema.id}}/{{movieId}}/{{showDate}}">
         {{cinema.name}}
         <p>{{cinema.address}}</p>
@@ -87,14 +87,14 @@
     <ion-content>
       <div class="list">
         <li class="item"
-            ng-click="filterByDistrictId(null,'全部')">
+            ng-click="filterByDistrict(null,'全部')">
           <p>
             全部
           </p>
         </li>
         <li class="item"
             ng-repeat="area in areas"
-            ng-click="filterByDistrictId(area.id,area.name)">
+            ng-click="filterByDistrict(area.id,area.name)">
           <p>
             {{area.name}}
           </p>

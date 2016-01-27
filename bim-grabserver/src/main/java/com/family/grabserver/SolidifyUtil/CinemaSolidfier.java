@@ -6,6 +6,7 @@ import com.family.grabserver.entity.bim_grab.CinemaMtime;
 import com.family.grabserver.mapper.bim_base.CinemaMapper;
 import com.family.grabserver.service.CinemaBaiduService;
 import com.family.grabserver.service.CinemaMtimeService;
+import com.family.grabserver.util.Cn2Spell;
 import com.family.grabserver.util.Levenshtein;
 import javafx.util.Pair;
 
@@ -25,6 +26,7 @@ public class CinemaSolidfier {
       for (Cinema record : cinemas) {
         if (isMatched(new Pair<>(cm.getName(), record.getName()),
           new Pair<>(cm.getAddress(), record.getAddress()))) {
+          record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
           if (record.getAddress().length() < cm.getAddress().length()) {
             record.setAddress(cm.getAddress());
           }
@@ -82,6 +84,7 @@ public class CinemaSolidfier {
         Cinema record = new Cinema();
         record.setDistrictId(cm.getAreaId());
         record.setName(cm.getName());
+        record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
         record.setAddress(cm.getAddress());
         if (cm.getLatitude() != null && cm.getLatitude().length() > 0
           && cm.getLatitude().compareTo("0") != 0)
@@ -130,6 +133,7 @@ public class CinemaSolidfier {
           if (record.getAddress().length() < cm.getAddress().length()) {
             record.setAddress(cm.getAddress());
           }
+          record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
           record.setIdBaidu(cm.getId());
           try {
             caMapper.updateByPrimaryKey(record);
@@ -148,6 +152,7 @@ public class CinemaSolidfier {
         Cinema record = new Cinema();
         record.setDistrictId(cm.getAreaId());
         record.setName(cm.getName());
+        record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
         record.setAddress(cm.getAddress());
         record.setIdBaidu(cm.getId());
         try {

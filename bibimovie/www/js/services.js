@@ -1,9 +1,22 @@
 angular.module('bibimovie.services', [])
 
   .provider('Geolocation', function () {
+
     this.$get = function ($q, $http, $ionicLoading, ApiEndpoint) {
 
+
       var service = {
+        hasValidLocalCity: function () {
+          var currTime = new Date();
+          if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_id'].length > 0 &&
+            window.localStorage['curr_city_name'] && window.localStorage['curr_city_name'].length > 0 &&
+            window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime
+          ) {
+            return true;
+          }
+          return false;
+        }
+        ,
         initCurrentCity: function () {
           var deferred = $q.defer();
           var deferredCityId = $q.defer();
@@ -29,8 +42,11 @@ angular.module('bibimovie.services', [])
             }
 
             function getError(error) {
-              alert('无法得到位置信息');
+              console.info('无法定位，以默认北京市加载');
               window.localStorage['curr_city_name'] = '北京市';
+              window.localStorage.removeItem('curr_lat');
+              window.localStorage.removeItem('curr_lng');
+              var map = new BMap.Map("l-map");
               deferred.resolve(window.localStorage['curr_city_name']);
             }
           }
@@ -76,7 +92,7 @@ angular.module('bibimovie.services', [])
             else  deferred.resolve();
           })
           .error(function (data, header, config, status) {
-            alert("读取电影影院上映日期信息错误");
+            console.error("读取电影影院上映日期信息错误");
             deferred.reject();
           });
         return promise;
@@ -93,7 +109,7 @@ angular.module('bibimovie.services', [])
             deferred.resolve(data);
           })
           .error(function (data, header, config, status) {
-            alert("读取电影影院信息错误");
+            console.error("读取电影影院信息错误");
             deferred.reject();
           });
 

@@ -47,7 +47,7 @@
       </button>
     </div>
 
-    <h2 ng-if="!cinemas || !showDates">无上映信息</h2>
+    <!--<h2 ng-if="!cinemas || !showDates">无上映信息</h2>-->
 
     <ion-slide-box ng-if="showDates" on-slide-changed="slideHasChanged($index)" show-pager="true">
       <ion-slide ng-repeat="showDate in showDates" repeat-done="repeatDone()">

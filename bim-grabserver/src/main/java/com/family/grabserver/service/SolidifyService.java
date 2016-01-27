@@ -1,12 +1,10 @@
 package com.family.grabserver.service;
 
 import com.family.grabserver.SolidifyUtil.CinemaSolidfier;
-import com.family.grabserver.SolidifyUtil.MovieSolidfier;
 import com.family.grabserver.mapper.bim_base.CinemaMapper;
 import com.family.grabserver.mapper.bim_base.CityMapper;
 import com.family.grabserver.mapper.bim_base.MovieshowingMapper;
 import com.family.grabserver.mapper.bim_base.SolidifyMapper;
-import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -48,25 +46,25 @@ public class SolidifyService {
   }
 
   public void merge() {
-    logger.info("清除过期数据");
-    try {
-      SqlUtil.truncateTable("bim_base.screening");
-    } catch (Exception e) {
-      e.printStackTrace();
-      return;
-    }
-
-    logger.info("开始执行合并");
+//    logger.info("清除过期数据");
+//    try {
+//      SqlUtil.truncateTable("bim_base.screening");
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      return;
+//    }
+//
+//    logger.info("开始执行合并");
 
     CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
     CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
     mapper.fillPositions();
 
-    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
-    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
-
-    mapper.merge_screening_mtime();
-    mapper.merge_screening_baidu();
+//    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
+//    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
+//
+//    mapper.merge_screening_mtime();
+//    mapper.merge_screening_baidu();
 
   }
 

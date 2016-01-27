@@ -126,6 +126,7 @@ public class CinemaSolidfier {
       if (cm.getAreaId() == null || cm.getAreaId() < 0)
         continue;
 
+
       boolean isMatched = false;
       for (Cinema record : baseCinemas) {
         if (isMatched(new Pair<>(cm.getName(), record.getName()),
@@ -173,7 +174,7 @@ public class CinemaSolidfier {
     String nameA = namePair.getKey();
     String nameB = namePair.getValue();
     if (nameA.length() > 0 && nameB.length() > 0 &&
-      Levenshtein.getSimilarityRatio(nameA, nameB) > 0.8) {
+      Levenshtein.getSimilarityRatio(nameA, nameB) > 0.9) {
       return true;
     } else {
       String addressA = addressPair.getKey();

@@ -154,7 +154,7 @@ angular.module('bibimovie.controllers', [])
           console.error("无法得到当前城市信息");
         })
       }
-    }
+      }
 
     $scope.doRefresh(1);
 
@@ -217,14 +217,14 @@ angular.module('bibimovie.controllers', [])
           var jsonObject = angular.fromJson(val);
           $scope.areas = jsonObject['areas'];
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
+          //$scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
-          console.error("无法获取影院信息");
+          //$scope.$broadcast('scroll.refreshComplete');
+          console.error("无法获取区域信息");
         });
-    }
+      }
 
     function loadCinemas(state) {
       if (state == 1) {
@@ -400,7 +400,7 @@ angular.module('bibimovie.controllers', [])
             $scope.showDates = null;
           }
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
+          //$scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           console.error("无法获取影片影院信息");
@@ -436,12 +436,12 @@ angular.module('bibimovie.controllers', [])
           var jsonObject = angular.fromJson(val);
           $scope.areas = jsonObject['areas'];
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
+          //$scope.$broadcast('scroll.refreshComplete');
         }
         , function () {
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
-          console.error("无法获取影院信息");
+          //$scope.$broadcast('scroll.refreshComplete');
+          console.error("无法获取区域信息");
         });
     }
 
@@ -613,15 +613,6 @@ angular.module('bibimovie.controllers', [])
       }
     }
 
-    $scope.repeatDateDone = function () {
-      $ionicLoading.show({template: '加载中...'})
-      $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
-      if ($scope.showDates.length > 0) {
-        var index = $ionicSlideBoxDelegate.$getByHandle("slideDate").currentIndex();
-        loadCinemaMovieSourcesByDate($scope.cinema.id, $scope.currMovie.id, $scope.showDates[index]);
-      }
-    };
-
     $scope.lastDateSlide = function () {
       $ionicSlideBoxDelegate.$getByHandle("slideDate").previous();
     };
@@ -637,7 +628,7 @@ angular.module('bibimovie.controllers', [])
           $ionicSlideBoxDelegate.$getByHandle("slideDate").update();
           $scope.currDateHasChanged(0);
           $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
+
         }
         , function () {
           console.error("无法获取影院影片日期信息");

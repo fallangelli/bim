@@ -1,12 +1,12 @@
 -- --------------------------------------------------------
--- 主机:                           localhost
--- 服务器版本:                        5.6.21 - MySQL Community Server (GPL)
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.6.24 - MySQL Community Server (GPL)
 -- 服务器操作系统:                      Win32
--- HeidiSQL 版本:                  8.3.0.4694
+-- HeidiSQL 版本:                  9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `city` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  bim_base.city 的数据：~391 rows (大约)
+-- 正在导出表  bim_base.city 的数据：~390 rows (大约)
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
 INSERT INTO `city` (`id`, `name`, `first_letter`, `pinyin`) VALUES
 	(110000, '北京市', 'B', 'beijingshi'),
@@ -428,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `cityarea` (
   CONSTRAINT `fk_area_to_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  bim_base.cityarea 的数据：~1,910 rows (大约)
+-- 正在导出表  bim_base.cityarea 的数据：~3,536 rows (大约)
 /*!40000 ALTER TABLE `cityarea` DISABLE KEYS */;
 INSERT INTO `cityarea` (`id`, `city_id`, `name`) VALUES
 	(110101, 110000, '东城区'),

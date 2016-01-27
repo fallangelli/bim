@@ -1,12 +1,12 @@
 -- --------------------------------------------------------
--- 主机:                           localhost
--- 服务器版本:                        5.6.21 - MySQL Community Server (GPL)
+-- 主机:                           127.0.0.1
+-- 服务器版本:                        5.6.24 - MySQL Community Server (GPL)
 -- 服务器操作系统:                      Win32
--- HeidiSQL 版本:                  8.3.0.4694
+-- HeidiSQL 版本:                  9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `cinema` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `district_id` int(11) NOT NULL DEFAULT '0' COMMENT '区域',
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '名称',
+  `firstSpell` varchar(500) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '地址',
   `latitude` varchar(100) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '经度',
   `longitude` varchar(100) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '纬度',

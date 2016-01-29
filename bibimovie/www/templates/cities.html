@@ -18,6 +18,21 @@
       <h4 style="text-align: left">{{currCityName}}</h4>
     </a>
 
+    <div id="定位" class="item item-divider">
+      定位信息
+    </div>
+
+    <div ng-if="currLat && currLng" class="button button-clear">
+      <h4 style="text-align: left">{{currCityName}}</h4>
+    </div>
+
+    <div ng-if="!currLat || !currLng" class="item item-button-right">
+      无法获取当前位置
+      <button class="button button-positive" ng-click="reLocate()">
+        <i>重新定位</i>
+      </button>
+    </div>
+
     <div class="item item-divider">按字母排序</div>
     <div class="item">
       <div class="row">

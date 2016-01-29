@@ -202,7 +202,7 @@ angular.module('bibimovie.controllers', [])
       $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "minPrice";
       $scope.doRefresh(1);
-    }
+      }
 
     $scope.goBack = function () {
       var history = $ionicHistory.viewHistory();
@@ -716,12 +716,16 @@ angular.module('bibimovie.controllers', [])
     if (Geolocation.hasValidLocalCity()) {
       $scope.currCityId = window.localStorage['curr_city_id'];
       $scope.currCityName = window.localStorage['curr_city_name'];
+      $scope.currLat = window.localStorage['curr_lat'];
+      $scope.currLng = window.localStorage['curr_lng'];
       loadCities();
     } else {
       var promiseCity = Geolocation.initCurrentCity();
       promiseCity.then(function () {
         $scope.currCityId = window.localStorage['curr_city_id'];
         $scope.currCityName = window.localStorage['curr_city_name'];
+        $scope.currLat = window.localStorage['curr_lat'];
+        $scope.currLng = window.localStorage['curr_lng'];
         loadCities();
       }, function () {
         console.error("无法得到当前城市信息");
@@ -731,6 +735,22 @@ angular.module('bibimovie.controllers', [])
     $scope.letterGroupB = ['G', 'H', 'J', 'K', 'L', 'M'];
     $scope.letterGroupC = ['N', 'P', 'Q', 'R', 'S', 'T'];
     $scope.letterGroupD = ['W', 'X', 'Y', 'Z'];
+
+    $scope.reLocate = function () {
+      $ionicLoading.show({template: '定位中...'})
+
+      var promiseCity = Geolocation.initCurrentCity();
+      promiseCity.then(function () {
+        $scope.currCityId = window.localStorage['curr_city_id'];
+        $scope.currCityName = window.localStorage['curr_city_name'];
+        $scope.currLat = window.localStorage['curr_lat'];
+        $scope.currLng = window.localStorage['curr_lng'];
+        $ionicLoading.hide();
+      }, function () {
+        console.error("无法得到当前城市信息");
+        $ionicLoading.hide();
+      })
+    };
 
     $scope.gotoElement = function (eID) {
       var stopY = CitiesService.elmYPosition(eID)

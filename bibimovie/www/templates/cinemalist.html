@@ -39,7 +39,7 @@
 
     <div class="list">
       <a class="item" style="min-height: 90px"
-         collection-repeat="cinema in cinemas.messages"
+         ng-repeat="cinema in cinemas.messages"
          href="/#/cinema/{{cinema.id}}">
         {{cinema.name}}
         <p>

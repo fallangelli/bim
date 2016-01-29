@@ -10,6 +10,8 @@ angular.module('bibimovie.services', [])
           var currTime = new Date();
           if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_id'].length > 0 &&
             window.localStorage['curr_city_name'] && window.localStorage['curr_city_name'].length > 0 &&
+            window.localStorage['curr_lat'] && window.localStorage['curr_lat'].length > 0 &&
+            window.localStorage['curr_lng'] && window.localStorage['curr_lng'].length > 0 &&
             window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime
           ) {
             return true;
@@ -21,13 +23,16 @@ angular.module('bibimovie.services', [])
           var deferred = $q.defer();
           var deferredCityId = $q.defer();
           var promise = deferred.promise;
-          if (navigator.geolocation) {
-            var getOptions = {
-              enableHighAccuracy: true,
-              timeout: 3000,
-              maximumAge: 0
-            };
-            navigator.geolocation.getCurrentPosition(getSuccess, getError, getOptions);
+          if (!navigator.geolocation) {
+            alert('您的浏览器不支持定位服务!，以默认北京市加载');
+            window.localStorage['curr_city_name'] = '北京市';
+            window.localStorage.removeItem('curr_lat');
+            window.localStorage.removeItem('curr_lng');
+            deferred.resolve(window.localStorage['curr_city_name']);
+          }
+          else {
+            navigator.geolocation.getCurrentPosition(getSuccess, getError, {enableHighAccuracy: true});
+            
             function getSuccess(position) {
               window.localStorage['curr_lat'] = position.coords.latitude;
               window.localStorage['curr_lng'] = position.coords.longitude;
@@ -42,11 +47,23 @@ angular.module('bibimovie.services', [])
             }
 
             function getError(error) {
-              console.info('无法定位，以默认北京市加载');
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  alert('用户拒绝对获取地理位置的请求,以默认北京市加载');
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  alert('位置信息不可用,以默认北京市加载');
+                  break;
+                case error.TIMEOUT:
+                  alert('请求用户地理位置超时,以默认北京市加载');
+                  break;
+                case error.UNKNOWN_ERROR:
+                  alert('定位未知错误,以默认北京市加载');
+                  break;
+              }
               window.localStorage['curr_city_name'] = '北京市';
               window.localStorage.removeItem('curr_lat');
               window.localStorage.removeItem('curr_lng');
-              var map = new BMap.Map("l-map");
               deferred.resolve(window.localStorage['curr_city_name']);
             }
           }

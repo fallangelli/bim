@@ -29,30 +29,28 @@
     </header>
 
     <div class="card">
-      <div class="item item-divider">
-        <div class="row">
-          <div class="col col-90">
-            <h2 style="font-size: 20px">{{cinema.name}}</h2>
-          </div>
-          <div class="col col-10">
-            <a href="tel:{{cinema.tel}}"><img style="height: 25px;" src="../img/tel.png"> </a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col col-70">
-            <p>{{cinema.address}}</p>
+      <div class="item item-body">
+        <h2>{{cinema.name}}</h2>
 
-            <p>{{cinema.route}}</p>
-          </div>
-          <div class="col col-center">
-            <div style="float: right;">
-              <img style="width: 30px" ng-if="cinema.has3d" src="../img/3d.png">
-              <img style="width: 30px" ng-if="cinema.hasImax" src="../img/imax.png">
-              <img style="width: 30px" ng-if="cinema.hasPark" src="../img/park.png">
-              <img style="width: 30px" ng-if="cinema.hasWifi" src="../img/wifi.png">
-            </div>
-          </div>
-        </div>
+        <p> {{cinema.address}}</p>
+      </div>
+
+      <div class="item tabs tabs-secondary" style="padding-top: 10px">
+        <a class="tab-item" ng-if="cinema.has3d">
+          <img style="width: 30px" src="../img/3d.png">
+        </a>
+        <a class="tab-item" ng-if="cinema.hasImax">
+          <img style="width: 30px" src="../img/imax.png">
+        </a>
+        <a class="tab-item" ng-if="cinema.hasPark">
+          <img style="width: 30px" src="../img/park.png">
+        </a>
+        <a class="tab-item" ng-if="cinema.hasWifi">
+          <img style="width: 30px" src="../img/wifi.png">
+        </a>
+        <a class="tab-item" href="tel:{{cinema.tel}}">
+          <img style=" height: 35px;" src="../img/tel.png">
+        </a>
       </div>
     </div>
 

@@ -6,15 +6,22 @@ angular.module('bibimovie.services', [])
       var service = {
         hasValidLocalCity: function () {
           var currTime = new Date();
-          if (window.localStorage['curr_city_id'] && window.localStorage['curr_city_id'].length > 0 &&
-            window.localStorage['curr_city_name'] && window.localStorage['curr_city_name'].length > 0 &&
-            window.localStorage['curr_lat'] && window.localStorage['curr_lat'].length > 0 &&
-            window.localStorage['curr_lng'] && window.localStorage['curr_lng'].length > 0 &&
-            window.localStorage['expiration_time'] && new Date(window.localStorage['expiration_time']) > currTime
+          var expirationTime = new Date();
+          expirationTime.setTime(window.localStorage['expiration_time']);
+          //无超时值 或 已超时 则重新定位
+          if (!window.localStorage['expiration_time']
+            || (window.localStorage['expiration_time'] && expirationTime && expirationTime < currTime))
+            return false;
+
+          //
+          if (!window.localStorage['curr_city_id']
+            || !window.localStorage['curr_city_name']
+            || window.localStorage['curr_city_id'].length <= 0
+            || window.localStorage['curr_city_name'].length <= 0
           ) {
-            return true;
+            return false;
           }
-          return false;
+          return true;
         }
         ,
         initCurrentCity: function () {
@@ -74,7 +81,7 @@ angular.module('bibimovie.services', [])
                   window.localStorage['curr_city_id'] = data;
                   var expirationTime = new Date();
                   expirationTime.setMinutes(expirationTime.getMinutes() + 20, expirationTime.getSeconds(), 0);
-                  window.localStorage['expiration_time'] = expirationTime;
+                  window.localStorage['expiration_time'] = expirationTime.getTime();
                   deferredCityId.resolve(data);
                 })
                 .error(function (data, header, config, status) {

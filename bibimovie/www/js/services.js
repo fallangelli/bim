@@ -3,8 +3,6 @@ angular.module('bibimovie.services', [])
   .provider('Geolocation', function () {
 
     this.$get = function ($q, $http, $ionicLoading, ApiEndpoint) {
-
-
       var service = {
         hasValidLocalCity: function () {
           var currTime = new Date();
@@ -24,16 +22,16 @@ angular.module('bibimovie.services', [])
           var deferredCityId = $q.defer();
           var promise = deferred.promise;
           if (!navigator.geolocation) {
-            alert('您的浏览器不支持定位服务!，以默认北京市加载');
+            console.warn('您的浏览器不支持定位服务!，以默认北京市加载');
             window.localStorage['curr_city_name'] = '北京市';
             window.localStorage.removeItem('curr_lat');
             window.localStorage.removeItem('curr_lng');
             deferred.resolve(window.localStorage['curr_city_name']);
           }
           else {
-            navigator.geolocation.getCurrentPosition(getSuccess, getError, {enableHighAccuracy: true});
-            
-            function getSuccess(position) {
+            navigator.geolocation.getCurrentPosition(locSuccess, locError);
+
+            function locSuccess(position) {
               window.localStorage['curr_lat'] = position.coords.latitude;
               window.localStorage['curr_lng'] = position.coords.longitude;
               var map = new BMap.Map("l-map");
@@ -46,19 +44,19 @@ angular.module('bibimovie.services', [])
               });
             }
 
-            function getError(error) {
+            function locError(error) {
               switch (error.code) {
                 case error.PERMISSION_DENIED:
-                  alert('用户拒绝对获取地理位置的请求,以默认北京市加载');
+                  console.warn('用户拒绝对获取地理位置的请求,以默认北京市加载');
                   break;
                 case error.POSITION_UNAVAILABLE:
-                  alert('位置信息不可用,以默认北京市加载');
+                  console.warn('位置信息不可用,以默认北京市加载');
                   break;
                 case error.TIMEOUT:
-                  alert('请求用户地理位置超时,以默认北京市加载');
+                  console.warn('请求用户地理位置超时,以默认北京市加载');
                   break;
                 case error.UNKNOWN_ERROR:
-                  alert('定位未知错误,以默认北京市加载');
+                  console.warn('定位未知错误,以默认北京市加载');
                   break;
               }
               window.localStorage['curr_city_name'] = '北京市';
@@ -91,7 +89,6 @@ angular.module('bibimovie.services', [])
   })
 
   .factory('MovieCinemaService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
-
     return {
       getMovieCinemaDates: function (cityId, movieId, districtId) {
         var deferred = $q.defer();
@@ -146,7 +143,6 @@ angular.module('bibimovie.services', [])
 
         return deferred.promise;
       }
-
     }
   }])
 

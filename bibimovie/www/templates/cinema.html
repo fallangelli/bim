@@ -15,7 +15,7 @@
   <ion-content class="padding">
     <ion-refresher on-refresh="doRefresh()"
                    pulling-text="松开刷新"
-                   refreshing-text="更新历史数据，稍后..."
+                   refreshing-text="加载中，请稍后..."
                    refreshing-icon="ion-loading-b">
     </ion-refresher>
 
@@ -56,11 +56,16 @@
       </div>
     </div>
 
-    <h1 ng-if="movies.length<=0">当前影院无上映信息</h1>
+
+    <button class="button button-full"
+            ng-if="!movies || movies.length<=0">
+      当前影院无上映信息
+    </button>
+
     <ion-slide-box style="background-color: gainsboro" delegate-handle="slideMovie"
                    on-slide-changed="currMovieHasChanged($index)" show-pager="true"
                    ng-if="movies.length>0">
-      <ion-slide ng-repeat="movie in movies" repeat-done="repeatMovieDone()">
+      <ion-slide id="movieSlider" ng-repeat="movie in movies" repeat-done="repeatDone()">
         <div class="row">
           <div class="col col-30">
             <img ng-if="$index!=0"
@@ -79,10 +84,13 @@
       </ion-slide>
     </ion-slide-box>
 
-    <h3 ng-if="showDates.length<=0">当前影片无上映信息</h3>
+    <button class="button button-full"
+            ng-if="movies.length > 0 && (!showDates || showDates.length<=0)">
+      当前影片无上映信息
+    </button>
     <ion-slide-box on-slide-changed="currDateHasChanged($index)" delegate-handle="slideDate"
                    show-pager="true" ng-if="showDates.length>0">
-      <ion-slide ng-repeat="showDate in showDates" repeat-done="repeatDateDone()">
+      <ion-slide ng-repeat="showDate in showDates" repeat-done="repeatDone()">
         <h3 style="text-align: center">
           <div ng-if="$index!=0" class="go_back" ng-click="lastDateSlide()"></div>
           {{showDate}}
@@ -91,7 +99,11 @@
       </ion-slide>
     </ion-slide-box>
 
-    <h3 ng-if="showDates.length<=0 || !currScreenings">当日已无场次</h3>
+    <button class="button button-full"
+            ng-if="movies.length > 0 && showDates.length > 0 && (!currScreenings || currScreenings.length<=0)">
+      当日已无场次
+    </button>
+
     <ion-list ng-if="showDates.length>0 && currScreenings">
       <h4>日期:{{showDate}}</h4>
       <ion-item ng-repeat="screening in currScreenings"

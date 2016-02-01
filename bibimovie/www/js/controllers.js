@@ -196,7 +196,7 @@ angular.module('bibimovie.controllers', [])
       $ionicLoading.show({template: '加载中...'})
       $scope.orderBy = "len";
       $scope.doRefresh(1);
-    }
+      }
 
     $scope.orderByPrice = function () {
       $ionicLoading.show({template: '加载中...'})
@@ -658,6 +658,13 @@ angular.module('bibimovie.controllers', [])
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         })
+    }
+  }).directive('repeatDone', function () {
+    return function (scope, element, attrs) {
+      if (scope.$last) {
+        if (element[0].id == "movieSlider")
+          scope.$eval(scope.repeatMovieDone);
+      }
     }
   })
 

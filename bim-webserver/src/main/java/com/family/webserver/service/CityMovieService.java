@@ -28,7 +28,7 @@ public class CityMovieService {
     return cmmapper.selectCityMovies(cityId);
   }
 
-  public List<Movieshowing> getMoviesByCinemaId(Integer cinemaId) {
-    return ccmapper.selectMoviesByCinemaId(cinemaId);
+  public List<Movieshowing> getShowingMoviesByCinemaId(Integer cinemaId) {
+    return ccmapper.selectShowingMoviesByCinemaId(cinemaId);
   }
 }

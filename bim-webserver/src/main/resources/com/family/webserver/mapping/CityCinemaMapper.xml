@@ -41,7 +41,7 @@
     LIMIT ${startIndex}, ${pageCount};
   </select>
 
-  <select id="selectMovieCinemaByCity" resultType="com.family.webserver.entity.MovieCinema">
+  <select id="selectMovieCinemaByDate" resultType="com.family.webserver.entity.MovieCinema">
     SELECT
     cn.id,
     cn.name,
@@ -71,11 +71,12 @@
     </if>
   </select>
 
-  <select id="selectMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">
+  <select id="selectShowingMoviesByCinemaId" resultType="com.family.webserver.entity.Movieshowing">
     SELECT DISTINCT m.*
     FROM movieshowing m
       LEFT JOIN screening s ON s.movie_id = m.id
-    WHERE s.cinema_id = #{cinemaId,jdbcType=INTEGER}
+    WHERE s.cinema_id = #{cinemaId,jdbcType=INTEGER} AND
+    to_days(s.show_date) >= to_days(now())
   </select>
 
 </mapper>

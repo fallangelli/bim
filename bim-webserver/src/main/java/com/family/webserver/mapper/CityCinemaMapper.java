@@ -19,11 +19,11 @@ public interface CityCinemaMapper {
                                      @Param("pageCount") Integer pageCount);
 
 
-  List<MovieCinema> selectMovieCinemaByCity(@Param("cityId") Integer cityId,
+  List<MovieCinema> selectMovieCinemaByDate(@Param("cityId") Integer cityId,
                                             @Param("movieId") Integer movieId,
                                             @Param("showDate") Date showDate,
                                             @Param("lat") String lat,
                                             @Param("lng") String lng);
 
-  List<Movieshowing> selectMoviesByCinemaId(@Param("cinemaId") Integer cinemaId);
+  List<Movieshowing> selectShowingMoviesByCinemaId(@Param("cinemaId") Integer cinemaId);
 }

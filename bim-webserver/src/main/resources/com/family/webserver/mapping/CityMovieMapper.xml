@@ -23,4 +23,12 @@
     ORDER BY count(*) DESC
   </select>
 
+
+  <select id="selectMovieCommets" parameterType="java.lang.Integer"
+          resultType="com.family.webserver.entity.Comment">
+    SELECT *
+    FROM `comment` c
+    WHERE c.movie_id = #{movieId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

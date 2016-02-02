@@ -530,7 +530,7 @@ angular.module('bibimovie.controllers', [])
       var promise = MovieService.getMovie($stateParams.movieId);
       promise.then(function (val) {
           var jsonObject = angular.fromJson(val);
-          $scope.movie = jsonObject;
+          $scope.movieDetail = jsonObject;
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         }

@@ -268,8 +268,8 @@ angular.module('bibimovie.services', [])
         var url = ApiEndpoint.server_url + "cityMovies/Movie?moiveId=" + moiveId;
         $http.get(url)
           .success(function (data) {
-            var cinemas = angular.fromJson(data)
-            deferred.resolve(cinemas);
+            var movie = angular.fromJson(data)
+            deferred.resolve(movie);
           })
           .error(function (data, header, config, status) {
             deferred.reject();

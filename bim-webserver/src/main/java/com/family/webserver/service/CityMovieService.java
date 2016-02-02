@@ -1,6 +1,7 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.CityHotMovie;
+import com.family.webserver.entity.Comment;
 import com.family.webserver.entity.Movieshowing;
 import com.family.webserver.mapper.CityCinemaMapper;
 import com.family.webserver.mapper.CityMovieMapper;
@@ -30,5 +31,10 @@ public class CityMovieService {
 
   public List<Movieshowing> getShowingMoviesByCinemaId(Integer cinemaId) {
     return ccmapper.selectShowingMoviesByCinemaId(cinemaId);
+  }
+
+
+  public List<Comment> getMovieCommets(Integer movieId) {
+    return cmmapper.selectMovieCommets(movieId);
   }
 }

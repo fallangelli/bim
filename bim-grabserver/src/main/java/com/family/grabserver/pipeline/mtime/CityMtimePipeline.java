@@ -31,7 +31,6 @@ public class CityMtimePipeline implements PageModelPipeline<CityMtimeModel> {
 
       service.insertOrUpdate(record);
     }
-    //删除 时光市
-    service.deleteByPrimaryKey(5051);
+
   }
 }

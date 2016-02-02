@@ -16,6 +16,20 @@
     SET pos = GeomFromText(concat('POINT(', latitude, ' ', longitude, ')'))
   </insert>
 
+  <insert id="merge_comment_mtime">
+    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source)
+    SELECT
+    m.id,
+    cm.title,
+    cm.nick_name,
+    cm.rating,
+    cm.content,
+    'mtime'
+    FROM bim_grab.comment_mtime cm
+    LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
+    WHERE m.id_mtime IS NOT NULL
+  </insert>
+
   <insert id="merge_screening_maoyan">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall, version,
                                     sale_price, cinema_price, source, ticket_url)

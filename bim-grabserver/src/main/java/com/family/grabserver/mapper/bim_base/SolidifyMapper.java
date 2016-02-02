@@ -10,6 +10,9 @@ public interface SolidifyMapper {
 
   void fillPositions();
 
+
+  void merge_comment_mtime();
+
   void merge_screening_mtime();
 
   void merge_screening_maoyan();

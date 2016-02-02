@@ -56,5 +56,6 @@ public class CityMtimeCrawler {
       areaPipeline, CityareaMtimeModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(30).run();
+
   }
 }

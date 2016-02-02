@@ -569,6 +569,7 @@ public class Cinema {
    * This method sets the value of the database column bim_base..cinema.id_baidu
    *
    * @param idBaidu the value for bim_base..cinema.id_baidu
+   *
    * @mbggenerated
    */
   public void setIdBaidu(Integer idBaidu) {

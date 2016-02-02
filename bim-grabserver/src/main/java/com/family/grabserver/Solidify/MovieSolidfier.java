@@ -1,4 +1,4 @@
-package com.family.grabserver.SolidifyUtil;
+package com.family.grabserver.Solidify;
 
 import com.family.grabserver.entity.bim_base.Movieshowing;
 import com.family.grabserver.entity.bim_grab.MovieshowingBaidu;

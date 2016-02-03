@@ -1,7 +1,5 @@
 package com.family.grabserver.service;
 
-import com.family.grabserver.Solidify.CinemaSolidfier;
-import com.family.grabserver.Solidify.MovieSolidfier;
 import com.family.grabserver.mapper.bim_base.*;
 import com.family.grabserver.mapper.bim_grab.CityMtimeMapper;
 import com.family.grabserver.util.SqlUtil;
@@ -59,7 +57,7 @@ public class SolidifyService {
   public void merge() {
     logger.info("清除过期数据");
     try {
-      SqlUtil.truncateTable("bim_base.screening");
+//      SqlUtil.truncateTable("bim_base.screening");
       SqlUtil.truncateTable("bim_base.comment");
     } catch (Exception e) {
       e.printStackTrace();
@@ -67,22 +65,22 @@ public class SolidifyService {
     }
 
     //删除 时光市
-    cmMapper.deleteByPrimaryKey(5051);
-
-    logger.info("开始执行合并");
-
-    CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
-    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
-
-    mapper.fillPositions();
-
-    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
-    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
+//    cmMapper.deleteByPrimaryKey(5051);
+//
+//    logger.info("开始执行合并");
+//
+//    CinemaSolidfier.mergeMtimeCinema(cmService, caMapper);
+//    CinemaSolidfier.mergeBaiduCinema(cbService, caMapper);
+//
+//    mapper.fillPositions();
+//
+//    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
+//    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
 
     mapper.merge_comment_mtime();
-
-    mapper.merge_screening_mtime();
-    mapper.merge_screening_baidu();
+//
+//    mapper.merge_screening_mtime();
+//    mapper.merge_screening_baidu();
 
   }
 

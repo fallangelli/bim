@@ -37,36 +37,51 @@
       </div>
     </div>
     <h5> {{movieDetail.movie.content}}</h5>
+    <button class="button button-full button-stable">
+      剧照
+    </button>
+    <ion-slide-box style="background-color: gainsboro" delegate-handle="slideMovie"
+                   on-slide-changed="currMovieHasChanged($index)" show-pager="true"
+                   ng-if="movies.length>0">
+      <ion-slide id="movieSlider" ng-repeat="movie in movies" repeat-done="repeatDone()">
+        <div class="row">
+          <div class="col col-30">
+            <img ng-if="$index!=0"
+                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
+                 src="{{movies[$index-1].image}}">
+          </div>
+          <div class="col col-40">
+            <img style="height: 150px;border: 3px" src="{{movie.image}}">
+          </div>
+          <div class="col col-30">
+            <img ng-if="$index!=movies.length-1 && movies.length != 1"
+                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.6;opacity:0.6"
+                 src="{{movies[$index+1].image}}">
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
 
     <div class="list card">
-      <div class="item item-body" ng-repeat="comment in movieDetail.comments">
-        <h2>{{comment.title}}</h2>
+      <button class="button button-full button-stable">
+        精选影评
+      </button>
+      <a class="item" ng-repeat="comment in movieDetail.comments"
+         href="http://m.mtime.cn/#!/review/detail/{{comment.idMtime}}/">
+        <div class="item item-divider">
+          <h2>{{comment.title}}</h2>
+        </div>
 
-        <p>
+        <div class="item item-body">
           {{comment.content}}
-        </p>
+        </div>
 
-        <p>
+        <div class="item">
+          {{comment.nickName}}
+          <span class="badge badge-balanced">评分:{{comment.rating}}</span>
+        </div>
 
-        <div class="subdued">8.7分</div>
-        </p>
-      </div>
-
-      <!--<div class="item tabs tabs-secondary tabs-icon-left">-->
-      <!--<a class="tab-item" href="#">-->
-      <!--<i class="icon ion-thumbsup"></i>-->
-      <!--Like-->
-      <!--</a>-->
-      <!--<a class="tab-item" href="#">-->
-      <!--<i class="icon ion-chatbox"></i>-->
-      <!--Comment-->
-      <!--</a>-->
-      <!--<a class="tab-item" href="#">-->
-      <!--<i class="icon ion-share"></i>-->
-      <!--Share-->
-      <!--</a>-->
-      <!--</div>-->
-
+      </a>
     </div>
   </ion-content>
   <a href="/#/moivecinema/{{movieDetail.movie.id}}">

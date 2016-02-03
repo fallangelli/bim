@@ -25,7 +25,7 @@
 
 
   <select id="selectMovieCommets" parameterType="java.lang.Integer"
-          resultType="com.family.webserver.entity.Comment">
+          resultMap="com.family.webserver.mapper.CommentMapper.BaseResultMap">
     SELECT *
     FROM `comment` c
     WHERE c.movie_id = #{movieId,jdbcType=INTEGER}

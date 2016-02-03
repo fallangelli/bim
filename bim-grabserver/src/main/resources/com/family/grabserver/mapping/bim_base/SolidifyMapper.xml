@@ -17,14 +17,15 @@
   </insert>
 
   <insert id="merge_comment_mtime">
-    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source)
+    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source, id_mtime)
     SELECT
     m.id,
     cm.title,
     cm.nick_name,
     cm.rating,
     cm.content,
-    'mtime'
+    'mtime',
+    cm.id
     FROM bim_grab.comment_mtime cm
     LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
     WHERE m.id_mtime IS NOT NULL

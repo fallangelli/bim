@@ -190,7 +190,7 @@ angular.module('bibimovie.controllers', [])
       $scope.currDistrictName = districtName;
 
       $scope.doRefresh(1);
-    }
+      }
 
     $scope.orderByDistance = function () {
       $ionicLoading.show({template: '加载中...'})
@@ -498,7 +498,7 @@ angular.module('bibimovie.controllers', [])
     }
   })
 
-  .controller('MovieCtrl', function ($scope, $http, $ionicLoading, $filter, $ionicHistory, $location, ApiEndpoint, $stateParams, MovieService, Geolocation) {
+  .controller('MovieCtrl', function ($scope, $http, $ionicLoading, $ionicSlideBoxDelegate, $filter, $ionicHistory, $location, ApiEndpoint, $stateParams, MovieService, Geolocation) {
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'})
 
@@ -526,6 +526,7 @@ angular.module('bibimovie.controllers', [])
         history.backView.go();
       $location.path("/");
     }
+
     function loadMovie() {
       var promise = MovieService.getMovie($stateParams.movieId);
       promise.then(function (val) {
@@ -533,9 +534,11 @@ angular.module('bibimovie.controllers', [])
           $scope.movieDetail = jsonObject;
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
+          $ionicSlideBoxDelegate.update();
         }
         , function () {
           $ionicLoading.hide();
+          $ionicSlideBoxDelegate.update();
           $scope.$broadcast('scroll.refreshComplete');
           console.error("无法获取排片信息");
         });

@@ -40,23 +40,23 @@
     <button class="button button-full button-stable">
       剧照
     </button>
-    <ion-slide-box style="background-color: gainsboro" delegate-handle="slideMovie"
-                   on-slide-changed="currMovieHasChanged($index)" show-pager="true"
-                   ng-if="movies.length>0">
-      <ion-slide id="movieSlider" ng-repeat="movie in movies" repeat-done="repeatDone()">
+    <ion-slide-box style="background-color: gainsboro" show-pager="true"
+                   ng-if="movieDetail.images.length>0">
+      <ion-slide id="imageSlider" ng-repeat="image in movieDetail.images">
         <div class="row">
-          <div class="col col-30">
-            <img ng-if="$index!=0"
-                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
-                 src="{{movies[$index-1].image}}">
+          <div class="col col-33">
+            <img ng-if="$index!=0" class="full-image"
+                 style="height:120px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
+                 src="{{movieDetail.images[$index-1].imageUrl}}">
           </div>
-          <div class="col col-40">
-            <img style="height: 150px;border: 3px" src="{{movie.image}}">
+          <div class="col col-33">
+            <img class="full-image" style="height:120px"
+                 src="{{image.imageUrl}}">
           </div>
-          <div class="col col-30">
-            <img ng-if="$index!=movies.length-1 && movies.length != 1"
-                 style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.6;opacity:0.6"
-                 src="{{movies[$index+1].image}}">
+          <div class="col col-33">
+            <img ng-if="$index!=movieDetail.images.length-1 && movieDetail.images.length != 1" class="full-image"
+                 style="height: 12px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
+                 src="{{movieDetail.images[$index+1].imageUrl}}">
           </div>
         </div>
       </ion-slide>
@@ -77,13 +77,15 @@
         </div>
 
         <div class="item">
-          {{comment.nickName}}
+          <span class="subdued"> {{comment.nickName}}</span>
+
           <span class="badge badge-balanced">评分:{{comment.rating}}</span>
         </div>
 
       </a>
     </div>
   </ion-content>
+
   <a href="/#/moivecinema/{{movieDetail.movie.id}}">
     <div class="bar bar-footer bar-assertive">
       <div class="title">购票</div>

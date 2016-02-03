@@ -24,11 +24,21 @@
   </select>
 
 
-  <select id="selectMovieCommets" parameterType="java.lang.Integer"
+  <select id="selectMovieComments" parameterType="java.lang.Integer"
           resultMap="com.family.webserver.mapper.CommentMapper.BaseResultMap">
     SELECT *
     FROM `comment` c
     WHERE c.movie_id = #{movieId,jdbcType=INTEGER}
+    LIMIT 15
+  </select>
+
+
+  <select id="selectMovieImages" parameterType="java.lang.Integer"
+          resultMap="com.family.webserver.mapper.ImageMapper.BaseResultMap">
+    SELECT *
+    FROM `image` i
+    WHERE i.movie_id = #{movieId,jdbcType=INTEGER}
+    LIMIT 15
   </select>
 
 </mapper>

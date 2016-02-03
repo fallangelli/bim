@@ -44,7 +44,6 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
 
         ScreeningMtime record = new ScreeningMtime();
 
-        record.setId(show.getInteger("sid"));
         JSONArray providers = show.getJSONArray("provider");
         for (Object providerOb : providers) {
           JSONObject provider = (JSONObject) providerOb;

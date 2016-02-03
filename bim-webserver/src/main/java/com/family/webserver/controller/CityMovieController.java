@@ -25,7 +25,8 @@ public class CityMovieController {
   CityMovie getMoive(@RequestParam(value = "moiveId", required = true) Integer moiveId) {
     CityMovie retVal = new CityMovie();
     retVal.setMovie(service.getMovieById(moiveId));
-    retVal.setComments(service.getMovieCommets(moiveId));
+    retVal.setComments(service.getMovieComments(moiveId));
+    retVal.setImages(service.getMovieImages(moiveId));
     return retVal;
   }
 

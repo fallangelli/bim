@@ -11,11 +11,11 @@ public interface SolidifyMapper {
   void fillPositions();
 
 
-  void merge_comment_mtime();
+  void merge_comment_mtime(Integer sourceCode);
 
-  void merge_screening_mtime();
+  void merge_screening_mtime(Integer sourceCode);
 
-  void merge_screening_maoyan();
+  void merge_screening_maoyan(Integer sourceCode);
 
-  void merge_screening_baidu();
+  void merge_screening_baidu(Integer sourceCode);
 }

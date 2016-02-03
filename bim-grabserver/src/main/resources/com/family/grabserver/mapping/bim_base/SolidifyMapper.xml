@@ -17,23 +17,38 @@
   </insert>
 
   <insert id="merge_comment_mtime">
-    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source, id_mtime)
+    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source_id, id_mtime)
     SELECT
     m.id,
     cm.title,
     cm.nick_name,
     cm.rating,
     cm.content,
-    'mtime',
+    #{sourceCode,jdbcType=INTEGER},
     cm.id
     FROM bim_grab.comment_mtime cm
     LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
     WHERE m.id_mtime IS NOT NULL
   </insert>
 
+  <insert id="merge_image_mtime">
+    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source_id, id_mtime)
+      SELECT
+        m.id,
+        cm.title,
+        cm.nick_name,
+        cm.rating,
+        cm.content,
+        #{sourceCode,jdbcType=INTEGER},
+        cm.id
+      FROM bim_grab.comment_mtime cm
+        LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
+      WHERE m.id_mtime IS NOT NULL
+  </insert>
+
   <insert id="merge_screening_maoyan">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall, version,
-                                    sale_price, cinema_price, source, ticket_url)
+    sale_price, cinema_price, source_id, ticket_url)
       SELECT
         c.id AS cinema_id,
         m.id AS movie_id,
@@ -45,7 +60,7 @@
         version,
         sale_price,
         cinema_price,
-        'maoyan',
+    #{sourceCode,jdbcType=INTEGER},
         ticket_url
       FROM bim_grab.screening_maoyan pm
         JOIN bim_base.movieshowing m ON pm.movie_id = m.id_maoyan
@@ -55,7 +70,7 @@
 
   <insert id="merge_screening_mtime">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
-                                    version, sale_price, cinema_price, source, ticket_url)
+    version, sale_price, cinema_price, source_id, ticket_url)
       SELECT
         c.id AS cinema_id,
         m.id AS movie_id,
@@ -67,7 +82,7 @@
         version,
         sale_price,
         cinema_price,
-        'mtime',
+    #{sourceCode,jdbcType=INTEGER},
         ticket_url
       FROM bim_grab.screening_mtime pm
         JOIN bim_base.movieshowing m ON pm.movie_id = m.id_mtime
@@ -77,7 +92,7 @@
 
   <insert id="merge_screening_baidu">
     INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
-                                    version, sale_price, cinema_price, source, ticket_url)
+    version, sale_price, cinema_price, source_id, ticket_url)
       SELECT
         c.id AS cinema_id,
         m.id AS movie_id,
@@ -89,7 +104,7 @@
         version,
         sale_price,
         cinema_price,
-        'baidu',
+    #{sourceCode,jdbcType=INTEGER},
         ticket_url
       FROM bim_grab.screening_baidu pm
         JOIN bim_base.movieshowing m ON pm.movie_id = m.id_baidu

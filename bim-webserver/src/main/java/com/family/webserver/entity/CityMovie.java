@@ -8,6 +8,8 @@ public class CityMovie {
 
   List<Comment> comments;
 
+  List<Image> images;
+
   public Movieshowing getMovie() {
     return movie;
   }
@@ -22,5 +24,13 @@ public class CityMovie {
 
   public void setComments(List<Comment> comments) {
     this.comments = comments;
+  }
+
+  public List<Image> getImages() {
+    return images;
+  }
+
+  public void setImages(List<Image> images) {
+    this.images = images;
   }
 }

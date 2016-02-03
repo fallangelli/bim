@@ -31,15 +31,15 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
         record.setId(cinema.getInteger("id"));
         record.setCityId(Integer.parseInt(model.getCityId()));
         record.setName(cinema.getString("nm"));
-        record.setArea(cinema.getString("area"));
-        record.setAddress(cinema.getString("addr"));
-
-        record.setLatitude(cinema.getString("lat"));
-        record.setLongitude(cinema.getString("lng"));
-
-        record.setSell(cinema.getBoolean("sell"));
-        record.setPreferential(cinema.getBoolean("preferential"));
-        record.setHasImax(cinema.getBoolean("imax"));
+//        record.setArea(cinema.getString("area"));
+//        record.setAddress(cinema.getString("addr"));
+//
+//        record.setLatitude(cinema.getString("lat"));
+//        record.setLongitude(cinema.getString("lng"));
+//
+//        record.setSell(cinema.getBoolean("sell"));
+//        record.setPreferential(cinema.getBoolean("preferential"));
+//        record.setHasImax(cinema.getBoolean("imax"));
 
 //todo
 //                record.setTel();

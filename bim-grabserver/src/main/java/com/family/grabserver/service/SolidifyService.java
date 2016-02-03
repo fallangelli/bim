@@ -2,6 +2,7 @@ package com.family.grabserver.service;
 
 import com.family.grabserver.mapper.bim_base.*;
 import com.family.grabserver.mapper.bim_grab.CityMtimeMapper;
+import com.family.grabserver.util.EnumSource;
 import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +58,14 @@ public class SolidifyService {
   public void merge() {
     logger.info("清除过期数据");
     try {
-//      SqlUtil.truncateTable("bim_base.screening");
+      SqlUtil.truncateTable("bim_base.screening");
       SqlUtil.truncateTable("bim_base.comment");
     } catch (Exception e) {
       e.printStackTrace();
       return;
     }
 
-    //删除 时光市
+//    //删除 时光市
 //    cmMapper.deleteByPrimaryKey(5051);
 //
 //    logger.info("开始执行合并");
@@ -77,10 +78,10 @@ public class SolidifyService {
 //    MovieSolidfier.mergeMtimeMovieshowing(mmService, mMapper);
 //    MovieSolidfier.mergeBaiduMovieshowing(mbService, mMapper);
 
-    mapper.merge_comment_mtime();
-//
-//    mapper.merge_screening_mtime();
-//    mapper.merge_screening_baidu();
+    mapper.merge_comment_mtime(EnumSource.MTIME.getCode());
+
+    mapper.merge_screening_mtime(EnumSource.MTIME.getCode());
+    mapper.merge_screening_baidu(EnumSource.BAIDU.getCode());
 
   }
 

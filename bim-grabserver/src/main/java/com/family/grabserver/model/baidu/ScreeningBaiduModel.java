@@ -14,7 +14,7 @@ import com.family.grab.pipeline.ConsolePipeline;
 public class ScreeningBaiduModel implements AfterExtractor {
 
 
-  @ExtractBy(value = "/html/body/script[2]")
+  @ExtractBy(value = "_MOVIE.data =([\\w\\W]*});", type = ExtractBy.Type.Regex)
   private String context;
 
 
@@ -46,9 +46,7 @@ public class ScreeningBaiduModel implements AfterExtractor {
 
   @Override
   public void afterProcess(Page page) {
-    String tmp = context;
-    context = tmp.substring(tmp.indexOf("_MOVIE.data =") + 13, tmp.lastIndexOf("};") + 1).trim();
-    context.replace("\\n", "");
+
   }
 
 }

@@ -19,10 +19,11 @@ public class CinemamovieMtimeService {
 
   public int insertOrUpdate(CinemamovieMtime record) {
 
-    if (record.getId() == null) {
+    if (record.getCinemaId() == null || record.getMovieId() == null) {
       return mapper.insert(record);
     } else {
-      if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
+      if (mapper.selectByPrimaryKey(record.getCinemaId(), record.getMovieId()) != null)
+        return mapper.updateByPrimaryKey(record);
       else return mapper.insert(record);
     }
   }

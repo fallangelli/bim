@@ -1,7 +1,8 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.maoyan;
 
-import com.family.grabserver.entity.bim_grab.CinemaTaobao;
-import com.family.grabserver.mapper.bim_grab.CinemaTaobaoMapper;
+
+import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
+import com.family.grabserver.mapper.bim_grab.CinemaMaoyanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,19 +10,15 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 @Service
-public class CinemaTaobaoService {
+public class CinemaMaoyanService {
   @Autowired
-  private CinemaTaobaoMapper mapper;
+  private CinemaMaoyanMapper mapper;
 
-  public List<CinemaTaobao> selectAll() {
+  public List<CinemaMaoyan> selectAll() {
     return mapper.selectAll();
   }
 
-  public CinemaTaobao selectByPrimaryKey(Integer id) {
-    return mapper.selectByPrimaryKey(id);
-  }
-
-  public int insertOrUpdate(CinemaTaobao record) {
+  public int insertOrUpdate(CinemaMaoyan record) {
     if (record.getId() == null) {
       return mapper.insert(record);
     } else {

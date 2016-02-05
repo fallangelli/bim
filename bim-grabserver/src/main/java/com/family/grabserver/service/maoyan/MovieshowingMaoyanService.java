@@ -1,4 +1,4 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.maoyan;
 
 import com.family.grabserver.entity.bim_grab.MovieshowingMaoyan;
 import com.family.grabserver.mapper.bim_grab.MovieshowingMaoyanMapper;

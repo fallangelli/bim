@@ -26,13 +26,13 @@ public class CinemaBaiduModel implements AfterExtractor {
   @ExtractByUrl("c=(\\d*)")
   private String cityId;
 
-  @ExtractByUrl("cityName=(.*?)(?=&)")
+  @ExtractByUrl("(?<=cityName=)(.*?)((?=&)|(?=$))")
   private String cityName;
 
   @ExtractByUrl("areaId=(\\d*)")
   private String areaId;
 
-  @ExtractByUrl("areaName=(.*?)(?=&)")
+  @ExtractByUrl("(?<=areaName=)(.*?)((?=&)|(?=$))")
   private String areaName;
 
   public static void main(String[] args) {

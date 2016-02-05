@@ -1,7 +1,7 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.taobao;
 
-import com.family.grabserver.entity.bim_grab.ImageMtime;
-import com.family.grabserver.mapper.bim_grab.ImageMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CinemaTaobao;
+import com.family.grabserver.mapper.bim_grab.CinemaTaobaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +9,19 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 @Service
-public class ImageMtimeService {
+public class CinemaTaobaoService {
   @Autowired
-  private ImageMtimeMapper mapper;
+  private CinemaTaobaoMapper mapper;
 
-  public List<ImageMtime> selectAll() {
+  public List<CinemaTaobao> selectAll() {
     return mapper.selectAll();
   }
 
-  public int insertOrUpdate(ImageMtime record) {
+  public CinemaTaobao selectByPrimaryKey(Integer id) {
+    return mapper.selectByPrimaryKey(id);
+  }
+
+  public int insertOrUpdate(CinemaTaobao record) {
     if (record.getId() == null) {
       return mapper.insert(record);
     } else {

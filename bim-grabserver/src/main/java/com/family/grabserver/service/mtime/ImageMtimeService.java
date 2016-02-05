@@ -1,7 +1,7 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.mtime;
 
-import com.family.grabserver.entity.bim_grab.CityMaoyan;
-import com.family.grabserver.mapper.bim_grab.CityMaoyanMapper;
+import com.family.grabserver.entity.bim_grab.ImageMtime;
+import com.family.grabserver.mapper.bim_grab.ImageMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +9,15 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 @Service
-public class CityMaoyanService {
+public class ImageMtimeService {
   @Autowired
-  private CityMaoyanMapper mapper;
+  private ImageMtimeMapper mapper;
 
-  public List<CityMaoyan> selectAll() {
+  public List<ImageMtime> selectAll() {
     return mapper.selectAll();
   }
 
-  public int insertOrUpdate(CityMaoyan record) {
+  public int insertOrUpdate(ImageMtime record) {
     if (record.getId() == null) {
       return mapper.insert(record);
     } else {

@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CinemaTaobao;
 import com.family.grabserver.model.taobao.CinemaTaobaoModel;
-import com.family.grabserver.service.CinemaTaobaoService;
+import com.family.grabserver.service.taobao.CinemaTaobaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

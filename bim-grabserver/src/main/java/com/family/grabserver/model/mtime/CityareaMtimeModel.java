@@ -22,7 +22,7 @@ public class CityareaMtimeModel implements AfterExtractor {
   @ExtractByUrl("locationId=(\\d*)")
   private String cityId = "";
 
-  @ExtractByUrl("cityName=([\\w\\W]*)?[&]")
+  @ExtractByUrl("(?<=cityName=)(.*?)((?=&)|(?=$))")
   private String cityName = "";
 
   public static void main(String[] args) {

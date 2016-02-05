@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
 import com.family.grabserver.model.maoyan.CinemaMaoyanModel;
-import com.family.grabserver.service.CinemaMaoyanService;
+import com.family.grabserver.service.maoyan.CinemaMaoyanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

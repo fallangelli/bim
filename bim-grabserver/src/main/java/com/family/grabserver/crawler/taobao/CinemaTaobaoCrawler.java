@@ -5,7 +5,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.bim_grab.CityTaobao;
 import com.family.grabserver.model.taobao.CinemaTaobaoModel;
 import com.family.grabserver.pipeline.taobao.CinemaTaobaoPipeline;
-import com.family.grabserver.service.CityTaobaoService;
+import com.family.grabserver.service.taobao.CityTaobaoService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

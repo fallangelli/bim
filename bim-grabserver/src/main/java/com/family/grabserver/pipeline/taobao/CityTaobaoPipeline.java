@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CityTaobao;
 import com.family.grabserver.model.taobao.CityTaobaoModel;
-import com.family.grabserver.service.CityTaobaoService;
+import com.family.grabserver.service.taobao.CityTaobaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -19,7 +19,7 @@ public class CityareaBaiduModel implements AfterExtractor {
   @ExtractByUrl("c=(\\d*)")
   private String cityId = "";
 
-  @ExtractByUrl("cityName=(.*?)(?=&)")
+  @ExtractByUrl("(?<=cityName=)(.*?)((?=&)|(?=$))")
   private String cityName = "";
 
   public static void main(String[] args) {

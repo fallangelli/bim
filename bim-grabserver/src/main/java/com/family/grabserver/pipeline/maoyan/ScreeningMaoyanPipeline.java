@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.ScreeningMaoyan;
 import com.family.grabserver.model.maoyan.ScreeningMaoyanModel;
-import com.family.grabserver.service.ScreeningMaoyanService;
+import com.family.grabserver.service.maoyan.ScreeningMaoyanService;
 import com.family.grabserver.util.MaoyanPriceDecoder;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

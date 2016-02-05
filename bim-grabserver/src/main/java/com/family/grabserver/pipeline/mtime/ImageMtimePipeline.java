@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.ImageMtime;
 import com.family.grabserver.model.mtime.ImageMtimeModel;
-import com.family.grabserver.service.ImageMtimeService;
+import com.family.grabserver.service.mtime.ImageMtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

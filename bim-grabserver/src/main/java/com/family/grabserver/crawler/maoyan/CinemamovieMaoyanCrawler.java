@@ -5,7 +5,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
 import com.family.grabserver.model.maoyan.CinemamovieMaoyanModel;
 import com.family.grabserver.pipeline.maoyan.CinemamoiveMaoyanPipeline;
-import com.family.grabserver.service.CinemaMaoyanService;
+import com.family.grabserver.service.maoyan.CinemaMaoyanService;
 import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

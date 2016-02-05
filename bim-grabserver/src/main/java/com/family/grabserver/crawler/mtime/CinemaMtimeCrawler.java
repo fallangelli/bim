@@ -5,7 +5,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.bim_grab.CinemaMtime;
 import com.family.grabserver.model.mtime.CinemaMtimeModel;
 import com.family.grabserver.pipeline.mtime.CinemaMtimePipeline;
-import com.family.grabserver.service.CinemaMtimeService;
+import com.family.grabserver.service.mtime.CinemaMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

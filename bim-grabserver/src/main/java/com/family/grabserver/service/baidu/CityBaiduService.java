@@ -1,4 +1,4 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.baidu;
 
 import com.family.grabserver.entity.bim_grab.CityBaidu;
 import com.family.grabserver.mapper.bim_grab.CityBaiduMapper;

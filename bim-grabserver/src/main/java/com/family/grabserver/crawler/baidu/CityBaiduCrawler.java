@@ -7,7 +7,7 @@ import com.family.grabserver.model.baidu.CityBaiduModel;
 import com.family.grabserver.model.baidu.CityareaBaiduModel;
 import com.family.grabserver.pipeline.baidu.CityBaiduPipeline;
 import com.family.grabserver.pipeline.baidu.CityareaBaiduPipeline;
-import com.family.grabserver.service.CityBaiduService;
+import com.family.grabserver.service.baidu.CityBaiduService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

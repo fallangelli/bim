@@ -6,8 +6,8 @@ import com.family.grabserver.entity.bim_base.City;
 import com.family.grabserver.entity.bim_base.Cityarea;
 import com.family.grabserver.entity.bim_grab.CinemaBaidu;
 import com.family.grabserver.model.baidu.CinemaBaiduModel;
-import com.family.grabserver.service.CinemaBaiduService;
 import com.family.grabserver.service.CityService;
+import com.family.grabserver.service.baidu.CinemaBaiduService;
 import com.family.grabserver.util.CityMerge;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,8 @@ public class CinemaBaiduPipeline implements PageModelPipeline<CinemaBaiduModel> 
         record.setCityId(simCity.getId());
         record.setCityName(simCity.getName());
 
-        Cityarea simArea = cservice.getMostSimilarArea(simCity.getId(), record.getBaiduCityName(), record.getBaiduArea());
+        Cityarea simArea = cservice.getMostSimilarArea(simCity.getId(),
+          record.getBaiduCityName(), record.getBaiduArea());
         if (simArea != null) {
           record.setAreaId(simArea.getId());
           record.setAreaName(simArea.getName());

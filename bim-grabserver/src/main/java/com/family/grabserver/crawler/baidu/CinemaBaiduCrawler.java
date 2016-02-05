@@ -5,7 +5,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.bim_grab.CityareaBaidu;
 import com.family.grabserver.model.baidu.CinemaBaiduModel;
 import com.family.grabserver.pipeline.baidu.CinemaBaiduPipeline;
-import com.family.grabserver.service.CityareaBaiduService;
+import com.family.grabserver.service.baidu.CityareaBaiduService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

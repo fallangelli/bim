@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CityMtime;
 import com.family.grabserver.model.mtime.CityMtimeModel;
-import com.family.grabserver.service.CityMtimeService;
+import com.family.grabserver.service.mtime.CityMtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

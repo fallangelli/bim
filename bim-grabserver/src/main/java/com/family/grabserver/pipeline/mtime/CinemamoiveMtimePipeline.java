@@ -7,8 +7,8 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CinemamovieMtime;
 import com.family.grabserver.model.mtime.CinemamovieMtimeModel;
-import com.family.grabserver.service.CinemaMtimeService;
-import com.family.grabserver.service.CinemamovieMtimeService;
+import com.family.grabserver.service.mtime.CinemaMtimeService;
+import com.family.grabserver.service.mtime.CinemamovieMtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

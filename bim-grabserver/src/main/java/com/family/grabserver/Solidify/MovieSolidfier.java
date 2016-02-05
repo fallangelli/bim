@@ -4,8 +4,8 @@ import com.family.grabserver.entity.bim_base.Movieshowing;
 import com.family.grabserver.entity.bim_grab.MovieshowingBaidu;
 import com.family.grabserver.entity.bim_grab.MovieshowingMtime;
 import com.family.grabserver.mapper.bim_base.MovieshowingMapper;
-import com.family.grabserver.service.MovieshowingBaiduService;
-import com.family.grabserver.service.MovieshowingMtimeService;
+import com.family.grabserver.service.baidu.MovieshowingBaiduService;
+import com.family.grabserver.service.mtime.MovieshowingMtimeService;
 
 import java.util.List;
 

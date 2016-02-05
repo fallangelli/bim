@@ -5,7 +5,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grabserver.entity.bim_grab.CinemaBaidu;
 import com.family.grabserver.model.baidu.ScreeningBaiduModel;
 import com.family.grabserver.pipeline.baidu.ScreeningBaiduPipeline;
-import com.family.grabserver.service.CinemaBaiduService;
+import com.family.grabserver.service.baidu.CinemaBaiduService;
 import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

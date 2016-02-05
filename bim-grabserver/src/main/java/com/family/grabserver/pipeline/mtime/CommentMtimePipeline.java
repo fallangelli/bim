@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CommentMtime;
 import com.family.grabserver.model.mtime.CommentMtimeModel;
-import com.family.grabserver.service.CommentMtimeService;
+import com.family.grabserver.service.mtime.CommentMtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

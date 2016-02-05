@@ -1,21 +1,23 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.mtime;
 
-import com.family.grabserver.entity.bim_grab.CityareaMtime;
-import com.family.grabserver.mapper.bim_grab.CityareaMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CommentMtime;
+import com.family.grabserver.mapper.bim_grab.CommentMtimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @SuppressWarnings("ALL")
 @Service
-public class CityareaMtimeService {
+public class CommentMtimeService {
   @Autowired
-  private CityareaMtimeMapper mapper;
+  private CommentMtimeMapper mapper;
 
-  public CityareaMtime selectByPrimaryKey(Integer id) {
-    return mapper.selectByPrimaryKey(id);
+  public List<CommentMtime> selectAll() {
+    return mapper.selectAll();
   }
 
-  public int insertOrUpdate(CityareaMtime record) {
+  public int insertOrUpdate(CommentMtime record) {
     if (record.getId() == null) {
       return mapper.insert(record);
     } else {

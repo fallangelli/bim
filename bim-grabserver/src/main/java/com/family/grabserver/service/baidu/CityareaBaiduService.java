@@ -1,7 +1,7 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.baidu;
 
-import com.family.grabserver.entity.bim_grab.CinemaMtime;
-import com.family.grabserver.mapper.bim_grab.CinemaMtimeMapper;
+import com.family.grabserver.entity.bim_grab.CityareaBaidu;
+import com.family.grabserver.mapper.bim_grab.CityareaBaiduMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,25 +9,25 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 @Service
-public class CinemaMtimeService {
+public class CityareaBaiduService {
   @Autowired
-  private CinemaMtimeMapper mapper;
+  private CityareaBaiduMapper mapper;
 
-  public List<CinemaMtime> selectAll() {
-    return mapper.selectAll();
-  }
-
-  public CinemaMtime selectByPrimaryKey(Integer id) {
+  public CityareaBaidu selectByPrimaryKey(Integer id) {
     return mapper.selectByPrimaryKey(id);
   }
 
-  public int insertOrUpdate(CinemaMtime record) {
+  public int insertOrUpdate(CityareaBaidu record) {
     if (record.getId() == null) {
       return mapper.insert(record);
     } else {
       if (mapper.selectByPrimaryKey(record.getId()) != null) return mapper.updateByPrimaryKey(record);
       else return mapper.insert(record);
     }
+  }
+
+  public List<CityareaBaidu> selectAll() {
+    return mapper.selectAll();
   }
 
 }

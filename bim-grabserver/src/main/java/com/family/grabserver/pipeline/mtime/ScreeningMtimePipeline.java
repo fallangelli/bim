@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.ScreeningMtime;
 import com.family.grabserver.model.mtime.ScreeningMtimeModel;
-import com.family.grabserver.service.ScreeningMtimeService;
+import com.family.grabserver.service.mtime.ScreeningMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,7 +60,7 @@ public class ScreeningMtimePipeline implements PageModelPipeline<ScreeningMtimeM
         } catch (ParseException e) {
           logger.error("无法解析上映时间" + context);
           e.printStackTrace();
-          return;
+          continue;
         }
 
         long showDay = show.getLong("showDay");

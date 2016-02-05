@@ -7,7 +7,7 @@ import com.family.grabserver.model.mtime.CityMtimeModel;
 import com.family.grabserver.model.mtime.CityareaMtimeModel;
 import com.family.grabserver.pipeline.mtime.CityMtimePipeline;
 import com.family.grabserver.pipeline.mtime.CityareaMtimePipeline;
-import com.family.grabserver.service.CityMtimeService;
+import com.family.grabserver.service.mtime.CityMtimeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

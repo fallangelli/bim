@@ -4,7 +4,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CityBaidu;
 import com.family.grabserver.model.baidu.CityBaiduModel;
-import com.family.grabserver.service.CityBaiduService;
+import com.family.grabserver.service.baidu.CityBaiduService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

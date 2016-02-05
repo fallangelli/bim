@@ -7,7 +7,7 @@ import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.MovieshowingMtime;
 import com.family.grabserver.model.mtime.MovieshowingMtimeModel;
-import com.family.grabserver.service.MovieshowingMtimeService;
+import com.family.grabserver.service.mtime.MovieshowingMtimeService;
 import com.family.grabserver.util.JsonStringUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

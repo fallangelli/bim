@@ -1,4 +1,4 @@
-package com.family.grabserver.service;
+package com.family.grabserver.service.mtime;
 
 import com.family.grabserver.entity.bim_grab.ScreeningMtime;
 import com.family.grabserver.mapper.bim_grab.ScreeningMtimeMapper;

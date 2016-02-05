@@ -3,6 +3,6 @@
   "app_id": "",
   "proxies": [{
          "path": "/server_url/",
-         "proxyUrl": "http://192.168.2.245:8808/"
+         "proxyUrl": "http://192.168.2.210:8808/"
   }]
 }

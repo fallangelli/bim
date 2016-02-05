@@ -1,7 +1,7 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.CinemaScreening;
-import com.family.webserver.entity.CityMovieWithShowDates;
+import com.family.webserver.entity.RetMovieWithShowDates;
 import com.family.webserver.entity.Source;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class CinemaScreeningServiceTest {
 
   @Test
   public void testGetMovieCinemaShowDatesByCity() throws Exception {
-    CityMovieWithShowDates dates = service.getCityMovieWithShowDates(1, 1554, null);
+    RetMovieWithShowDates dates = service.getCityMovieWithShowDates(1, 1554, null);
     System.out.println("return size : " + dates);
   }
 

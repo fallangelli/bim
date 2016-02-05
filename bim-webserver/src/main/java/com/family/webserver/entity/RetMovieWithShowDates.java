@@ -2,7 +2,7 @@ package com.family.webserver.entity;
 
 import java.util.List;
 
-public class CityMovieWithShowDates {
+public class RetMovieWithShowDates {
 
   String movieName;
   List<String> showDates;

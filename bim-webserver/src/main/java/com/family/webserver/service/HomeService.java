@@ -1,9 +1,9 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
-import com.family.webserver.entity.CityHotMovie;
-import com.family.webserver.entity.CityWithArea;
-import com.family.webserver.entity.ListCity;
+import com.family.webserver.entity.RetCityWithArea;
+import com.family.webserver.entity.RetHotMovie;
+import com.family.webserver.entity.RetListCity;
 import com.family.webserver.mapper.HomeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ public class HomeService {
   @Autowired
   private HomeMapper mapper;
 
-  public List<CityHotMovie> getHotMoviesByCity(Integer cityId) {
-    List<CityHotMovie> hotMovies = mapper.selectHomeHotMoviesByCity(cityId);
+  public List<RetHotMovie> getHotMoviesByCity(Integer cityId) {
+    List<RetHotMovie> hotMovies = mapper.selectHomeHotMoviesByCity(cityId);
     return hotMovies;
   }
 
@@ -25,7 +25,7 @@ public class HomeService {
     return mapper.selectCityIdFromName(cityName);
   }
 
-  public CityWithArea getCityInfo(Integer cityId) {
+  public RetCityWithArea getCityInfo(Integer cityId) {
     return mapper.selectCityInfo(cityId);
   }
 
@@ -33,7 +33,7 @@ public class HomeService {
     return mapper.selectNearCinemas(cityId, lat, lng);
   }
 
-  public List<ListCity> getAllCities() {
+  public List<RetListCity> getAllCities() {
     return mapper.selectCitiesGroupFL();
   }
 

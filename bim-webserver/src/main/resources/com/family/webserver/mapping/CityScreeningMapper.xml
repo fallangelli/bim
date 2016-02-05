@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.webserver.mapper.CityScreeningMapper">
-  <resultMap id="MovieWithShowDatesResultMap" type="com.family.webserver.entity.CityMovieWithShowDates">
+  <resultMap id="MovieWithShowDatesResultMap" type="com.family.webserver.entity.RetMovieWithShowDates">
     <id property="movieName" column="movie_name"/>
     <collection property="showDates" ofType="String">
       <result property="showDates" column="show_dates"/>
@@ -12,14 +12,14 @@
     <id property="movieName" jdbcType="VARCHAR" column="movie_name"/>
     <result property="showDate" jdbcType="DATE" column="show_date"/>
     <result property="cinemaName" jdbcType="VARCHAR" column="cinema_name"/>
-    <collection property="minSource" ofType="com.family.webserver.entity.Source">
+    <collection property="minSource" ofType="com.family.webserver.entity.RetSource">
       <id property="id" jdbcType="INTEGER" column="id"/>
       <result property="sourceCount" jdbcType="INTEGER" column="source_count"/>
       <result property="startTime" jdbcType="VARCHAR" column="start_time"/>
       <result property="endTime" jdbcType="VARCHAR" column="end_time"/>
       <result property="salePrice" jdbcType="REAL" column="sale_price"/>
       <result property="cinemaPrice" jdbcType="REAL" column="cinema_price"/>
-      <result property="source" jdbcType="VARCHAR" column="source"/>
+      <result property="sourceId" jdbcType="INTEGER" column="source_id"/>
       <result property="ticketURL" jdbcType="VARCHAR" column="ticket_url"/>
       <result property="language" jdbcType="VARCHAR" column="language"/>
       <result property="version" jdbcType="VARCHAR" column="version"/>
@@ -63,13 +63,12 @@
       m.name                 AS movie_name,
     cn.name AS cinema_name,
       s.show_date,
-      count(DISTINCT source) AS source_count,
-      s.id,
+    count(DISTINCT source_id) AS source_count,
       s.start_time,
       s.end_time,
       s.sale_price,
       s.cinema_price,
-      s.source,
+    s.source_id,
       s.ticket_url,
       s.`language`,
       s.hall,
@@ -91,14 +90,13 @@
   </select>
 
 
-  <select id="selectCinemaSource" resultType="com.family.webserver.entity.Source">
+  <select id="selectCinemaSource" resultType="com.family.webserver.entity.RetSource">
     SELECT
-    s.id,
     s.start_time AS startTime,
     s.end_time AS endTime,
     s.sale_price AS salePrice,
     s.cinema_price AS cinemaPrice,
-    s.source AS source,
+    s.source_id AS sourceId,
     s.ticket_url AS ticketURL,
     s.`language` AS language,
     s.hall AS hall,

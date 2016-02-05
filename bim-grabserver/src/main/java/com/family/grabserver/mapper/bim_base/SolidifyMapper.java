@@ -10,12 +10,16 @@ public interface SolidifyMapper {
 
   void fillPositions();
 
-
   void merge_comment_mtime(Integer sourceCode);
+
+  void merge_image_mtime(Integer sourceCode);
+
 
   void merge_screening_mtime(Integer sourceCode);
 
   void merge_screening_maoyan(Integer sourceCode);
 
   void merge_screening_baidu(Integer sourceCode);
+
+  void merge_screening_weixin(Integer sourceCode);
 }

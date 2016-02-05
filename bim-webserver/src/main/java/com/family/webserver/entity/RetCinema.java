@@ -2,7 +2,7 @@ package com.family.webserver.entity;
 
 import java.util.List;
 
-public class CityCinema {
+public class RetCinema {
 
   Cinema cinema;
 

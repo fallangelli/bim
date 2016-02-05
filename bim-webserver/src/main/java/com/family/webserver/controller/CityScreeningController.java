@@ -1,7 +1,7 @@
 package com.family.webserver.controller;
 
 import com.family.webserver.entity.CinemaScreening;
-import com.family.webserver.entity.CityMovieWithShowDates;
+import com.family.webserver.entity.RetMovieWithShowDates;
 import com.family.webserver.entity.Source;
 import com.family.webserver.service.CityScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ public class CityScreeningController {
   @RequestMapping(value = "/CityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                                   @RequestParam(value = "movieId", required = true) Integer movieId,
-                                                   @RequestParam(value = "districtId", required = false) Integer districtId) {
-    CityMovieWithShowDates movieWithShowDates = service.getCityMovieWithShowDates(cityId, movieId, districtId);
+  RetMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
+                                                  @RequestParam(value = "movieId", required = true) Integer movieId,
+                                                  @RequestParam(value = "districtId", required = false) Integer districtId) {
+    RetMovieWithShowDates movieWithShowDates = service.getCityMovieWithShowDates(cityId, movieId, districtId);
     return movieWithShowDates;
   }
 

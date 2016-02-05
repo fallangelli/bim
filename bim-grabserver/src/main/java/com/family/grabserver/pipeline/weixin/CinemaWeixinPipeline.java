@@ -37,6 +37,7 @@ public class CinemaWeixinPipeline implements PageModelPipeline<CinemaWeixinModel
       JSONObject cinema = (JSONObject) obj;
       CinemaWeixin record = new CinemaWeixin();
       record.setId(cinema.getInteger("id"));
+      record.setWeixinCityId(Integer.parseInt(model.getCityId()));
       record.setWeixinCityName(model.getCityName());
       record.setWeixinArea(cinema.getString("area_name"));
 

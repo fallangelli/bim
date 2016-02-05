@@ -1,6 +1,6 @@
 package com.family.webserver.service;
 
-import com.family.webserver.entity.CityHotMovie;
+import com.family.webserver.entity.RetHotMovie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class CityMovieServiceTest {
 
   @Test
   public void testGetCityMoives() throws Exception {
-    List<CityHotMovie> movies = service.getCityMoives(1);
+    List<RetHotMovie> movies = service.getCityMoives(1);
     System.out.println(movies);
   }
 }

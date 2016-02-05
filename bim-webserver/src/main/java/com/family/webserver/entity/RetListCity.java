@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/13.
  */
-public class ListCity {
+public class RetListCity {
   String firstLetter;
   List<City> cities;
 

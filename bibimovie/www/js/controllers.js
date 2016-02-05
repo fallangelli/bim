@@ -4,7 +4,6 @@ angular.module('bibimovie.controllers', [])
   })
 
   .controller('HomeCtrl', function ($scope, $http, $ionicLoading, ApiEndpoint, Geolocation) {
-
     $scope.doRefresh = function () {
       $ionicLoading.show({template: '加载中...'});
       if (Geolocation.hasValidLocalCity()) {

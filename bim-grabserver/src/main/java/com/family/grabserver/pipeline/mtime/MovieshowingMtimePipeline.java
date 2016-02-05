@@ -30,6 +30,9 @@ public class MovieshowingMtimePipeline implements PageModelPipeline<Movieshowing
     MovieshowingMtime record = new MovieshowingMtime();
     record.setId(Integer.parseInt(model.getMovieId()));
     record.setName(movie.getString("titleCn"));
+
+//    String imageUrl = "http://img22.mtimeimg.com/get.ashx?uri=" +
+//      movie.getString("image") + "&width=210&height=316&clipType=4";
     record.setImage(movie.getString("image"));
     record.setRating(movie.getFloat("rating"));
     record.setIsImax(movie.getBoolean("isIMAX"));

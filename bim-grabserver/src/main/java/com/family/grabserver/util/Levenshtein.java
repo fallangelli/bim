@@ -62,13 +62,12 @@ public class Levenshtein {
 
   public static float getSimilarityRatio(String str, String target) {
     return 1 - (float) Levenshtein.compare(str, target) / Math.max(str.length(), target.length());
-
   }
 
   public static void main(String[] args) {
     Levenshtein lt = new Levenshtein();
-    String str = "北京市海淀区四道口2号B座京果商厦3层北侧";
-    String target = "北京市海淀区四道口2号B座京果商厦三层北侧";
-    System.out.println("similarityRatio=" + lt.getSimilarityRatio(str, target));
+    String str = "深圳雅图数字影院（梅林店）";
+    String target = "深圳雅图数字影院(梅林店)";
+    System.out.println("similarityRatio=" + Levenshtein.getSimilarityRatio(str, target));
   }
 }

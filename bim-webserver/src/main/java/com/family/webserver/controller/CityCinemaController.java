@@ -1,9 +1,9 @@
 package com.family.webserver.controller;
 
 import com.family.webserver.entity.CinemaScreening;
-import com.family.webserver.entity.CityCinema;
-import com.family.webserver.entity.ListCinema;
 import com.family.webserver.entity.MovieCinema;
+import com.family.webserver.entity.RetCinema;
+import com.family.webserver.entity.RetListCinema;
 import com.family.webserver.service.CityCinemaService;
 import com.family.webserver.service.CityMovieService;
 import com.family.webserver.service.CityScreeningService;
@@ -33,16 +33,16 @@ public class CityCinemaController {
   @RequestMapping(value = "/Cinemas", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<ListCinema> getCityCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
-                                  @RequestParam(value = "lat", required = false) String lat,
-                                  @RequestParam(value = "lng", required = false) String lng,
-                                  @RequestParam(value = "orderBy", required = false) String orderBy,
-                                  @RequestParam(value = "districtId", required = false) Integer districtId,
-                                  @RequestParam(value = "nameLike", required = false) String nameLike,
-                                  @RequestParam(value = "currPage", required = true) Integer currPage,
-                                  @RequestParam(value = "pageCount", required = true) Integer pageCount) {
+  List<RetListCinema> getCityCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
+                                     @RequestParam(value = "lat", required = false) String lat,
+                                     @RequestParam(value = "lng", required = false) String lng,
+                                     @RequestParam(value = "orderBy", required = false) String orderBy,
+                                     @RequestParam(value = "districtId", required = false) Integer districtId,
+                                     @RequestParam(value = "nameLike", required = false) String nameLike,
+                                     @RequestParam(value = "currPage", required = true) Integer currPage,
+                                     @RequestParam(value = "pageCount", required = true) Integer pageCount) {
     int startIndex = pageCount * (currPage - 1);
-    List<ListCinema> retList = cservice.getCityCinemas(cityId, lat, lng, orderBy,
+    List<RetListCinema> retList = cservice.getCityCinemas(cityId, lat, lng, orderBy,
       districtId, nameLike, startIndex, pageCount);
     return retList;
   }
@@ -62,8 +62,8 @@ public class CityCinemaController {
   @RequestMapping(value = "/Cinema", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityCinema getCinemaWithMovies(@RequestParam(value = "cinemaId", required = true) Integer cinemaId) {
-    CityCinema cc = new CityCinema();
+  RetCinema getCinemaWithMovies(@RequestParam(value = "cinemaId", required = true) Integer cinemaId) {
+    RetCinema cc = new RetCinema();
     cc.setCinema(cservice.getCinemaById(cinemaId));
     cc.setShowingMovies(mService.getShowingMoviesByCinemaId(cinemaId));
     return cc;

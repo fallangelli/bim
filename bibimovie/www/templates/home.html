@@ -33,12 +33,11 @@
         <span class="item-note">更多&gt;&gt;</span>
       </a>
 
-
       <div class="row" ng-repeat="movies in movieList">
         <div class="col col-33" ng-repeat="movie in movies">
           <a href="/#/movie/{{movie.movieId}}">
             <div>
-              <img src={{movie.image}} height="130px" width="100%">
+              <img ng-src="{{movie.image}}" height="130px" width="100%">
               <em class="m_score">{{movie.rating}}</em>
             </div>
 

@@ -1,8 +1,8 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
-import com.family.webserver.entity.CityHotMovie;
-import com.family.webserver.entity.ListCity;
+import com.family.webserver.entity.RetHotMovie;
+import com.family.webserver.entity.RetListCity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class HomeServiceTest {
 
   @Test
   public void testGetHotMoviesByCity() {
-    List<CityHotMovie> movies = service.getHotMoviesByCity(2861);
+    List<RetHotMovie> movies = service.getHotMoviesByCity(2861);
     System.out.println(movies);
   }
 
@@ -41,7 +41,7 @@ public class HomeServiceTest {
 
   @Test
   public void testGetAllCities() {
-    List<ListCity> cities = service.getAllCities();
+    List<RetListCity> cities = service.getAllCities();
     System.out.println(cities);
   }
 

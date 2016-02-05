@@ -1,8 +1,8 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.Cinema;
-import com.family.webserver.entity.ListCinema;
 import com.family.webserver.entity.MovieCinema;
+import com.family.webserver.entity.RetListCinema;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class CityCinemaServiceTest {
 
   @Test
   public void testGetCinemaByCity() throws Exception {
-    List<ListCinema> listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "len",
+    List<RetListCinema> listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "len",
       null, null, 1, 10);
     System.out.println("return size : " + listCinemas.size());
     listCinemas = service.getCityCinemas(110000, "39.91488908", "116.40387397", "minPrice",

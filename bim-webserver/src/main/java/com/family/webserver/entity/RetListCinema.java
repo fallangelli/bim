@@ -5,7 +5,7 @@ import com.family.webserver.utils.Cn2Spell;
 /**
  * Created by Administrator on 2015/12/13.
  */
-public class ListCinema {
+public class RetListCinema {
   Integer id;
   String name;
   String areaName;

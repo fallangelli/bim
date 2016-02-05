@@ -3,7 +3,7 @@
 <mapper namespace="com.family.webserver.mapper.CityCinemaMapper">
 
   <select id="selectCityCinemas"
-          resultType="com.family.webserver.entity.ListCinema">
+          resultType="com.family.webserver.entity.RetListCinema">
     SELECT
     cn.id,
     cn.name name,
@@ -19,7 +19,7 @@
     <if test="lat!=null and lat!='' and lng!=null and lng!=''">
       GLength(LineStringFromWKB(LineString(point(${lat}, ${lng}), pos))) len,
     </if>
-    count(DISTINCT s.source) AS sourceCount
+    count(DISTINCT s.source_id) AS sourceCount
     FROM cinema cn
     LEFT JOIN cityarea ca ON cn.district_id = ca.id
     LEFT JOIN city c ON ca.city_id = c.id
@@ -57,7 +57,7 @@
     <if test="lat!=null and lat!='' and lng!=null and lng!=''">
       GLength(LineStringFromWKB(LineString(point(#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}), pos))) len,
     </if>
-    count(DISTINCT s.source) AS sourceCount,
+    count(DISTINCT s.source_id) AS sourceCount,
     count(DISTINCT s.start_time) AS leftScreening
     FROM cinema cn
     LEFT JOIN cityarea ca ON cn.district_id = ca.id

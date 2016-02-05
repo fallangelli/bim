@@ -1,7 +1,7 @@
 package com.family.webserver.service;
 
 import com.family.webserver.entity.CinemaScreening;
-import com.family.webserver.entity.CityMovieWithShowDates;
+import com.family.webserver.entity.RetMovieWithShowDates;
 import com.family.webserver.entity.Source;
 import com.family.webserver.mapper.CityScreeningMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class CityScreeningService {
   @Autowired
   private CityScreeningMapper ccmapper;
 
-  public CityMovieWithShowDates getCityMovieWithShowDates(Integer cityId, Integer movieId, Integer districtId) {
+  public RetMovieWithShowDates getCityMovieWithShowDates(Integer cityId, Integer movieId, Integer districtId) {
     return ccmapper.selectCityMovieWithShowDates(cityId, movieId, districtId);
   }
 

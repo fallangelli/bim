@@ -21,7 +21,7 @@
     <div class="list">
       <a ng-repeat="movie in movies"
          class="item item-thumbnail-left item-icon-right" href="/#/movie/{{movie.movieId}}">
-        <img src="{{movie.image}}" height="220px">
+        <img ng-src="{{movie.image}}" height="220px">
 
         <h2 style="font-family: 微软雅黑">{{movie.movieName}}</h2>
 

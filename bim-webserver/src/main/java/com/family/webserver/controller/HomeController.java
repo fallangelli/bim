@@ -24,12 +24,12 @@ public class HomeController {
   @RequestMapping(value = "/hotMovies", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<List<CityHotMovie>> getHotMoviesByCity(@RequestParam(value = "cityId", required = true) Integer cityId) {
-    List<CityHotMovie> hotMovies = service.getHotMoviesByCity(cityId);
+  List<List<RetHotMovie>> getHotMoviesByCity(@RequestParam(value = "cityId", required = true) Integer cityId) {
+    List<RetHotMovie> hotMovies = service.getHotMoviesByCity(cityId);
     int midIndex = hotMovies.size() / 2;
-    List<CityHotMovie> a = hotMovies.subList(0, midIndex);
-    List<CityHotMovie> b = hotMovies.subList(midIndex, hotMovies.size());
-    List<List<CityHotMovie>> retVal = new ArrayList<>();
+    List<RetHotMovie> a = hotMovies.subList(0, midIndex);
+    List<RetHotMovie> b = hotMovies.subList(midIndex, hotMovies.size());
+    List<List<RetHotMovie>> retVal = new ArrayList<>();
     retVal.add(a);
     retVal.add(b);
     return retVal;
@@ -49,7 +49,7 @@ public class HomeController {
   @RequestMapping(value = "/getCityInfo", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityWithArea getCityInfo(@RequestParam(value = "cityId", required = true) Integer cityId) {
+  RetCityWithArea getCityInfo(@RequestParam(value = "cityId", required = true) Integer cityId) {
     return service.getCityInfo(cityId);
   }
 
@@ -67,9 +67,9 @@ public class HomeController {
   public
   @ResponseBody
   Map<String, List<List<City>>> getAllCities() {
-    List<ListCity> lists = service.getAllCities();
+    List<RetListCity> lists = service.getAllCities();
     Map<String, List<List<City>>> retVal = new HashMap<>();
-    for (ListCity list : lists) {
+    for (RetListCity list : lists) {
       List<City> cities = list.getCities();
       List<List<City>> groups = new ArrayList<>();
       for (int i = 1; i <= cities.size(); i++) {

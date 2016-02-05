@@ -3,7 +3,7 @@
 <mapper namespace="com.family.webserver.mapper.CityMovieMapper">
 
   <select id="selectCityMovies" parameterType="java.lang.Integer"
-          resultType="com.family.webserver.entity.CityHotMovie">
+          resultType="com.family.webserver.entity.RetHotMovie">
     SELECT
       ct.id      AS     cityId,
       s.movie_id AS     movieId,

@@ -20,6 +20,10 @@ public class CinemaWeixinService {
     return mapper.selectAll();
   }
 
+  public CinemaWeixin selectByPrimaryKey(Integer id) {
+    return mapper.selectByPrimaryKey(id);
+  }
+
   public int insertOrUpdate(CinemaWeixin record) {
     try {
       if (record.getId() == null)

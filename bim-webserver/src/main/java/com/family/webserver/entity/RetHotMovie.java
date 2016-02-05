@@ -6,7 +6,7 @@ import org.apache.ibatis.type.Alias;
  * Created by Administrator on 2015/12/12.
  */
 @Alias("User")
-public class CityHotMovie {
+public class RetHotMovie {
 
   Integer cityId;
   Integer movieId;

@@ -1,7 +1,7 @@
 package com.family.webserver.controller;
 
-import com.family.webserver.entity.CityHotMovie;
-import com.family.webserver.entity.CityMovie;
+import com.family.webserver.entity.RetHotMovie;
+import com.family.webserver.entity.RetMovie;
 import com.family.webserver.service.CityMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,8 @@ public class CityMovieController {
   @RequestMapping(value = "/Movie", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  CityMovie getMoive(@RequestParam(value = "moiveId", required = true) Integer moiveId) {
-    CityMovie retVal = new CityMovie();
+  RetMovie getMoive(@RequestParam(value = "moiveId", required = true) Integer moiveId) {
+    RetMovie retVal = new RetMovie();
     retVal.setMovie(service.getMovieById(moiveId));
     retVal.setComments(service.getMovieComments(moiveId));
     retVal.setImages(service.getMovieImages(moiveId));
@@ -33,7 +33,7 @@ public class CityMovieController {
   @RequestMapping(value = "/CityMovies", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
-  List<CityHotMovie> getCityMoives(@RequestParam(value = "cityId", required = true) Integer cityId) {
+  List<RetHotMovie> getCityMoives(@RequestParam(value = "cityId", required = true) Integer cityId) {
     return service.getCityMoives(cityId);
   }
 }

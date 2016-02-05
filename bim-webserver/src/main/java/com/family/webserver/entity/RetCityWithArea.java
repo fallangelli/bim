@@ -2,7 +2,7 @@ package com.family.webserver.entity;
 
 import java.util.List;
 
-public class CityWithArea {
+public class RetCityWithArea {
 
   Integer id;
   List<Cityarea> areas;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.family.webserver.mapper.HomeMapper">
 
-  <resultMap type="com.family.webserver.entity.CityWithArea" id="cityWithAreaMap">
+  <resultMap type="com.family.webserver.entity.RetCityWithArea" id="cityWithAreaMap">
     <id column="id" property="id"/>
     <result column="city_name" property="name"/>
     <result column="first_letter" property="firstLetter"/>
@@ -14,7 +14,7 @@
     </collection>
   </resultMap>
 
-  <resultMap type="com.family.webserver.entity.ListCity" id="cityGroupFL">
+  <resultMap type="com.family.webserver.entity.RetListCity" id="cityGroupFL">
     <id column="fl" property="firstLetter"/>
     <collection property="cities" ofType="com.family.webserver.entity.City" column="fl">
       <id column="id" property="id"/>
@@ -25,7 +25,7 @@
   </resultMap>
 
   <select id="selectHomeHotMoviesByCity" parameterType="java.lang.Integer"
-          resultType="com.family.webserver.entity.CityHotMovie">
+          resultType="com.family.webserver.entity.RetHotMovie">
     SELECT
       ct.id      AS     cityId,
       s.movie_id AS     movieId,

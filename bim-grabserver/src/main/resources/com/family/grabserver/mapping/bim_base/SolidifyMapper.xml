@@ -18,21 +18,6 @@
 
   <insert id="merge_comment_mtime">
     INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source_id, id_mtime)
-    SELECT
-    m.id,
-    cm.title,
-    cm.nick_name,
-    cm.rating,
-    cm.content,
-    #{sourceCode,jdbcType=INTEGER},
-    cm.id
-    FROM bim_grab.comment_mtime cm
-    LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
-    WHERE m.id_mtime IS NOT NULL
-  </insert>
-
-  <insert id="merge_image_mtime">
-    INSERT INTO bim_base.`comment` (movie_id, title, nick_name, rating, content, source_id, id_mtime)
       SELECT
         m.id,
         cm.title,
@@ -43,6 +28,16 @@
         cm.id
       FROM bim_grab.comment_mtime cm
         LEFT JOIN bim_base.movieshowing m ON cm.movie_id = m.id_mtime
+      WHERE m.id_mtime IS NOT NULL
+  </insert>
+
+  <insert id="merge_image_mtime">
+    INSERT INTO bim_base.`image` (movie_id, image_url)
+      SELECT
+        m.id,
+        im.image_url
+      FROM bim_grab.image_mtime im
+        LEFT JOIN bim_base.movieshowing m ON im.movie_id = m.id_mtime
       WHERE m.id_mtime IS NOT NULL
   </insert>
 
@@ -111,4 +106,27 @@
         JOIN bim_base.cinema c ON pm.cinema_id = c.id_baidu
     ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
   </insert>
+
+  <insert id="merge_screening_weixin">
+    INSERT INTO bim_base.screening (cinema_id, movie_id, show_date, start_time, end_time, language, hall,
+                                    version, sale_price, cinema_price, source_id, ticket_url)
+      SELECT
+        c.id AS cinema_id,
+        m.id AS movie_id,
+        show_date,
+        start_time,
+        end_time,
+        language,
+        hall,
+        version,
+        sale_price,
+        cinema_price,
+        #{sourceCode,jdbcType=INTEGER},
+        ticket_url
+      FROM bim_grab.screening_weixin pm
+        JOIN bim_base.movieshowing m ON pm.movie_id = m.id_weixin
+        JOIN bim_base.cinema c ON pm.cinema_id = c.id_weixin
+    ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
+  </insert>
+
 </mapper>

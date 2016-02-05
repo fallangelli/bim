@@ -37,19 +37,19 @@
 
       <div class="item tabs tabs-secondary" style="padding-top: 10px">
         <a class="tab-item" ng-if="cinema.has3d">
-          <img style="width: 30px" src="../img/3d.png">
+          <img style="width: 30px" ng-src="../img/3d.png">
         </a>
         <a class="tab-item" ng-if="cinema.hasImax">
-          <img style="width: 30px" src="../img/imax.png">
+          <img style="width: 30px" ng-src="../img/imax.png">
         </a>
         <a class="tab-item" ng-if="cinema.hasPark">
-          <img style="width: 30px" src="../img/park.png">
+          <img style="width: 30px" ng-src="../img/park.png">
         </a>
         <a class="tab-item" ng-if="cinema.hasWifi">
-          <img style="width: 30px" src="../img/wifi.png">
+          <img style="width: 30px" ng-src="../img/wifi.png">
         </a>
         <a class="tab-item" href="tel:{{cinema.tel}}">
-          <img style=" height: 35px;" src="../img/tel.png">
+          <img style=" height: 35px;" ng-src="../img/tel.png">
         </a>
       </div>
     </div>
@@ -68,15 +68,15 @@
           <div class="col col-30">
             <img ng-if="$index!=0"
                  style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.68;opacity:0.6"
-                 src="{{movies[$index-1].image}}">
+                 ng-src="{{movies[$index-1].image}}">
           </div>
           <div class="col col-40">
-            <img style="height: 150px;border: 3px" src="{{movie.image}}">
+            <img style="height: 150px;border: 3px" ng-src="{{movie.image}}">
           </div>
           <div class="col col-30">
             <img ng-if="$index!=movies.length-1 && movies.length != 1"
                  style="height:150px;filter:alpha(opacity=60);-moz-opacity:0.6;-khtml-opacity:0.6;opacity:0.6"
-                 src="{{movies[$index+1].image}}">
+                 ng-src="{{movies[$index+1].image}}">
           </div>
         </div>
       </ion-slide>

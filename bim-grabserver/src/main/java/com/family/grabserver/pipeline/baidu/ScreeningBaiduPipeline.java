@@ -43,7 +43,8 @@ public class ScreeningBaiduPipeline implements PageModelPipeline<ScreeningBaiduM
           movieRecord.setId(movieId);
           movieRecord.setName(movie.getString("name"));
           movieRecord.setContent(movie.getString("summary"));
-          movieRecord.setImage(movie.getJSONObject("posterUrl").getString("medium"));
+          String imgUrl = "http://www.beihaiw.com/pic.php?url=" + movie.getJSONObject("posterUrl").getString("medium");
+          movieRecord.setImage(imgUrl);
           movieRecord.setRating(movie.getFloat("score") / 10);
           movieService.insertOrUpdate(movieRecord);
         }

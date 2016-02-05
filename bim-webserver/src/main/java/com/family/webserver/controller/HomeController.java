@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +93,27 @@ public class HomeController {
     }
 
     return retVal;
+  }
 
+  @RequestMapping(value = "/getImage")
+  public void getImage(
+    @RequestParam(value = "imgUrl", required = true) String imgUrl,
+    HttpServletResponse response) throws IOException {
+    URL url = new URL(imgUrl);
+
+    BufferedImage src = javax.imageio.ImageIO.read(url);
+
+    BufferedImage tag = new BufferedImage(130, 195, BufferedImage.TYPE_INT_RGB);
+
+    tag.getGraphics().drawImage(src.getScaledInstance(130, 195, java.awt.Image.SCALE_SMOOTH), 0, 0, null);
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    ImageIO.write(tag, "PNG", out);
+
+    response.setContentType("image/png");
+    OutputStream stream = response.getOutputStream();
+    stream.write(out.toByteArray());
+    stream.flush();
+    stream.close();
   }
 }

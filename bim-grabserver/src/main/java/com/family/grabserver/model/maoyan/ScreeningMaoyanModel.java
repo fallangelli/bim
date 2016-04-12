@@ -3,13 +3,11 @@ package com.family.grabserver.model.maoyan;
 import com.family.grab.Page;
 import com.family.grab.Site;
 import com.family.grab.model.AfterExtractor;
+import com.family.grab.model.ConsolePageModelPipeline;
 import com.family.grab.model.OOSpider;
 import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
-import com.family.grabserver.pipeline.maoyan.ScreeningMaoyanPipeline;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 public class ScreeningMaoyanModel implements AfterExtractor {
@@ -27,12 +25,12 @@ public class ScreeningMaoyanModel implements AfterExtractor {
 
 
   public static void main(String[] args) {
-    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
-    final ScreeningMaoyanPipeline pipeline = applicationContext.getBean(ScreeningMaoyanPipeline.class);
+//    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
+//    final ScreeningMaoyanPipeline pipeline = applicationContext.getBean(ScreeningMaoyanPipeline.class);
 
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
-      pipeline, ScreeningMaoyanModel.class)
-      .addUrl("http://m.maoyan.com/showtime/wrap.json?cinemaid=834&movieid=78701").thread(1).run();
+      new ConsolePageModelPipeline(), ScreeningMaoyanModel.class)
+      .addUrl("http://m.maoyan.com/#tmp=showtime&cinemaid=48&movieid=246063&date=2016-02-26").thread(1).run();
   }
 
   public String getContext() {

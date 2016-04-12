@@ -9,15 +9,16 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <version.spring>4.1.4.RELEASE</version.spring>
   </properties>
 
   <modules>
     <module>grab-core</module>
     <module>grab-extension</module>
+    <module>grab-selenium</module>
     <module>bim-grabserver</module>
     <module>bim-webserver</module>
   </modules>

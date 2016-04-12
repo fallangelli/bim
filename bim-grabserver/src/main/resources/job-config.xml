@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+  <!--<context:component-scan-->
+  <!--base-package="com.family.grabserver.service,com.family.grabserver.pipeline,com.family.grabserver.crawler,com.family.grabserver.runner"/>-->
+
+
+  <!-- For times when you just need to invoke a method on a specific object -->
+  <!--<bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+  <!--<property name="targetObject" ref="MyTasklet"/>-->
+  <!--<property name="targetMethod" value="execute"/>-->
+  <!--</bean>-->
+
+  <bean id="MyTasklet" class="com.family.grabserver.runner.MyTasklet"></bean>
+
+  <!-- For times when you need more complex processing, passing data to the scheduled job -->
+  <bean name="complexJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.family.grabserver.runner.ScheduledJob"/>
+    <property name="durability" value="true"/>
+  </bean>
+
+
+  <!-- Run the job every 2 seconds with initial delay of 1 second -->
+  <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <property name="jobDetail" ref="complexJobDetail"/>
+    <property name="startDelay" value="1000"/>
+    <property name="repeatInterval" value="20000000"/>
+  </bean>
+
+
+  <!-- Run the job every 5 seconds only on weekends -->
+  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="complexJobDetail"/>
+    <property name="cronExpression" value="0/5 * * ? * SAT-SUN"/>
+  </bean>
+
+
+  <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobDetails">
+      <list>
+        <!--<ref bean="simpleJobDetail"/>-->
+        <ref bean="complexJobDetail"/>
+      </list>
+    </property>
+
+    <property name="triggers">
+      <list>
+        <ref bean="simpleTrigger"/>
+        <ref bean="cronTrigger"/>
+      </list>
+    </property>
+  </bean>
+
+</beans>

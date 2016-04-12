@@ -14,4 +14,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
   <!-- 自动扫描(自动注入)，扫描service这个包以及它的子包的所有使用@Service注解标注的类 -->
   <context:component-scan
     base-package="com.family.grabserver.service,com.family.grabserver.pipeline,com.family.grabserver.crawler,com.family.grabserver.runner"/>
+
+
 </beans>

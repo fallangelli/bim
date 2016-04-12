@@ -17,6 +17,10 @@
     <mybatis.generator.configurationFile>./src/main/resources/generatorConfig.xml
     </mybatis.generator.configurationFile>
     <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
+    <java.version>1.8</java.version>
+    <spring.batch.version>3.0.6.RELEASE</spring.batch.version>
+    <quartz.version>2.2.2</quartz.version>
+    <hsql.version>1.8.0.7</hsql.version>
   </properties>
 
   <build>
@@ -142,5 +146,39 @@
       <version>2.5.0</version>
     </dependency>
 
+
+    <!-- Quartz framework -->
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
+
+    <!-- Spring Batch dependencies -->
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-core</artifactId>
+      <version>${spring.batch.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-infrastructure</artifactId>
+      <version>${spring.batch.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>3.2.9.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>${hsql.version}</version>
+    </dependency>
   </dependencies>
 </project>

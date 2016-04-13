@@ -47,22 +47,8 @@ public class MainRunner {
   @Autowired
   public SolidifyService mergeService;
 
+
   public static void main(String[] args) {
-//    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
-//    final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
-//    grabRunner.grabCity();
-//    grabRunner.grabCinema();
-//    grabRunner.grabCinemamovie();
-//    grabRunner.grabScreening();
-//    grabRunner.mergeService.merge();
-
-    String springConfig = "spring/batch/jobs/job-quartz.xml";
-
-    ApplicationContext context = new ClassPathXmlApplicationContext("classpath:/job-config.xml");
-  }
-
-  public void execute() {
-    System.out.println("[JOB] Welcome to Quartz!");
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
     grabRunner.grabCity();

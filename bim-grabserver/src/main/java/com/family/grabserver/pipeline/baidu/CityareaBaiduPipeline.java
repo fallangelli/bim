@@ -8,11 +8,13 @@ import com.family.grab.pipeline.PageModelPipeline;
 import com.family.grabserver.entity.bim_grab.CityareaBaidu;
 import com.family.grabserver.model.baidu.CityareaBaiduModel;
 import com.family.grabserver.service.baidu.CityareaBaiduService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CityareaBaiduPipeline implements PageModelPipeline<CityareaBaiduModel> {
+  private Logger logger = Logger.getLogger(getClass());
 
   @Autowired
   private CityareaBaiduService service;
@@ -31,7 +33,12 @@ public class CityareaBaiduPipeline implements PageModelPipeline<CityareaBaiduMod
       record.setCityName(model.getCityName());
       record.setName(area.getString("name"));
 
-      service.insertOrUpdate(record);
+      try {
+        service.insertOrUpdate(record);
+      } catch (org.springframework.dao.DuplicateKeyException e) {
+        String log = e.getMessage();
+        logger.warn(log);
+      }
     }
   }
 }

@@ -29,7 +29,7 @@ public class CityWeixinCrawler {
 
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, CityWeixinModel.class)
-      .addUrl("http://m.dianying.baidu.com/city/choose")
+      .addUrl("http://m.wepiao.com/data/v5/city.json")
       .thread(1).run();
   }
 }

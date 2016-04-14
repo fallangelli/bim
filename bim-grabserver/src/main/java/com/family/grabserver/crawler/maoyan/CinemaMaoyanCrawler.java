@@ -43,7 +43,7 @@ public class CinemaMaoyanCrawler {
 
     for (CityMaoyan city : allCity) {
       String url = "http://m.maoyan.com/cinemas.json?cityId="
-        + city.getId();
+        + city.getId() + "&cityName=" + city.getName();
 
       CinemaMaoyanCrawler.CinemaThread th = new CinemaThread(cinemaMaoyanPipeline, city.getId(), url);
       pool.execute(th);

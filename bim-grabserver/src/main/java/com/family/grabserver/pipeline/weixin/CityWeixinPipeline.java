@@ -23,10 +23,10 @@ public class CityWeixinPipeline implements PageModelPipeline<CityWeixinModel> {
   public void process(CityWeixinModel model, Task task) {
     String context = model.getContext();
     JSONObject ob = JSON.parseObject(context);
-    JSONObject citys = (JSONObject) ob.get("list");
-    Set<String> keys = citys.keySet();
+
+    Set<String> keys = ob.keySet();
     for (String key : keys) {
-      JSONObject cityObj = citys.getJSONObject(key);
+      JSONObject cityObj = ob.getJSONObject(key);
       CityWeixin record = new CityWeixin();
       record.setId(Integer.parseInt(key));
       record.setName(cityObj.getString("name"));

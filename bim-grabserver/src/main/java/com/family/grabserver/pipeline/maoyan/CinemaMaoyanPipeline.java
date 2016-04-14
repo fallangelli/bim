@@ -5,17 +5,24 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.family.grab.Task;
 import com.family.grab.pipeline.PageModelPipeline;
+import com.family.grabserver.entity.bim_base.City;
+import com.family.grabserver.entity.bim_base.Cityarea;
 import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
 import com.family.grabserver.model.maoyan.CinemaMaoyanModel;
+import com.family.grabserver.service.CityService;
 import com.family.grabserver.service.maoyan.CinemaMaoyanService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel> {
+  private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
   @Autowired
   private CinemaMaoyanService service;
+  @Autowired
+  private CityService cservice;
 
   @Override
   public void process(CinemaMaoyanModel model, Task task) {
@@ -30,19 +37,28 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
         CinemaMaoyan record = new CinemaMaoyan();
         record.setId(cinema.getInteger("id"));
         record.setCityId(Integer.parseInt(model.getCityId()));
+        record.setMaoyanCityName(model.getCityName());
+        record.setMaoyanArea(cinema.getString("area"));
         record.setName(cinema.getString("nm"));
-//        record.setArea(cinema.getString("area"));
-//        record.setAddress(cinema.getString("addr"));
-//
-//        record.setLatitude(cinema.getString("lat"));
-//        record.setLongitude(cinema.getString("lng"));
-//
-//        record.setSell(cinema.getBoolean("sell"));
-//        record.setPreferential(cinema.getBoolean("preferential"));
-//        record.setHasImax(cinema.getBoolean("imax"));
+        record.setAddress(cinema.getString("addr"));
 
-//todo
-//                record.setTel();
+        service.insertOrUpdate(record);
+
+        City simCity = cservice.getMostSimilarCity(model.getCityName());
+        if (simCity != null) {
+          record.setCityId(simCity.getId());
+          record.setCityName(simCity.getName());
+
+          Cityarea simArea = cservice.getMostSimilarArea(simCity.getId(),
+            record.getMaoyanCityName(), record.getMaoyanArea());
+          if (simArea != null) {
+            record.setAreaId(simArea.getId());
+            record.setAreaName(simArea.getName());
+          } else
+            logger.error("无法找到归并地区：" + record.getMaoyanCityName() + " - " + record.getMaoyanArea());
+        } else
+          logger.error("无法找到归并城市：" + model.getCityName());
+
 
         service.insertOrUpdate(record);
       }

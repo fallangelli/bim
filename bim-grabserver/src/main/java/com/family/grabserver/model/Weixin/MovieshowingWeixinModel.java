@@ -31,7 +31,7 @@ public class MovieshowingWeixinModel implements AfterExtractor {
 
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(30),
       pipeline, MovieshowingWeixinModel.class)
-      .addUrl("http://m.wepiao.com/data/v5/movies/cities/1915/movies_city_1915.json?cityId=1915cityName=永康").thread(1).run();
+      .addUrl("http://m.wepiao.com/data/v5/movies/cities/1915/movies_city_1915.json?cityId=1915&cityName=永康").thread(1).run();
   }
 
   public String getCityId() {

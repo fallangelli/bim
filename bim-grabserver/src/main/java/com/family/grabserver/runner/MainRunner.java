@@ -11,6 +11,10 @@ import com.family.grabserver.crawler.mtime.CinemaMtimeCrawler;
 import com.family.grabserver.crawler.mtime.CinemamovieMtimeCrawler;
 import com.family.grabserver.crawler.mtime.CityMtimeCrawler;
 import com.family.grabserver.crawler.mtime.ScreeningMtimeCrawler;
+import com.family.grabserver.crawler.weixin.CinemaWeixinCrawler;
+import com.family.grabserver.crawler.weixin.CityWeixinCrawler;
+import com.family.grabserver.crawler.weixin.MovieshowingWeixinCrawler;
+import com.family.grabserver.crawler.weixin.ScreeningWeixinCrawler;
 import com.family.grabserver.service.SolidifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +49,15 @@ public class MainRunner {
   public ScreeningBaiduCrawler screeningBaiduCrawler;
 
   @Autowired
+  public CityWeixinCrawler cityWeixinCrawler;
+  @Autowired
+  public CinemaWeixinCrawler cinemaWeixinCrawler;
+  @Autowired
+  public MovieshowingWeixinCrawler movieshowingWeixinCrawler;
+  @Autowired
+  public ScreeningWeixinCrawler screeningWeixinCrawler;
+
+  @Autowired
   public SolidifyService mergeService;
 
 
@@ -52,16 +65,17 @@ public class MainRunner {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final MainRunner grabRunner = applicationContext.getBean(MainRunner.class);
     grabRunner.grabCity();
-    grabRunner.grabCinema();
-    grabRunner.grabCinemamovie();
-    grabRunner.grabScreening();
-    grabRunner.mergeService.merge();
+//    grabRunner.grabCinema();
+//    grabRunner.grabCinemamovie();
+//    grabRunner.grabScreening();
+//    grabRunner.mergeService.merge();
   }
 
   public void grabCity() {
-//    cityMaoyanCrawler.crawl();
+    cityMaoyanCrawler.crawl();
     cityMtimeCrawler.crawl();
     cityBaiduCrawler.crawl();
+    cityWeixinCrawler.crawl();
   }
 
 
@@ -69,6 +83,7 @@ public class MainRunner {
 //    cinemaMaoyanCrawler.crawl();
     cinemaMtimeCrawler.crawl();
     cinemaBaiduCrawler.crawl();
+    cinemaWeixinCrawler.crawl();
   }
 
   public void grabCinemamovie() {

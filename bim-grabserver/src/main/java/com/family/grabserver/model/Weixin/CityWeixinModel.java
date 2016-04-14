@@ -10,10 +10,14 @@ import com.family.grabserver.pipeline.weixin.CityWeixinPipeline;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @TargetUrl("http://m.wepiao.com/data/v5/city.json")
 public class CityWeixinModel implements AfterExtractor {
 
-  @ExtractBy(value = "(?<=\"movies_city_\",)(.+?)(?=\\);)", type = ExtractBy.Type.Regex)
+  //    @ExtractBy(value = "(?<=\"movies_city_\",)(.+?)(?=\\);)", type = ExtractBy.Type.Regex)
+  @ExtractBy(value = "/html/body/text()")
   private String context;
 
   public static void main(String[] args) {
@@ -36,7 +40,10 @@ public class CityWeixinModel implements AfterExtractor {
 
   @Override
   public void afterProcess(Page page) {
-
+    Pattern pattern = Pattern.compile("(?<=\"list\":)(.+?)(?=\\}\\);)");
+    Matcher matcher = pattern.matcher(context);
+    if (matcher.find())
+      context = matcher.group();
   }
 
 }

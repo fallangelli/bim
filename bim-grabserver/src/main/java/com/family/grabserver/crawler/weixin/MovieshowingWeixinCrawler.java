@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MoveshowingWeixinCrawler {
+public class MovieshowingWeixinCrawler {
   @Autowired
   private MovieshowingWeixinPipeline pipeline;
 
@@ -27,7 +27,7 @@ public class MoveshowingWeixinCrawler {
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
-    final MoveshowingWeixinCrawler jsonCrawler = applicationContext.getBean(MoveshowingWeixinCrawler.class);
+    final MovieshowingWeixinCrawler jsonCrawler = applicationContext.getBean(MovieshowingWeixinCrawler.class);
     jsonCrawler.crawl();
   }
 

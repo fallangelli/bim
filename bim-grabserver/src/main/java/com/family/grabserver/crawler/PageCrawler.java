@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class PageCrawler {
   @Qualifier("DoubanComingPipeline")
@@ -21,6 +23,7 @@ public class PageCrawler {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final PageCrawler pageCrawler = applicationContext.getBean(PageCrawler.class);
     pageCrawler.crawl();
+    System.out.println(new Date());
   }
 
   public void crawl() {

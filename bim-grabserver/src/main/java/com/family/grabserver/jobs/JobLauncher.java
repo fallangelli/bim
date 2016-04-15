@@ -1,6 +1,5 @@
 package com.family.grabserver.jobs;
 
-import com.family.grabserver.util.EnumType;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -21,8 +20,8 @@ public class JobLauncher {
     try {
             /* 运行Job */
       JobExecution result = launcher.run(job, new JobParametersBuilder()
-        .addString("type", EnumType.city.getName())
-        .addLong("source", (long) 2)
+        .addString("type", "screening")
+        .addLong("source", (long) 0)
         .addDate("date", new Date())
         .toJobParameters()
       );

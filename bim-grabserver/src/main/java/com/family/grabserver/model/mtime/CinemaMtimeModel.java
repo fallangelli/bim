@@ -8,6 +8,8 @@ import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
 import com.family.grab.model.annotation.TargetUrl;
 import com.family.grabserver.pipeline.mtime.CinemaMtimePipeline;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @TargetUrl(value = "http://m.mtime.cn/[\\w\\W]*")
 public class CinemaMtimeModel implements AfterExtractor {
@@ -20,9 +22,12 @@ public class CinemaMtimeModel implements AfterExtractor {
   private String cinemaId = "";
 
   public static void main(String[] args) {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
+    final CinemaMtimePipeline pipeline = applicationContext.getBean(CinemaMtimePipeline.class);
+
     OOSpider.create(Site.me().setSleepTime(1000)
-      , new CinemaMtimePipeline(), CinemaMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=3980")
+      , pipeline, CinemaMtimeModel.class)
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Cinema/Detail.api?cinemaId=3078")
       .thread(1).run();
   }
 
@@ -54,6 +59,8 @@ public class CinemaMtimeModel implements AfterExtractor {
     context = context.replace("</body>", "");
     context = context.replace("</strong>", "");
     context = context.replace("\n", "");
+    context = context.replace("</p>", "");
+    context = context.trim();
   }
 
 }

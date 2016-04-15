@@ -19,10 +19,15 @@ public class CinemaMtimePipeline implements PageModelPipeline<CinemaMtimeModel> 
   @Override
   public void process(CinemaMtimeModel model, Task task) {
     String context = model.getContext();
-    JSONObject cinema = JSON.parseObject(context);
-
+    JSONObject cinema = new JSONObject();
+    try {
+      cinema = JSON.parseObject(context);
+    } catch (Exception e) {
+      System.out.println(model.getContext());
+      throw e;
+    }
     CinemaMtime record = service.selectByPrimaryKey(Integer.parseInt(model.getCinemaId()));
-    if (record != null) {
+    if (record != null && cinema.size() > 0) {
       record.setRating(cinema.getFloat("rating"));
       JSONObject feature = (JSONObject) cinema.get("feature");
       record.setHas3d(feature.getBoolean("has3D") == null ? false : feature.getBoolean("has3D"));

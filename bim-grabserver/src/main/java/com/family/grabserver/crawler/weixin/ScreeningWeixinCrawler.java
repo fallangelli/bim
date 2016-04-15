@@ -6,6 +6,7 @@ import com.family.grabserver.entity.bim_grab.CinemaWeixin;
 import com.family.grabserver.model.Weixin.ScreeningWeixinModel;
 import com.family.grabserver.pipeline.weixin.ScreeningWeixinPipeline;
 import com.family.grabserver.service.weixin.CinemaWeixinService;
+import com.family.grabserver.util.SqlUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -33,6 +34,13 @@ public class ScreeningWeixinCrawler {
 
   public void crawl() {
 
+    try {
+      SqlUtil.truncateTable("screening_Weixin");
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
+    }
+
     List<CinemaWeixin> allCinemas = cinemaService.selectAll();
 
     List<String> urls = new ArrayList<>();
@@ -42,7 +50,7 @@ public class ScreeningWeixinCrawler {
         "cityId=" + cinema.getWeixinCityId() + "&cinemaId=" + cinema.getId());
     }
     logger.info("开始抓取 微信 电影 信息");
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(100).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setCharset("UTF-8").setTimeOut(60000).setSleepTime(100).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningWeixinModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(20).run();

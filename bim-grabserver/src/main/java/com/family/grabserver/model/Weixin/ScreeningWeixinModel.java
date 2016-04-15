@@ -67,6 +67,7 @@ public class ScreeningWeixinModel implements AfterExtractor {
     Matcher matcher = pattern.matcher(context);
     if (matcher.find())
       context = matcher.group();
+    context = context.trim();
   }
 
 }

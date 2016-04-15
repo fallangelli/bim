@@ -41,7 +41,7 @@ public class CinemaWeixinCrawler {
         "/cinemas_city_" + city.getId() + ".json?cityId=" + city.getId() + "cityName=" + city.getName());
     }
     logger.info("开始抓取 微信 影院 信息");
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(100).setCycleRetryTimes(5).setRetrySleepTime(3000),
+    OOSpider.create(Site.me().setCharset("UTF-8").setTimeOut(60000).setSleepTime(100).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, CinemaWeixinModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(50).run();

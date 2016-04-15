@@ -3,11 +3,13 @@ package com.family.grabserver.model.mtime;
 import com.family.grab.Page;
 import com.family.grab.Site;
 import com.family.grab.model.AfterExtractor;
-import com.family.grab.model.ConsolePageModelPipeline;
 import com.family.grab.model.OOSpider;
 import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
 import com.family.grab.model.annotation.TargetUrl;
+import com.family.grabserver.pipeline.mtime.CinemamoiveMtimePipeline;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @TargetUrl(value = "http://m.mtime.cn/[\\w\\W]*")
 public class CinemamovieMtimeModel implements AfterExtractor {
@@ -18,10 +20,16 @@ public class CinemamovieMtimeModel implements AfterExtractor {
   @ExtractByUrl("cinemaId=(\\d*)")
   private String cinemaid = "";
 
+  @ExtractByUrl
+  private String url;
+
   public static void main(String[] args) {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
+    final CinemamoiveMtimePipeline pipeline = applicationContext.getBean(CinemamoiveMtimePipeline.class);
+
     OOSpider.create(Site.me().setSleepTime(1000)
-      , new ConsolePageModelPipeline(), CinemaMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=2342")
+      , pipeline, CinemamovieMtimeModel.class)
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=1813")
       .thread(1).run();
   }
 
@@ -39,6 +47,14 @@ public class CinemamovieMtimeModel implements AfterExtractor {
 
   public void setCinemaid(String cinemaid) {
     this.cinemaid = cinemaid;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 
   @Override

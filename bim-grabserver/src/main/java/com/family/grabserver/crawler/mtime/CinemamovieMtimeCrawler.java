@@ -27,8 +27,6 @@ public class CinemamovieMtimeCrawler {
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
   public static void main(String[] args) {
-
-
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final CinemamovieMtimeCrawler jsonCrawler = applicationContext.getBean(CinemamovieMtimeCrawler.class);
     jsonCrawler.crawl();
@@ -51,6 +49,6 @@ public class CinemamovieMtimeCrawler {
     logger.info("开始抓取 时光 影院上映电影");
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(1000),
       pipeline, CinemamovieMtimeModel.class).addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(100).run();
+      .thread(50).run();
   }
 }

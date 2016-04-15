@@ -30,4 +30,10 @@ public class CityMtimeService {
     }
   }
 
+  public void deleteInvalidCity() {
+    //删除 时光市
+    mapper.deleteByPrimaryKey(5051);
+  }
+
+
 }

@@ -1,6 +1,7 @@
 package com.family.grabserver.mapper.bim_base;
 
 import com.family.grabserver.entity.bim_base.Cityarea;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public interface SolidifyMapper {
   void merge_screening_baidu(Integer sourceCode);
 
   void merge_screening_weixin(Integer sourceCode);
+
+  void clear_u(@Param("type") String type, @Param("source") Integer source);
+
+  void clear_d(@Param("type") String type);
+
+
 }

@@ -23,8 +23,7 @@ public class CityareaBaiduPipeline implements PageModelPipeline<CityareaBaiduMod
   public void process(CityareaBaiduModel model, Task task) {
 
     String context = model.getArea();
-    JSONObject ob = JSON.parseObject(context);
-    JSONArray areas = ob.getJSONObject("cinemaStr").getJSONObject("filter").getJSONArray("areas");
+    JSONArray areas = JSON.parseArray(context);
     for (Object areaOb : areas) {
       JSONObject area = (JSONObject) areaOb;
       CityareaBaidu record = new CityareaBaidu();

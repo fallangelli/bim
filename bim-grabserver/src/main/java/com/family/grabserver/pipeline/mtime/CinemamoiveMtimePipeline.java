@@ -22,8 +22,16 @@ public class CinemamoiveMtimePipeline implements PageModelPipeline<CinemamovieMt
   @Override
   public void process(CinemamovieMtimeModel model, Task task) {
     String context = model.getContext();
-    JSONObject ob = JSON.parseObject(context);
+    JSONObject ob = new JSONObject();
+    try {
+      ob = JSON.parseObject(context);
+    } catch (Exception e) {
+      System.out.println(model.getUrl());
+      System.out.println(context);
+      throw e;
+    }
     JSONArray movies = (JSONArray) ob.get("movies");
+
 
     for (Object movieOb : movies) {
 

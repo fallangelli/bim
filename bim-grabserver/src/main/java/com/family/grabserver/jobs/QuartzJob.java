@@ -1,6 +1,6 @@
 package com.family.grabserver.jobs;
 
-import com.family.grabserver.runner.MainRunner;
+import com.family.grabserver.runner.GrabRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,12 +20,11 @@ public class QuartzJob {
   public void work() {
     System.out.println("work任务调度！！！" + (new Date()).toString());
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocations);
-    final MainRunner runner = applicationContext.getBean(MainRunner.class);
-    runner.grabCity();
-    runner.grabCinema();
-    runner.grabCinemamovie();
-    runner.grabScreening();
-    runner.mergeService.merge();
+    final GrabRunner runner = applicationContext.getBean(GrabRunner.class);
+//    runner.grabCity();
+//    runner.grabCinema();
+//    runner.grabScreening();
+//    runner.mergeService.merge();
   }
 
 }

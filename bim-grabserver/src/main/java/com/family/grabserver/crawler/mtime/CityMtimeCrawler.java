@@ -28,6 +28,7 @@ public class CityMtimeCrawler {
   @Autowired
   private CityMtimeService cityService;
 
+
   private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
   public static void main(String[] args) {
@@ -57,5 +58,8 @@ public class CityMtimeCrawler {
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(30).run();
 
+
+    //删除 时光市
+    cityService.deleteInvalidCity();
   }
 }

@@ -1,49 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation=" http://www.springframework.org/schema/batch
+  http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <import resource="applicationContext*.xml"/>
 
-  <!--<import resource="applicationContext.xml"/>-->
-  <!--<import resource="applicationContext-myBatis.xml"/>-->
+  <job id="syncJob" xmlns="http://www.springframework.org/schema/batch">
+    <step id="step_city_grab" next="step_city_merge">
+      <tasklet ref="grabTasklet" transaction-manager="transactionManager"></tasklet>
+    </step>
+    <step id="step_city_merge">
+      <tasklet ref="mergeTasklet" transaction-manager="transactionManager"></tasklet>
+    </step>
+  </job>
 
-  <!-- 工作的bean -->
-  <bean id="QuartzJob" class="com.family.grabserver.jobs.QuartzJob"/>
 
-  <!-- job的配置开始 -->
-  <bean id="myJobDetail"
-        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    <property name="targetObject">
-      <ref bean="QuartzJob"/>
-    </property>
-    <property name="targetMethod">
-      <value>work</value>
-    </property>
+  <bean id="grabTasklet" class="com.family.grabserver.jobs.GrabTasklet" scope="step">
+    <property name="type" value="#{jobParameters['type']}"></property>
+    <property name="source" value="#{jobParameters['source']}"></property>
+    <property name="date" value="#{jobParameters['date']}"></property>
   </bean>
-  <!-- job的配置结束 -->
 
-
-  <!-- 调度的配置开始 -->
-  <bean id="crontestJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-    <property name="jobDetail">
-      <ref bean="myJobDetail"/>
-    </property>
-    <property name="cronExpression">
-      <value>*/30 * * * * ?</value>  <!-- Cron表达式“10 */1 * * * ?”意为：从10秒开始，每1分钟执行一次。  -->
-    </property>
+  <bean id="mergeTasklet" class="com.family.grabserver.jobs.MergeTasklet" scope="step">
+    <property name="type" value="#{jobParameters['type']}"></property>
+    <property name="date" value="#{jobParameters['date']}"></property>
   </bean>
-  <!-- 调度的配置结束 -->
-
-
-  <!-- 启动触发器的配置开始 -->
-  <bean name="startQuertz" lazy-init="false" autowire="no"
-        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    <property name="triggers">
-      <list>
-        <ref bean="crontestJobTrigger"/>
-      </list>
-    </property>
-  </bean>
-  <!-- 启动触发器的配置结束 -->
-
 
 </beans>

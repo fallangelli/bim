@@ -129,4 +129,32 @@
     ON DUPLICATE KEY UPDATE ticket_url = pm.ticket_url
   </insert>
 
+  <update id="clear_u" statementType="STATEMENT">
+    update bim_base.${type} set
+    <choose>
+      <when test="source == 0">
+        id_mtime = null,id_baidu = null,id_weixin = null
+      </when>
+      <when test="source == 1 ">
+        id_mtime = null
+      </when>
+      <when test="source == 2">
+        id_baidu = null
+      </when>
+      <when test="source == 3">
+        id_weixin = null
+      </when>
+      <otherwise>
+        1=1
+      </otherwise>
+    </choose>
+  </update>
+
+  <delete id="clear_d" statementType="STATEMENT">
+    DELETE FROM bim_base.${type}
+    WHERE
+      id_mtime IS NULL AND id_baidu IS NULL AND id_weixin IS NULL
+  </delete>
+
+
 </mapper>

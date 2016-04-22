@@ -7,6 +7,7 @@ import com.family.grab.model.OOSpider;
 import com.family.grab.model.annotation.ExtractBy;
 import com.family.grab.model.annotation.ExtractByUrl;
 import com.family.grab.model.annotation.TargetUrl;
+import com.family.grabserver.crawler.maoyan.CookieSimProcessor;
 import com.family.grabserver.pipeline.maoyan.CinemamoiveMaoyanPipeline;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,13 +22,19 @@ public class CinemamovieMaoyanModel implements AfterExtractor {
   private String cinemaid = "";
 
   public static void main(String[] args) {
+    Integer testCityId = 2;
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final CinemamoiveMaoyanPipeline pipeline = applicationContext.getBean(CinemamoiveMaoyanPipeline.class);
-
-    OOSpider.create(Site.me().setSleepTime(1000)
-      , pipeline, CinemaMaoyanModel.class)
-      .addUrl("http://m.maoyan.com/showtime/wrap.json?cinemaid=721")
-      .thread(1).run();
+    CookieSimProcessor cookieSimer = new CookieSimProcessor(testCityId);
+    Site site = Site.me().setSleepTime(1000);
+//    for (Cookie cookie : cookieSimer.getCookieStore().getCookies()) {
+//      site.addCookie(cookie.getName(), cookie.getValue());
+//    }
+    site.addCookie("ci", testCityId.toString());
+    OOSpider.create(site
+      , pipeline, CinemamovieMaoyanModel.class)
+      .addUrl("http://m.maoyan.com/showtime/wrap.json?cinemaid=6272")
+      .thread(testCityId).run();
   }
 
   public String getContext() {

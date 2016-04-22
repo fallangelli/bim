@@ -17,15 +17,9 @@ public class CinemamovieMaoyanService {
     return mapper.selectAll();
   }
 
-  public int insertOrUpdate(CinemamovieMaoyan record) {
+  public int insert(CinemamovieMaoyan record) {
+    return mapper.insert(record);
 
-    if (record.getCinemaId() == null || record.getMovieId() == null) {
-      return mapper.insert(record);
-    } else {
-      if (mapper.selectByPrimaryKey(record.getCinemaId(), record.getMovieId()) != null)
-        return mapper.updateByPrimaryKey(record);
-      else return mapper.insert(record);
-    }
   }
 
 }

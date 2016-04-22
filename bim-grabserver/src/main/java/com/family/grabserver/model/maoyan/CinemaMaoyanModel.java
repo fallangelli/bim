@@ -26,7 +26,7 @@ public class CinemaMaoyanModel implements AfterExtractor {
   public static void main(String[] args) {
 
     String url = "http://m.maoyan.com/cinemas.json?cityId="
-      + 362 + "&cityName=测试";
+      + 1 + "&cityName=北京";
 
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final CinemaMaoyanPipeline pipeline = applicationContext.getBean(CinemaMaoyanPipeline.class);

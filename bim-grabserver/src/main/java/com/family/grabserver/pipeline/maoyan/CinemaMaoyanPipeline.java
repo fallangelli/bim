@@ -36,7 +36,7 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
         JSONObject cinema = (JSONObject) cinemaOb;
         CinemaMaoyan record = new CinemaMaoyan();
         record.setId(cinema.getInteger("id"));
-        record.setCityId(Integer.parseInt(model.getCityId()));
+        record.setMaoyanCityId(Integer.parseInt(model.getCityId()));
         record.setMaoyanCityName(model.getCityName());
         record.setMaoyanArea(cinema.getString("area"));
         record.setName(cinema.getString("nm"));

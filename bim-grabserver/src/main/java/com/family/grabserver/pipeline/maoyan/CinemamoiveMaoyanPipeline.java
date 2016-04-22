@@ -22,6 +22,7 @@ public class CinemamoiveMaoyanPipeline implements PageModelPipeline<CinemamovieM
     String context = model.getContext();
     JSONObject ob = JSON.parseObject(context);
     JSONObject data = (JSONObject) ob.get("data");
+
     JSONArray movies = (JSONArray) data.get("movies");
 
     for (Object moiveOb : movies) {
@@ -32,7 +33,7 @@ public class CinemamoiveMaoyanPipeline implements PageModelPipeline<CinemamovieM
       record.setMovieId(moive.getInteger("id"));
       record.setCinemaId(Integer.parseInt(model.getCinemaid()));
 
-      service.insertOrUpdate(record);
+      service.insert(record);
     }
   }
 }

@@ -46,7 +46,7 @@ public class MaoyanPriceDecoder {
           String patStr = "." + type;
           patStr += ">i\\:nth-of-type\\(";
           patStr += i + "\\)";
-          patStr += "\\{text-indent\\:-(\\d*.\\d*)em;width\\:(\\d*.\\d*)em;\\}";
+          patStr += "\\{text-indent\\:-(\\d*.\\d*)em;width\\:(\\d*.\\d*)em;";
           Pattern p3 = Pattern.compile(patStr);
           Matcher m3 = p3.matcher(decodeCss);
           if (m3.find()) {

@@ -249,7 +249,7 @@ public class Spider implements Runnable, Task {
   public void run() {
     checkRunningStat();
     initComponent();
-    logger.info("Spider " + getUUID() + " started!");
+//    logger.info("Spider " + getUUID() + " started!");
     while (!Thread.currentThread().isInterrupted() && stat.get() == STAT_RUNNING) {
       Request request = scheduler.poll(this);
       if (request == null) {

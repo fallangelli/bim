@@ -96,6 +96,11 @@ public class HttpClientDownloader extends AbstractDownloader {
         return page;
       } else {
         logger.warn("code error " + statusCode + "\t" + request.getUrl());
+        logger.warn("retry times : " + site.getCycleRetryTimes());
+        if (site.getCycleRetryTimes() > 0) {
+          return addToCycleRetry(request, site);
+        }
+        onError(request);
         return null;
       }
     } catch (IOException e) {

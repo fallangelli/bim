@@ -18,6 +18,11 @@ public class CinemaMaoyanService {
     return mapper.selectAll();
   }
 
+  public List<CinemaMaoyan> selectByMaoyanCityId(Integer cityId) {
+    return mapper.selectByMaoyanCityId(cityId);
+  }
+
+
   public int insertOrUpdate(CinemaMaoyan record) {
     if (record.getId() == null) {
       return mapper.insert(record);

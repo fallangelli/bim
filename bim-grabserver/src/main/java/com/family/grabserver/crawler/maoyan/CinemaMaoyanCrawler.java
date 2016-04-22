@@ -6,6 +6,7 @@ import com.family.grabserver.entity.bim_grab.CityMaoyan;
 import com.family.grabserver.model.maoyan.CinemaMaoyanModel;
 import com.family.grabserver.pipeline.maoyan.CinemaMaoyanPipeline;
 import com.family.grabserver.service.maoyan.CityMaoyanService;
+import org.apache.http.cookie.Cookie;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -34,8 +35,7 @@ public class CinemaMaoyanCrawler {
   }
 
   public void crawl() {
-    ExecutorService pool = Executors.newFixedThreadPool(30);
-
+    ExecutorService pool = Executors.newFixedThreadPool(10);
 
     List<CityMaoyan> allCity = cityService.selectAll();
 
@@ -45,7 +45,7 @@ public class CinemaMaoyanCrawler {
       String url = "http://m.maoyan.com/cinemas.json?cityId="
         + city.getId() + "&cityName=" + city.getName();
 
-      CinemaMaoyanCrawler.CinemaThread th = new CinemaThread(cinemaMaoyanPipeline, city.getId(), url);
+      CinemaMaoyanCrawler.CinemaThread th = new CinemaThread(city.getId(), url);
       pool.execute(th);
     }
     pool.shutdown();
@@ -60,20 +60,25 @@ public class CinemaMaoyanCrawler {
 
 
   public class CinemaThread implements Runnable {
-    CinemaMaoyanPipeline cinemaMaoyanPipeline;
     Integer cityId;
     String url;
 
-    public CinemaThread(CinemaMaoyanPipeline cinemaMaoyanPipeline, Integer cityId, String url) {
-      this.cinemaMaoyanPipeline = cinemaMaoyanPipeline;
+    public CinemaThread(Integer cityId, String url) {
       this.cityId = cityId;
       this.url = url;
     }
 
     @Override
     public void run() {
-      OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000)
-          .addCookie("ci", cityId.toString()),
+      CookieSimProcessor cookieSimer = new CookieSimProcessor(cityId);
+
+      Site site = Site.me().setTimeOut(60000).setSleepTime(500)
+        .setCycleRetryTimes(5).setRetrySleepTime(3000);
+      for (Cookie cookie : cookieSimer.getCookieStore().getCookies()) {
+        site.addCookie(cookie.getName(), cookie.getValue());
+      }
+      site.addCookie("ci", cityId.toString());
+      OOSpider.create(site,
         cinemaMaoyanPipeline, CinemaMaoyanModel.class)
         .addUrl(url)
         .thread(1).run();
@@ -94,15 +99,6 @@ public class CinemaMaoyanCrawler {
     public void setUrl(String url) {
       this.url = url;
     }
-
-    public CinemaMaoyanPipeline getCinemaMaoyanPipeline() {
-      return cinemaMaoyanPipeline;
-    }
-
-    public void setCinemaMaoyanPipeline(CinemaMaoyanPipeline cinemaMaoyanPipeline) {
-      this.cinemaMaoyanPipeline = cinemaMaoyanPipeline;
-    }
-
   }
 
 }

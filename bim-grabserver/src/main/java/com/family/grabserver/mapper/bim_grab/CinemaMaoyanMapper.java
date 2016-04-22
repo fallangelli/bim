@@ -44,4 +44,7 @@ public interface CinemaMaoyanMapper {
    * @mbggenerated
    */
   int updateByPrimaryKey(CinemaMaoyan record);
+
+  List<CinemaMaoyan> selectByMaoyanCityId(Integer cityId);
+
 }

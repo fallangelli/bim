@@ -101,7 +101,7 @@ angular.module('bibimovie.services', [])
         var deferred = $q.defer();
         var promise = deferred.promise;
 
-        var dates_url = ApiEndpoint.server_url + "cityScreening/CityMovieWithShowDates?" +
+        var dates_url = ApiEndpoint.server_url + "cityScreening/cityMovieWithShowDates?" +
           "cityId=" + cityId + "&movieId=" + movieId;
         if (districtId) dates_url += "&districtId=" + districtId;
         $http.get(dates_url)
@@ -122,7 +122,7 @@ angular.module('bibimovie.services', [])
         var deferred = $q.defer();
         var promise = deferred.promise;
 
-        var cinema_url = ApiEndpoint.server_url + "cityCinemas/DateMovieCinemas?" +
+        var cinema_url = ApiEndpoint.server_url + "cityCinemas/dateMovieCinemas?" +
           "cityId=" + cityId + "&movieId=" + movieId + "&showDate=" + date;
         if (lat) cinema_url += "&lat=" + lat;
         if (lng) cinema_url += "&lng=" + lng;
@@ -157,7 +157,7 @@ angular.module('bibimovie.services', [])
     return {
       getMovies: function (cityId) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityMovies/CityMovies?cityId=" + cityId;
+        var url = ApiEndpoint.server_url + "cityMovies/cityMovies?cityId=" + cityId;
         $http.get(url)
           .success(function (data) {
             var movies = angular.fromJson(data)
@@ -176,7 +176,7 @@ angular.module('bibimovie.services', [])
   .factory('CinemaListService', ['$q', '$http', 'ApiEndpoint', function ($q, $http, ApiEndpoint) {
     return {
       getCinemas: function (cityId, lat, lng, orderBy, districtId, nameLike, currPage, pageCount) {
-        var url = ApiEndpoint.server_url + "cityCinemas/Cinemas?cityId=" +
+        var url = ApiEndpoint.server_url + "cityCinemas/cinemas?cityId=" +
           cityId + "&currPage=" + currPage + "&pageCount=" + pageCount;
         if (lat) url += "&lat=" + lat;
         if (lng) url += "&lng=" + lng;
@@ -217,7 +217,7 @@ angular.module('bibimovie.services', [])
     return {
       getCinema: function (cinemaId) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityCinemas/Cinema?cinemaId=" + cinemaId;
+        var url = ApiEndpoint.server_url + "cityCinemas/cinema?cinemaId=" + cinemaId;
         $http.get(url)
           .success(function (data) {
             var cinemas = angular.fromJson(data)
@@ -231,7 +231,7 @@ angular.module('bibimovie.services', [])
       },
       getCinemaMovieDates: function (cinemaId, movieId) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityCinemas/CinemaMovieDates?cinemaId=" + cinemaId + "&movieId=" + movieId;
+        var url = ApiEndpoint.server_url + "cityCinemas/cinemaMovieDates?cinemaId=" + cinemaId + "&movieId=" + movieId;
         $http.get(url)
           .success(function (data) {
             var cinemas = angular.fromJson(data);
@@ -245,7 +245,7 @@ angular.module('bibimovie.services', [])
       },
       getCinemaMovieScreeningByDate: function (cinemaId, movieId, date) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityScreening/CinemaScreening?cinemaId="
+        var url = ApiEndpoint.server_url + "cityScreening/cinemaScreening?cinemaId="
           + cinemaId + "&movieId=" + movieId + "&showDate=" + date;
         $http.get(url)
           .success(function (data) {
@@ -265,7 +265,7 @@ angular.module('bibimovie.services', [])
     return {
       getMovie: function (moiveId) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityMovies/Movie?moiveId=" + moiveId;
+        var url = ApiEndpoint.server_url + "cityMovies/movie?moiveId=" + moiveId;
         $http.get(url)
           .success(function (data) {
             var movie = angular.fromJson(data)
@@ -285,7 +285,7 @@ angular.module('bibimovie.services', [])
     return {
       getScreening: function (cityId, cinemaId, movieId, showDate) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityScreening/CinemaScreening?cinemaId=" +
+        var url = ApiEndpoint.server_url + "cityScreening/cinemaScreening?cinemaId=" +
           cinemaId + "&movieId=" + movieId + "&showDate=" + showDate;
         $http.get(url)
           .success(function (data) {
@@ -306,7 +306,7 @@ angular.module('bibimovie.services', [])
     return {
       getSource: function (cityId, cinemaId, movieId, showDate, startTime) {
         var deferred = $q.defer();
-        var url = ApiEndpoint.server_url + "cityScreening/CinemaSource?cinemaId=" +
+        var url = ApiEndpoint.server_url + "cityScreening/cinemaSource?cinemaId=" +
           cinemaId + "&movieId=" + movieId + "&showDate=" + showDate + "&startTime=" + startTime;
         $http.get(url)
           .success(function (data) {

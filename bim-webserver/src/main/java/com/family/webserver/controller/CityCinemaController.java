@@ -30,7 +30,7 @@ public class CityCinemaController {
   @Autowired
   private CityScreeningService sService;
 
-  @RequestMapping(value = "/Cinemas", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinemas", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   List<RetListCinema> getCityCinemas(@RequestParam(value = "cityId", required = true) Integer cityId,
@@ -47,7 +47,7 @@ public class CityCinemaController {
     return retList;
   }
 
-  @RequestMapping(value = "/DateMovieCinemas", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/dateMovieCinemas", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   List<MovieCinema> getCityMovieCinemabyDate(@RequestParam(value = "cityId", required = true) Integer cityId,
@@ -59,7 +59,7 @@ public class CityCinemaController {
     return cinemas;
   }
 
-  @RequestMapping(value = "/Cinema", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinema", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   RetCinema getCinemaWithMovies(@RequestParam(value = "cinemaId", required = true) Integer cinemaId) {
@@ -69,7 +69,7 @@ public class CityCinemaController {
     return cc;
   }
 
-  @RequestMapping(value = "/CinemaMovieDates", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinemaMovieDates", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   List<String> getCinemaMovieDates(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
@@ -78,7 +78,7 @@ public class CityCinemaController {
     return dates;
   }
 
-  @RequestMapping(value = "/CinemaMovieSourcesByDate", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinemaMovieSourcesByDate", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   CinemaScreening getCinemaMovieSourcesByDate(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,

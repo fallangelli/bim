@@ -71,7 +71,7 @@ public class ScreeningMaoyanCrawler {
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(1200).run();
+      .thread(80).run();
   }
 
 }

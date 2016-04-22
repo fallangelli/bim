@@ -47,6 +47,7 @@ public class HomeController {
   public
   @ResponseBody
   Integer getCityIdFromName(@RequestParam(value = "cityName", required = true) String cityName) {
+
     if (cityName.length() > 1) {
       return service.getCityIdFromName(cityName);
     }

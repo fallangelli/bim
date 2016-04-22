@@ -29,7 +29,7 @@ public class CinemamovieMtimeModel implements AfterExtractor {
 
     OOSpider.create(Site.me().setSleepTime(1000)
       , pipeline, CinemamovieMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=1813")
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=3275")
       .thread(1).run();
   }
 
@@ -57,14 +57,10 @@ public class CinemamovieMtimeModel implements AfterExtractor {
     this.url = url;
   }
 
-  @Override
-  public String toString() {
-    String retVal = context;
-    return retVal;
-  }
 
   @Override
   public void afterProcess(Page page) {
+    context = context.trim();
   }
 
 }

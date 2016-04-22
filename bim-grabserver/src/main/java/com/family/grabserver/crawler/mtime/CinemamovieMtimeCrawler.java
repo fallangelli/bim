@@ -34,7 +34,7 @@ public class CinemamovieMtimeCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.truncateTable("cinemamovie_Mtime");
+      SqlUtil.truncateTable("cinemamovie_mtime");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -46,8 +46,8 @@ public class CinemamovieMtimeCrawler {
       String url = "http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=" + cinema.getId();
       urls.add(url);
     }
-    logger.info("开始抓取 时光 影院上映电影");
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(1000),
+    logger.info("开始抓取 时光 影院 排片信息");
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(1000),
       pipeline, CinemamovieMtimeModel.class).addUrl((String[]) urls.toArray(new String[]{}))
       .thread(50).run();
   }

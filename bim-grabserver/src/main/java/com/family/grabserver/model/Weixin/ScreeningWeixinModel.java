@@ -27,14 +27,16 @@ public class ScreeningWeixinModel implements AfterExtractor {
   @ExtractBy(value = "/html/body/text()")
   private String context;
 
+  @ExtractByUrl
+  private String url;
+
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final ScreeningWeixinPipeline pipeline = applicationContext.getBean(ScreeningWeixinPipeline.class);
 
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(30),
       pipeline, ScreeningWeixinModel.class)
-      .addUrl("http://m.wepiao.com/data/v5/cinemas/cities/10/sched_city_cinema_10_1000088.json?" +
-        "cityId=10&cinemaId=1000088").thread(1).run();
+      .addUrl("http://m.wepiao.com/data/v5/cinemas/cities/155/sched_city_cinema_155_1012755.json?cityId=155&cinemaId=1012755").thread(1).run();
   }
 
   public String getCityId() {
@@ -59,6 +61,14 @@ public class ScreeningWeixinModel implements AfterExtractor {
 
   public void setContext(String context) {
     this.context = context;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 
   @Override

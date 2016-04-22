@@ -33,12 +33,10 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <!-- Job Repository: used to persist the state of the batch job -->
   <!-- stored job-meta in memory -->
-  <!--
-  <bean id="jobRepository"
-      class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
-      <property name="transactionManager" ref="transactionManager" />
-  </bean>
-   -->
+  <!--<bean id="jobRepository"-->
+  <!--class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">-->
+  <!--<property name="transactionManager" ref="transactionManager" />-->
+  <!--</bean>-->
 
   <!-- stored job-meta in database -->
   <bean id="jobRepository"

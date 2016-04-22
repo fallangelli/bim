@@ -66,7 +66,9 @@ public class MergeRunner {
     final MergeRunner service = applicationContext.getBean(MergeRunner.class);
 
     try {
-      service.mergeCinema(2);
+      service.mergeCinema(0);
+      service.mergeMovie(0);
+      service.mergeScreening(0);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -74,6 +76,7 @@ public class MergeRunner {
 
 
   public void mergeCinema(int source) throws Exception {
+    logger.info("开始合并影院");
     mapper.clear_u(EnumType.cinema.getName(), source);
     mapper.clear_d(EnumType.cinema.getName());
     switch (source) {
@@ -98,6 +101,7 @@ public class MergeRunner {
 
 
   public void mergeMovie(int source) throws Exception {
+    logger.info("开始合并电影");
     mapper.clear_u(EnumType.movieshowing.getName(), source);
     mapper.clear_d(EnumType.movieshowing.getName());
     switch (source) {
@@ -125,8 +129,9 @@ public class MergeRunner {
   }
 
   public void mergeScreening(int source) throws Exception {
-    mapper.clear_u(EnumType.screening.getName(), source);
-    mapper.clear_d(EnumType.screening.getName());
+    logger.info("开始合并上映信息");
+
+    mapper.clear_screening(source);
     switch (source) {
       case 0:
         mapper.merge_screening_mtime(EnumSource.MTIME.getCode());

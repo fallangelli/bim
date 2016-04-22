@@ -156,5 +156,10 @@
       id_mtime IS NULL AND id_baidu IS NULL AND id_weixin IS NULL
   </delete>
 
+  <delete id="clear_screening">
+    DELETE FROM bim_base.screening
+    WHERE
+      source_id = #{source,jdbcType=INTEGER}
+  </delete>
 
 </mapper>

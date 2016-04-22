@@ -53,7 +53,7 @@ public class ScreeningBaiduCrawler {
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningBaiduModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(500).run();
+      .thread(80).run();
   }
 
 }

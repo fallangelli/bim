@@ -9,7 +9,8 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class MergeTasklet implements Tasklet {
   private static String[] configLocations = new String[]{"applicationContext.xml", "applicationContext-myBatis.xml"};
@@ -18,7 +19,7 @@ public class MergeTasklet implements Tasklet {
 
   private EnumType type;
 
-  private Date date;
+  private String date;
 
 
   /**
@@ -38,13 +39,16 @@ public class MergeTasklet implements Tasklet {
   /**
    * @param date the message to set
    */
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
   }
 
   @Override
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
     throws Exception {
+    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    fmt.parse(date);
+
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocations);
     final MergeRunner runner = applicationContext.getBean(MergeRunner.class);
 

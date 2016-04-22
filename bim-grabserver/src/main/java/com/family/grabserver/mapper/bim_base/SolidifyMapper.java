@@ -28,5 +28,8 @@ public interface SolidifyMapper {
 
   void clear_d(@Param("type") String type);
 
+  void clear_screening(@Param("source") Integer source);
+
+
 
 }

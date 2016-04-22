@@ -44,7 +44,7 @@ public class ScreeningMtimeCrawler {
 
   public void crawl() {
     try {
-      SqlUtil.truncateTable("screening_Mtime");
+      SqlUtil.truncateTable("screening_mtime");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -76,7 +76,7 @@ public class ScreeningMtimeCrawler {
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(500).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningMtimeModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(600).run();
+      .thread(60).run();
   }
 
 }

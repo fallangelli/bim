@@ -34,6 +34,10 @@ public class ScreeningWeixinPipeline implements PageModelPipeline<ScreeningWeixi
   @Override
   public void process(ScreeningWeixinModel model, Task task) {
     String context = model.getContext();
+    if (context.length() <= 11) {
+      logger.warn("内容为空 : " + model.getUrl());
+      return;
+    }
     JSONArray movies = JSON.parseArray(context);
 
     for (Object movieObj : movies) {

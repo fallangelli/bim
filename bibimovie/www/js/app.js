@@ -1,7 +1,7 @@
 angular.module('bibimovie', ['ionic', 'bibimovie.services', 'bibimovie.controllers'])
   .constant('ApiEndpoint', {
-    //server_url: 'http://192.168.2.111:8100/server_url/bibimovie/'
-    server_url: 'http://192.168.2.111:18888/bibimovie/'
+    server_url: 'http://192.168.2.126:8100/server_url/bibimovie/'
+    //server_url: 'http://192.168.2.111:18888/bibimovie/'
     //server_url: 'http://fallangelli.imwork.net:18888/bibimovie/'
   })
 

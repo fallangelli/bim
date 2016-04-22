@@ -20,7 +20,7 @@
   <p class="description">没有找到您请求的页面</p>
 
   <p>
-    <button class="btn btn-danger" onClick="document.location.href = '/index';">回到主页</button>
+    <button class="btn btn-danger" onClick="document.location.href = '/#/';">回到主页</button>
     <button class="btn btn-warning" onClick="history.back();">返回上一页</button>
   </p>
 </div>

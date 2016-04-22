@@ -6,8 +6,6 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Date;
-
 /**
  * Created by Administrator on 2016/4/15.
  */
@@ -21,8 +19,8 @@ public class JobLauncher {
             /* 运行Job */
       JobExecution result = launcher.run(job, new JobParametersBuilder()
         .addString("type", "screening")
-        .addLong("source", (long) 0)
-        .addDate("date", new Date())
+        .addLong("source", (long) 1)
+        .addString("date", "2000-01-01 01:09")
         .toJobParameters()
       );
             /* 处理结束，控制台打印处理结果 */

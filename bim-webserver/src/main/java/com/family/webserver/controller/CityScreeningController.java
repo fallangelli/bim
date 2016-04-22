@@ -22,7 +22,7 @@ public class CityScreeningController {
   @Autowired
   private CityScreeningService service;
 
-  @RequestMapping(value = "/CityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cityMovieWithShowDates", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   RetMovieWithShowDates getCityMovieWithShowDates(@RequestParam(value = "cityId", required = true) Integer cityId,
@@ -32,7 +32,7 @@ public class CityScreeningController {
     return movieWithShowDates;
   }
 
-  @RequestMapping(value = "/CinemaScreening", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinemaScreening", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   CinemaScreening getCinemaScreening(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,
@@ -42,7 +42,7 @@ public class CityScreeningController {
     return screening;
   }
 
-  @RequestMapping(value = "/CinemaSource", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cinemaSource", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   List<Source> getCinemaSource(@RequestParam(value = "cinemaId", required = true) Integer cinemaId,

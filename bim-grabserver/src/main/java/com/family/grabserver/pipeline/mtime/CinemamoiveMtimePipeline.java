@@ -9,11 +9,14 @@ import com.family.grabserver.entity.bim_grab.CinemamovieMtime;
 import com.family.grabserver.model.mtime.CinemamovieMtimeModel;
 import com.family.grabserver.service.mtime.CinemaMtimeService;
 import com.family.grabserver.service.mtime.CinemamovieMtimeService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CinemamoiveMtimePipeline implements PageModelPipeline<CinemamovieMtimeModel> {
+  private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
+
   @Autowired
   private CinemaMtimeService cinemaService;
   @Autowired
@@ -21,6 +24,11 @@ public class CinemamoiveMtimePipeline implements PageModelPipeline<CinemamovieMt
 
   @Override
   public void process(CinemamovieMtimeModel model, Task task) {
+    if (model.getContext().length() <= 5) {
+      logger.warn("内容为空 : " + model.getUrl());
+      return;
+    }
+
     String context = model.getContext();
     JSONObject ob = new JSONObject();
     try {
@@ -31,7 +39,6 @@ public class CinemamoiveMtimePipeline implements PageModelPipeline<CinemamovieMt
       throw e;
     }
     JSONArray movies = (JSONArray) ob.get("movies");
-
 
     for (Object movieOb : movies) {
 

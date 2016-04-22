@@ -35,7 +35,7 @@ public class ScreeningWeixinCrawler {
   public void crawl() {
 
     try {
-      SqlUtil.truncateTable("screening_Weixin");
+      SqlUtil.truncateTable("screening_weixin");
     } catch (Exception e) {
       e.printStackTrace();
       return;
@@ -53,7 +53,7 @@ public class ScreeningWeixinCrawler {
     OOSpider.create(Site.me().setCharset("UTF-8").setTimeOut(60000).setSleepTime(100).setCycleRetryTimes(5).setRetrySleepTime(3000),
       pipeline, ScreeningWeixinModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(20).run();
+      .thread(80).run();
 
   }
 }

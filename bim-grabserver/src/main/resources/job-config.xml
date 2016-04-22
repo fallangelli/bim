@@ -8,14 +8,19 @@
   <import resource="applicationContext*.xml"/>
 
   <job id="syncJob" xmlns="http://www.springframework.org/schema/batch">
-    <step id="step_city_grab" next="step_city_merge">
+    <step id="step_city_grab" next="decider">
       <tasklet ref="grabTasklet" transaction-manager="transactionManager"></tasklet>
     </step>
+    <decision id="decider" decider="messagesDecider">
+      <next on="COMPLETED" to="step_city_merge"/>
+      <end on="FAILED"/>
+    </decision>
     <step id="step_city_merge">
       <tasklet ref="mergeTasklet" transaction-manager="transactionManager"></tasklet>
     </step>
   </job>
 
+  <bean id="messagesDecider" class="com.family.grabserver.jobs.MessagesDecider"/>
 
   <bean id="grabTasklet" class="com.family.grabserver.jobs.GrabTasklet" scope="step">
     <property name="type" value="#{jobParameters['type']}"></property>
@@ -25,7 +30,9 @@
 
   <bean id="mergeTasklet" class="com.family.grabserver.jobs.MergeTasklet" scope="step">
     <property name="type" value="#{jobParameters['type']}"></property>
+    <property name="source" value="#{jobParameters['source']}"></property>
     <property name="date" value="#{jobParameters['date']}"></property>
+
   </bean>
 
 </beans>

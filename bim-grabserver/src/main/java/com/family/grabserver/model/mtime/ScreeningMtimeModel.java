@@ -32,9 +32,10 @@ public class ScreeningMtimeModel implements AfterExtractor {
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final ScreeningMtimePipeline pipeline = applicationContext.getBean(ScreeningMtimePipeline.class);
+
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(3),
       pipeline, ScreeningMtimeModel.class)
-      .addUrl("http://m.mtime.cn/Service/callback.mi/showtime/ShowTimesByCinemaMovieDate.api?cinemaId=4185&movieId=216885&date=2016-01-21").thread(1).run();
+      .addUrl("http://m.mtime.cn/Service/callback.mi/Showtime/ShowtimeMovieAndDateListByCinema.api?cinemaId=3275&movieId=216885&date=2016-01-21").thread(1).run();
   }
 
   public String getContext() {

@@ -19,7 +19,7 @@ public class CityMovieController {
   @Autowired
   private CityMovieService service;
 
-  @RequestMapping(value = "/Movie", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/movie", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   RetMovie getMoive(@RequestParam(value = "moiveId", required = true) Integer moiveId) {
@@ -30,7 +30,7 @@ public class CityMovieController {
     return retVal;
   }
 
-  @RequestMapping(value = "/CityMovies", method = RequestMethod.GET, produces = "application/json")
+  @RequestMapping(value = "/cityMovies", method = RequestMethod.GET, produces = "application/json")
   public
   @ResponseBody
   List<RetHotMovie> getCityMoives(@RequestParam(value = "cityId", required = true) Integer cityId) {

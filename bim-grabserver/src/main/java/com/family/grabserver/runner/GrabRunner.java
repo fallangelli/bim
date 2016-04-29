@@ -63,11 +63,9 @@ public class GrabRunner {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final GrabRunner grabRunner = applicationContext.getBean(GrabRunner.class);
     try {
-      grabRunner.grabCity(1);
-      //    grabRunner.grabCinema();
-//    grabRunner.grabCinemamovie();
-//    grabRunner.grabScreening();
-//    grabRunner.mergeService.merge();
+//      grabRunner.grabCity(4);
+//      grabRunner.grabCinema(4);
+      grabRunner.grabScreening(4);
     } catch (Exception e) {
       e.printStackTrace();
     }

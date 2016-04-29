@@ -9,6 +9,7 @@ import com.family.grabserver.pipeline.maoyan.CinemamoiveMaoyanPipeline;
 import com.family.grabserver.service.maoyan.CinemaMaoyanService;
 import com.family.grabserver.service.maoyan.CityMaoyanService;
 import com.family.grabserver.util.SqlUtil;
+import com.google.common.collect.Lists;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -91,9 +92,11 @@ public class CinemamovieMaoyanCrawler {
 //      }
       site.addCookie("ci", cityId.toString());
 
-      OOSpider.create(site,
+      OOSpider.create(site.setHttpProxyPool(Lists.newArrayList(
+        new String[]{"36.233.123.115", "8080"},
+        new String[]{"116.23.72.205", "9999"})),
         pipeline, CinemamovieMaoyanModel.class).addUrl((String[]) urls.toArray(new String[]{}))
-        .thread(5).run();
+        .thread(10).run();
     }
 
     public Integer getCityId() {

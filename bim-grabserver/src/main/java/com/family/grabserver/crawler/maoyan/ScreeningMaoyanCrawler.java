@@ -10,6 +10,7 @@ import com.family.grabserver.pipeline.maoyan.ScreeningMaoyanPipeline;
 import com.family.grabserver.service.maoyan.CinemamovieMaoyanService;
 import com.family.grabserver.service.maoyan.MovieshowingMaoyanService;
 import com.family.grabserver.util.SqlUtil;
+import com.google.common.collect.Lists;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -68,7 +69,10 @@ public class ScreeningMaoyanCrawler {
     logger.info("开始抓取 猫眼 场次信息");
     OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(5000)
         .setCycleRetryTimes(20).setRetrySleepTime(10000)
-        .addCookie("ci", "1"),
+        .addCookie("ci", "1")
+        .setHttpProxyPool(Lists.newArrayList(
+          new String[]{"36.233.123.115", "8080"},
+          new String[]{"116.23.72.205", "9999"})),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
       .thread(10).run();

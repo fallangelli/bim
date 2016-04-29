@@ -7,8 +7,8 @@ import com.family.grabserver.service.maoyan.CityMaoyanService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -80,9 +80,10 @@ public class CinemaMaoyanCrawler {
 
     @Override
     public void run() {
-      DefaultHttpClient client = new DefaultHttpClient(new PoolingClientConnectionManager());
       CookieSimProcessor cookieSimer = new CookieSimProcessor(cityId);
-      client.setCookieStore(cookieSimer.getCookieStore());
+      CloseableHttpClient client = HttpClients.custom()
+        .setDefaultCookieStore(cookieSimer.getCookieStore()).build();
+
       HttpGet get = new HttpGet(url);
       Integer totalRetryTimes = 10;
       Integer retriedTimes = 0;
@@ -99,10 +100,6 @@ public class CinemaMaoyanCrawler {
             e.printStackTrace();
           }
           logger.warn(url + ":目标城市错误，重试第 " + retriedTimes + " 次");
-          client = new DefaultHttpClient(new PoolingClientConnectionManager());
-          cookieSimer = new CookieSimProcessor(cityId);
-          client.setCookieStore(cookieSimer.getCookieStore());
-          get = new HttpGet(url);
           response = client.execute(get);
           context = paseResponse(response);
         }

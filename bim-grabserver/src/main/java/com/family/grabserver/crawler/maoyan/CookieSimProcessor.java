@@ -38,6 +38,7 @@ public class CookieSimProcessor {
     cookie.setDomain(".maoyan.com");
     cookie.setPath("/");
     cookieStore.addCookie(cookie);
+
     // 使用cookieStore方式
     CloseableHttpClient client = HttpClients.custom()
       .setDefaultCookieStore(cookieStore).build();
@@ -61,8 +62,6 @@ public class CookieSimProcessor {
           e.printStackTrace();
         }
         logger.warn("城市" + cityId + " cookie设置错误，重试第 " + retryTime + " 次");
-        client = HttpClients.custom()
-          .setDefaultCookieStore(cookieStore).build();
         client.execute(httpGet);
         for (Cookie tmpCookie : cookieStore.getCookies()) {
           if (tmpCookie.getName().compareToIgnoreCase("JSESSIONID") == 0)
@@ -70,19 +69,8 @@ public class CookieSimProcessor {
           break;
         }
       }
-
-//      System.out.println("cookie store:" + cookieStore.getCookies());
-//      System.out.println(html.toString());
-
     } catch (IOException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        // 关闭流并释放资源
-        client.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
     }
   }
 

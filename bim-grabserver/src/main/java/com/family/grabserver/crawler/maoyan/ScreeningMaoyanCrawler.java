@@ -54,7 +54,8 @@ public class ScreeningMaoyanCrawler {
       //电影不存在则添加
       if (movieService.selectByPrimaryKey(cm.getMovieId()) == null) {
         logger.info("添加 猫眼 电影基本信息 - " + cm.getMovieId());
-        OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(3000),
+        OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(5000)
+            .setCycleRetryTimes(20).setRetrySleepTime(10000),
           movieShowingMaoyanPipeline, MovieshowingMaoyanModel.class)
           .addUrl("http://m.maoyan.com/cinemas/list.json?movieid=" + cm.getMovieId())
           .thread(1).run();
@@ -65,11 +66,12 @@ public class ScreeningMaoyanCrawler {
       urls.add(movieUrl);
     }
     logger.info("开始抓取 猫眼 场次信息");
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(5).setRetrySleepTime(3000)
+    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(5000)
+        .setCycleRetryTimes(20).setRetrySleepTime(10000)
         .addCookie("ci", "1"),
       pipeline, ScreeningMaoyanModel.class)
       .addUrl((String[]) urls.toArray(new String[]{}))
-      .thread(3).run();
+      .thread(10).run();
   }
 
 }

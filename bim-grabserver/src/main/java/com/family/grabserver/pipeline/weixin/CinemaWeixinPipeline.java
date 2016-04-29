@@ -58,9 +58,9 @@ public class CinemaWeixinPipeline implements PageModelPipeline<CinemaWeixinModel
           record.setAreaId(simArea.getId());
           record.setAreaName(simArea.getName());
         } else
-          logger.error("无法找到归并地区：" + record.getWeixinCityName() + " - " + record.getWeixinArea());
+          logger.warn("无法找到归并地区：" + record.getWeixinCityName() + " - " + record.getWeixinArea());
       } else
-        logger.error("无法找到归并城市：" + model.getCityName());
+        logger.warn("无法找到归并城市：" + model.getCityName());
 
 
       service.insertOrUpdate(record);

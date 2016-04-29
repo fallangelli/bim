@@ -41,6 +41,7 @@ public class GithubRepoProcessor implements PageProcessor {
 
   @Test
   public void test() {
+
     OOSpider.create(new GithubRepoProcessor()).addPipeline(new Pipeline() {
       @Override
       public void process(ResultItems resultItems, Task task) {
@@ -48,6 +49,7 @@ public class GithubRepoProcessor implements PageProcessor {
         Assert.assertEquals("65", ((String) resultItems.get("fork")).trim());
       }
     }).setDownloader(new MockGithubDownloader()).test("https://github.com/code4craft/grab");
+
   }
 
 }

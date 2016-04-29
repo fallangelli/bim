@@ -77,7 +77,7 @@ public class GrabRunner {
   public void grabCity(int source) throws Exception {
     switch (source) {
       case 0:
-//    cityMaoyanCrawler.crawl();
+        cityMaoyanCrawler.crawl();
         cityMtimeCrawler.crawl();
         cityBaiduCrawler.crawl();
         cityWeixinCrawler.crawl();
@@ -91,8 +91,11 @@ public class GrabRunner {
       case 3:
         cityWeixinCrawler.crawl();
         break;
+      case 4:
+        cityMaoyanCrawler.crawl();
+        break;
       default:
-        throw new Exception("请选择源，0所有1时光2百度3微信");
+        throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");
     }
   }
 
@@ -100,7 +103,7 @@ public class GrabRunner {
   public void grabCinema(int source) throws Exception {
     switch (source) {
       case 0:
-//    cinemaMaoyanCrawler.crawl();
+        cinemaMaoyanCrawler.crawl();
         cinemaMtimeCrawler.crawl();
         cinemaBaiduCrawler.crawl();
         cinemaWeixinCrawler.crawl();
@@ -114,8 +117,11 @@ public class GrabRunner {
       case 3:
         cinemaWeixinCrawler.crawl();
         break;
+      case 4:
+        cinemaMaoyanCrawler.crawl();
+        break;
       default:
-        throw new Exception("请选择源，0所有1时光2百度3微信");
+        throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");
     }
 
   }
@@ -123,13 +129,15 @@ public class GrabRunner {
   public void grabScreening(int source) throws Exception {
     switch (source) {
       case 0:
-        movieshowingWeixinCrawler.crawl();
-        //cinemamovieMaoyanCrawler.crawl();
         cinemamovieMtimeCrawler.crawl();
-
-        //screeningMaoyanCrawler.crawl();
         screeningMtimeCrawler.crawl();
+
+        cinemamovieMaoyanCrawler.crawl();
+        screeningMaoyanCrawler.crawl();
+
         screeningBaiduCrawler.crawl();
+
+        movieshowingWeixinCrawler.crawl();
         screeningWeixinCrawler.crawl();
         break;
       case 1:
@@ -143,8 +151,12 @@ public class GrabRunner {
         movieshowingWeixinCrawler.crawl();
         screeningWeixinCrawler.crawl();
         break;
+      case 4:
+        cinemamovieMaoyanCrawler.crawl();
+        screeningMaoyanCrawler.crawl();
+        break;
       default:
-        throw new Exception("请选择源，0所有1时光2百度3微信");
+        throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");
     }
 
   }

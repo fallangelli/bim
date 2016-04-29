@@ -5,11 +5,18 @@ import com.family.grabserver.mapper.bim_grab.MovieshowingMaoyanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @SuppressWarnings("ALL")
 @Service
 public class MovieshowingMaoyanService {
   @Autowired
   private MovieshowingMaoyanMapper mapper;
+
+  public List<MovieshowingMaoyan> selectAll() {
+    return mapper.selectAll();
+  }
+
 
   public MovieshowingMaoyan selectByPrimaryKey(Integer id) {
     return mapper.selectByPrimaryKey(id);

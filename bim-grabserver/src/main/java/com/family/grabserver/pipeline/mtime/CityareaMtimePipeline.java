@@ -80,9 +80,9 @@ public class CityareaMtimePipeline implements PageModelPipeline<CityareaMtimeMod
           record.setAreaId(simArea.getId());
           record.setAreaName(simArea.getName());
         } else
-          logger.error("无法找到归并地区：" + model.getCityName() + " - " + record.getMtimeArea());
+          logger.warn("无法找到归并地区：" + model.getCityName() + " - " + record.getMtimeArea());
       } else
-        logger.error("无法找到归并城市：" + model.getCityName());
+        logger.warn("无法找到归并城市：" + model.getCityName());
 
       cinemaService.insertOrUpdate(record);
     }

@@ -49,7 +49,7 @@ public class CinemamovieMaoyanCrawler {
       return;
     }
 
-    ExecutorService pool = Executors.newFixedThreadPool(1);
+    ExecutorService pool = Executors.newFixedThreadPool(5);
     List<CityMaoyan> allCity = cityService.selectAll();
 
     logger.info("开始抓取 猫眼 影院排片信息");
@@ -85,7 +85,7 @@ public class CinemamovieMaoyanCrawler {
       }
 
       Site site = Site.me().setTimeOut(60000).setSleepTime(5000)
-        .setCycleRetryTimes(3).setRetrySleepTime(2000);
+        .setCycleRetryTimes(20).setRetrySleepTime(10000);
 //      for (Cookie cookie : cookieSimer.getCookieStore().getCookies()) {
 //        site.addCookie(cookie.getName(), cookie.getValue());
 //      }

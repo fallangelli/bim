@@ -55,9 +55,9 @@ public class CinemaBaiduPipeline implements PageModelPipeline<CinemaBaiduModel> 
           record.setAreaId(simArea.getId());
           record.setAreaName(simArea.getName());
         } else
-          logger.error("无法找到归并地区：" + record.getBaiduCityName() + " - " + record.getBaiduArea());
+          logger.warn("无法找到归并地区：" + record.getBaiduCityName() + " - " + record.getBaiduArea());
       } else
-        logger.error("无法找到归并城市：" + model.getCityName());
+        logger.warn("无法找到归并城市：" + model.getCityName());
 
 
       service.insertOrUpdate(record);

@@ -9,7 +9,5 @@ import com.family.grab.Task;
  * @since 0.2.0
  */
 public interface PageModelPipeline<T> {
-
   public void process(T t, Task task);
-
 }

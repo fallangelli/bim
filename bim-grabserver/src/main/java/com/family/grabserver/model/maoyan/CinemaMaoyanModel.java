@@ -25,13 +25,15 @@ public class CinemaMaoyanModel implements AfterExtractor {
 
   public static void main(String[] args) {
 
+    String cityId = "273";
     String url = "http://m.maoyan.com/cinemas.json?cityId="
-      + 1 + "&cityName=北京";
+      + cityId + "&cityName=怀化";
 
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
     final CinemaMaoyanPipeline pipeline = applicationContext.getBean(CinemaMaoyanPipeline.class);
-
-    OOSpider.create(Site.me().setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(4)
+    Site site = Site.me();
+    site.addCookie("ci", cityId.toString());
+    OOSpider.create(site.setTimeOut(60000).setSleepTime(1000).setCycleRetryTimes(4)
       , pipeline, CinemaMaoyanModel.class)
       .addUrl(url).thread(1).run();
 

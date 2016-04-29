@@ -144,6 +144,9 @@
       <when test="source == 3">
         id_weixin = null
       </when>
+      <when test="source == 4">
+        id_maoyan = null
+      </when>
       <otherwise>
         1=1
       </otherwise>
@@ -153,7 +156,7 @@
   <delete id="clear_d" statementType="STATEMENT">
     DELETE FROM bim_base.${type}
     WHERE
-      id_mtime IS NULL AND id_baidu IS NULL AND id_weixin IS NULL
+    id_mtime IS NULL AND id_baidu IS NULL AND id_weixin IS NULL AND id_maoyan IS NULL
   </delete>
 
   <delete id="clear_screening">

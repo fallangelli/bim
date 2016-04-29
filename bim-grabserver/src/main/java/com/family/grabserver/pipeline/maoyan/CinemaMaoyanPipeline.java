@@ -29,6 +29,10 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
     String context = model.getContext();
     JSONObject ob = JSON.parseObject(context);
     JSONObject data = (JSONObject) ob.get("data");
+
+    if (model.getCityId().compareToIgnoreCase("1") != 0 && context.contains("密云县")) {
+      logger.error(model.getCityName() + ":目标城市错误");
+    }
     for (String key : data.keySet()) {
       String area = key;
       JSONArray cinemaArray = (JSONArray) data.get(key);
@@ -55,9 +59,9 @@ public class CinemaMaoyanPipeline implements PageModelPipeline<CinemaMaoyanModel
             record.setAreaId(simArea.getId());
             record.setAreaName(simArea.getName());
           } else
-            logger.error("无法找到归并地区：" + record.getMaoyanCityName() + " - " + record.getMaoyanArea());
+            logger.warn("无法找到归并地区：" + record.getMaoyanCityName() + " - " + record.getMaoyanArea());
         } else
-          logger.error("无法找到归并城市：" + model.getCityName());
+          logger.warn("无法找到归并城市：" + model.getCityName());
 
 
         service.insertOrUpdate(record);

@@ -2,10 +2,12 @@ package com.family.grabserver.Solidify;
 
 import com.family.grabserver.entity.bim_base.Cinema;
 import com.family.grabserver.entity.bim_grab.CinemaBaidu;
+import com.family.grabserver.entity.bim_grab.CinemaMaoyan;
 import com.family.grabserver.entity.bim_grab.CinemaMtime;
 import com.family.grabserver.entity.bim_grab.CinemaWeixin;
 import com.family.grabserver.mapper.bim_base.CinemaMapper;
 import com.family.grabserver.service.baidu.CinemaBaiduService;
+import com.family.grabserver.service.maoyan.CinemaMaoyanService;
 import com.family.grabserver.service.mtime.CinemaMtimeService;
 import com.family.grabserver.service.weixin.CinemaWeixinService;
 import com.family.grabserver.util.Cn2Spell;
@@ -262,6 +264,55 @@ public class CinemaSolidfier {
     }
   }
 
+  public static void mergeMaoyanCinema(CinemaMaoyanService cmyService, CinemaMapper caMapper) {
+    List<CinemaMaoyan> cinemaMaoyanList = cmyService.selectAll();
+    List<Cinema> cinemas = caMapper.selectAll();
+
+    for (CinemaMaoyan cm : cinemaMaoyanList) {
+      if (cm.getAreaId() == null || cm.getAreaId() < 0)
+        continue;
+
+      boolean isMatched = false;
+      for (Cinema record : cinemas) {
+        if (isMatched(new Pair<>(cm.getName(), record.getName()),
+          new Pair<>(cm.getAddress(), record.getAddress()))) {
+          record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
+          if (record.getAddress().length() < cm.getAddress().length()) {
+            record.setAddress(cm.getAddress());
+          }
+          record.setIdMaoyan(cm.getId());
+          try {
+            caMapper.updateByPrimaryKey(record);
+          } catch (Exception e) {
+            e.printStackTrace();
+            isMatched = true;
+            break;
+          }
+
+          isMatched = true;
+          break;
+        }
+      }
+      if (!isMatched) {
+        Cinema record = new Cinema();
+        record.setDistrictId(cm.getAreaId());
+        record.setName(cm.getName());
+        record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
+        record.setAddress(cm.getAddress());
+        record.setLongitude(null);
+        record.setIdMaoyan(cm.getId());
+        try {
+          if (caMapper.selectByPrimaryKey(record.getId()) != null)
+            caMapper.updateByPrimaryKey(record);
+          else
+            caMapper.insert(record);
+        } catch (Exception e) {
+          e.printStackTrace();
+          continue;
+        }
+      }
+    }
+  }
 
   private static Boolean isMatched(Pair<String, String> namePair, Pair<String, String> addressPair) {
     String nameA = namePair.getKey();

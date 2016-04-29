@@ -15,6 +15,7 @@ public class GithubRepoTest {
 
   @Test
   public void test() {
+
     OOSpider.create(Site.me().setSleepTime(0)
       , new PageModelPipeline<GithubRepo>() {
         @Override
@@ -23,5 +24,6 @@ public class GithubRepoTest {
           assertThat(o.getFork()).isEqualTo(70);
         }
       }, GithubRepo.class).addUrl("https://github.com/code4craft/grab").setDownloader(new MockGithubDownloader()).test("https://github.com/code4craft/grab");
+
   }
 }

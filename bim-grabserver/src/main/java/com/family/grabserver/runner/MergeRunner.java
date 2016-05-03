@@ -91,18 +91,23 @@ public class MergeRunner {
         CinemaSolidfier.mergeBaiduCinema(cbdService, caMapper);
         CinemaSolidfier.mergeWeixinCinema(cwxService, caMapper);
         CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
+        mapper.fillPositions();
         break;
       case 1:
         CinemaSolidfier.mergeMtimeCinema(cmtService, caMapper);
+        mapper.fillPositions();
         break;
       case 2:
         CinemaSolidfier.mergeBaiduCinema(cbdService, caMapper);
+        mapper.fillPositions();
         break;
       case 3:
         CinemaSolidfier.mergeMtimeCinema(cmtService, caMapper);
+        mapper.fillPositions();
         break;
       case 4:
         CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
+        mapper.fillPositions();
         break;
       default:
         throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");

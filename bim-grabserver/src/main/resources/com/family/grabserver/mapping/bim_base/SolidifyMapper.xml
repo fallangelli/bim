@@ -14,6 +14,7 @@
   <insert id="fillPositions">
     UPDATE bim_base.cinema
     SET pos = GeomFromText(concat('POINT(', latitude, ' ', longitude, ')'))
+    WHERE pos IS NULL
   </insert>
 
   <insert id="merge_comment_mtime">

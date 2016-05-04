@@ -10,24 +10,21 @@ import com.family.grabserver.service.baidu.CinemaBaiduService;
 import com.family.grabserver.service.maoyan.CinemaMaoyanService;
 import com.family.grabserver.service.mtime.CinemaMtimeService;
 import com.family.grabserver.service.weixin.CinemaWeixinService;
+import com.family.grabserver.util.CinemaMerge;
 import com.family.grabserver.util.Cn2Spell;
-import com.family.grabserver.util.Levenshtein;
 import javafx.util.Pair;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CinemaSolidfier {
 
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/applicationContext*.xml");
-    final CinemaWeixinService wxService = applicationContext.getBean(CinemaWeixinService.class);
+    final CinemaBaiduService bdService = applicationContext.getBean(CinemaBaiduService.class);
     final CinemaMapper caMapper = applicationContext.getBean(CinemaMapper.class);
-
-    CinemaSolidfier.mergeWeixinCinema(wxService, caMapper);
+    CinemaSolidfier.mergeBaiduCinema(bdService, caMapper);
   }
 
   public static void mergeWeixinCinema(CinemaWeixinService wxService, CinemaMapper caMapper) {
@@ -40,7 +37,7 @@ public class CinemaSolidfier {
 
       boolean isMatched = false;
       for (Cinema record : baseCinemas) {
-        if (isMatched(new Pair<>(cm.getName(), record.getName()),
+        if (CinemaMerge.isMatched(new Pair<>(cm.getName(), record.getName()),
           new Pair<>(cm.getAddress(), record.getAddress()))) {
           if (record.getAddress().length() < cm.getAddress().length()) {
             record.setAddress(cm.getAddress());
@@ -120,7 +117,7 @@ public class CinemaSolidfier {
 
       boolean isMatched = false;
       for (Cinema record : cinemas) {
-        if (isMatched(new Pair<>(cm.getName(), record.getName()),
+        if (CinemaMerge.isMatched(new Pair<>(cm.getName(), record.getName()),
           new Pair<>(cm.getAddress(), record.getAddress()))) {
           record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
           if (record.getAddress().length() < cm.getAddress().length()) {
@@ -224,7 +221,7 @@ public class CinemaSolidfier {
 
       boolean isMatched = false;
       for (Cinema record : baseCinemas) {
-        if (isMatched(new Pair<>(cm.getName(), record.getName()),
+        if (CinemaMerge.isMatched(new Pair<>(cm.getName(), record.getName()),
           new Pair<>(cm.getAddress(), record.getAddress()))) {
           if (record.getAddress().length() < cm.getAddress().length()) {
             record.setAddress(cm.getAddress());
@@ -274,7 +271,7 @@ public class CinemaSolidfier {
 
       boolean isMatched = false;
       for (Cinema record : cinemas) {
-        if (isMatched(new Pair<>(cm.getName(), record.getName()),
+        if (CinemaMerge.isMatched(new Pair<>(cm.getName(), record.getName()),
           new Pair<>(cm.getAddress(), record.getAddress()))) {
           record.setFirstspell(Cn2Spell.converterToFirstSpell(record.getName()));
           if (record.getAddress().length() < cm.getAddress().length()) {
@@ -314,32 +311,5 @@ public class CinemaSolidfier {
     }
   }
 
-  private static Boolean isMatched(Pair<String, String> namePair, Pair<String, String> addressPair) {
-    String nameA = namePair.getKey();
-    String nameB = namePair.getValue();
-
-    String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-    Pattern p = Pattern.compile(regEx);
-    Matcher m = p.matcher(nameA);
-    nameA = m.replaceAll("").trim();
-    nameA = nameA.toUpperCase();
-    m = p.matcher(nameB);
-    nameB = m.replaceAll("").trim();
-    nameB = nameB.toUpperCase();
-
-    if (nameA.length() > 0 && nameB.length() > 0 &&
-      Levenshtein.getSimilarityRatio(nameA, nameB) > 0.9) {
-      return true;
-    } else {
-      String addressA = addressPair.getKey();
-      String addressB = addressPair.getValue();
-      if (addressA.length() > 0 && addressB.length() > 0 &&
-        Levenshtein.getSimilarityRatio(addressA, addressB) > 0.5) {
-        return true;
-      }
-    }
-
-    return false;
-  }
 
 }

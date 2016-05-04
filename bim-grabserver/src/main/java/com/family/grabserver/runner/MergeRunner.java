@@ -72,8 +72,8 @@ public class MergeRunner {
     final MergeRunner service = applicationContext.getBean(MergeRunner.class);
 
     try {
-      service.mergeCinema(4);
-      service.mergeMovie(4);
+      service.mergeCinema(0);
+//      service.mergeMovie(4);
 //      service.mergeScreening(4);
     } catch (Exception e) {
       e.printStackTrace();
@@ -90,7 +90,7 @@ public class MergeRunner {
         CinemaSolidfier.mergeMtimeCinema(cmtService, caMapper);
         CinemaSolidfier.mergeBaiduCinema(cbdService, caMapper);
         CinemaSolidfier.mergeWeixinCinema(cwxService, caMapper);
-        CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
+//        CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
         mapper.fillPositions();
         break;
       case 1:
@@ -106,8 +106,8 @@ public class MergeRunner {
         mapper.fillPositions();
         break;
       case 4:
-        CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
-        mapper.fillPositions();
+//        CinemaSolidfier.mergeMaoyanCinema(cmyService, caMapper);
+//        mapper.fillPositions();
         break;
       default:
         throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");
@@ -124,7 +124,7 @@ public class MergeRunner {
         MovieSolidfier.mergeMtimeMovieshowing(mmtService, mMapper);
         MovieSolidfier.mergeBaiduMovieshowing(mbdService, mMapper);
         MovieSolidfier.mergeWeixinMovieshowing(mwxService, mMapper);
-        MovieSolidfier.mergeMaoyanMovieshowing(mmyService, mMapper);
+//        MovieSolidfier.mergeMaoyanMovieshowing(mmyService, mMapper);
 
         mapper.merge_comment_mtime(EnumSource.MTIME.getCode());
         mapper.merge_image_mtime(EnumSource.MTIME.getCode());
@@ -141,7 +141,7 @@ public class MergeRunner {
         MovieSolidfier.mergeWeixinMovieshowing(mwxService, mMapper);
         break;
       case 4:
-        MovieSolidfier.mergeMaoyanMovieshowing(mmyService, mMapper);
+//        MovieSolidfier.mergeMaoyanMovieshowing(mmyService, mMapper);
         break;
       default:
         throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");
@@ -157,7 +157,7 @@ public class MergeRunner {
         mapper.merge_screening_mtime(EnumSource.MTIME.getCode());
         mapper.merge_screening_baidu(EnumSource.BAIDU.getCode());
         mapper.merge_screening_weixin(EnumSource.WEIXIN.getCode());
-        mapper.merge_screening_maoyan(EnumSource.MAOYAN.getCode());
+//        mapper.merge_screening_maoyan(EnumSource.MAOYAN.getCode());
         break;
       case 1:
         mapper.merge_screening_mtime(EnumSource.MTIME.getCode());
@@ -169,7 +169,7 @@ public class MergeRunner {
         mapper.merge_screening_weixin(EnumSource.WEIXIN.getCode());
         break;
       case 4:
-        mapper.merge_screening_maoyan(EnumSource.MAOYAN.getCode());
+//        mapper.merge_screening_maoyan(EnumSource.MAOYAN.getCode());
         break;
       default:
         throw new Exception("请选择源，0所有1时光2百度3微信4猫眼");

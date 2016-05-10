@@ -36,7 +36,7 @@ public class ScreeningWeixinModel implements AfterExtractor {
 
     OOSpider.create(Site.me().setSleepTime(1000).setCycleRetryTimes(30),
       pipeline, ScreeningWeixinModel.class)
-      .addUrl("http://m.wepiao.com/data/v5/cinemas/cities/155/sched_city_cinema_155_1012755.json?cityId=155&cinemaId=1012755").thread(1).run();
+      .addUrl("http://m.wepiao.com/data/v5/cinemas/cities/10/sched_city_cinema_10_1003249.json?cityId=10&cinemaId=1003249").thread(1).run();
   }
 
   public String getCityId() {

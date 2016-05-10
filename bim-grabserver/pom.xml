@@ -23,9 +23,18 @@
     <hsql.version>1.8.0.7</hsql.version>
   </properties>
 
-
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>2.4</version>
+      </extension>
+    </extensions>
+
     <plugins>
+
+
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.5</version>
@@ -73,18 +82,21 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>wagon-maven-plugin</artifactId>
+        <version>1.0</version>
+        <configuration>
+          <serverId>diandianmovie</serverId>
+          <fromFile>${project.build.directory}/${project.artifactId}-${project.version}.jar</fromFile>
+          <url>scp://m.diandianmovie.com/home/grab</url>
+        </configuration>
         <executions>
           <execution>
-            <id>copy</id>
-            <phase>install</phase>
+            <id>upload-grab</id>
+            <phase>package</phase>
             <goals>
-              <goal>copy-dependencies</goal>
+              <goal>upload-single</goal>
             </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
-            </configuration>
           </execution>
         </executions>
       </plugin>

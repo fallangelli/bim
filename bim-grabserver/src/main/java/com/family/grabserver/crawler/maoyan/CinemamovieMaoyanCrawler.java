@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class CinemamovieMaoyanCrawler {
@@ -60,11 +59,11 @@ public class CinemamovieMaoyanCrawler {
       pool.execute(th);
     }
     pool.shutdown();
-    try {//等待直到所有任务完成
-      pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+//    try {//等待直到所有任务完成
+//      pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+//    } catch (InterruptedException e) {
+//      e.printStackTrace();
+//    }
     logger.info("完成抓取 猫眼 影院排片信息");
   }
 
